@@ -1,20 +1,29 @@
 import { Link, NavLink } from 'react-router-dom';
+import './css/Navbar.css';
+import SmallLogo from '../assets/images/logo_hit_me_up8x.png';
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 function Navbar() {
+    const [user, setUser] = useState(null);
+
     const navHeading = [{
         value: '/',
-        label:"Home"
+        label:"HOME"
     },{
         value: '/shop',
-        label:"Shop"
+        label:"SHOP"
     },{
         value: '/about',
-        label:"About"
+        label:"ABOUT"
     }]
 
     return (
         <div className="navbar-container">
-            <div className="lower-nav">
+            <Link className='logo-link' to='/'>
+                <img className='logo-image' src={SmallLogo} alt="Logo"/>
+            </Link>
+            <div className="center-buttons">
                 {navHeading.map((_heading) => (
                     <NavLink 
                         to={_heading.value}
@@ -27,6 +36,16 @@ function Navbar() {
                     </NavLink>
                 ))}
             </div>
+            {user ? 
+            <div>
+            </div>
+            :
+            <Link to='/log-in' id='entry-button-link'>
+                <Button id='entry-button'>
+                    LOG IN/SIGN UP
+                </Button>
+            </Link>
+            }
         </div>
     )
 }
