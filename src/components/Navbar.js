@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import './css/Navbar.css';
 import SmallLogo from '../assets/images/logo_hit_me_up8x.png';
+import OutlineButton from './OutlineButton';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
@@ -23,6 +24,7 @@ function Navbar() {
             <Link className='logo-link' to='/'>
                 <img className='logo-image' src={SmallLogo} alt="Logo"/>
             </Link>
+
             <div className="center-buttons">
                 {navHeading.map((_heading) => (
                     <NavLink 
@@ -36,6 +38,9 @@ function Navbar() {
                     </NavLink>
                 ))}
             </div>
+
+            {/* JSX ternery operater to change button to profile image 
+            and cart if login information is present  */}
             {user ? 
             <div>
             </div>
