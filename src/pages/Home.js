@@ -12,7 +12,9 @@ function Home() {
     return (
         <div className="home-container">
             <div className='landing-hero-section'>
-                <OutlineButton buttonLabel='MEET THE MAN' buttonLink='/log-in'/>
+                <div className='landing-button-container'>
+                    <OutlineButton className="landing-button" buttonLabel='MEET THE MAN' buttonLink='/log-in'/>
+                </div>
                 <hr className='hero-divider'/>
             </div>
 
@@ -29,7 +31,9 @@ function Home() {
                             <p className='cta-text'>Welcome to the Internet's worst-kept secret. Whether it's your boss, your ex, or that guy who double parked in your spot... We “fix” problems. You just send the name. We handle the rest.</p>
                             <h2 className='cta-heading'>ALREADY PART OF THE UNDERGROUND ELITE?</h2>
                             <p className='cta-text'>Already part of the underground elite? Sign in to access your hit history, view progress, or upgrade to Premium Discreet&trade;.</p>
-                            <OutlineButton buttonLabel="Log In" buttonLink="/log-in"/>
+                            <div className='cta-button-container'>
+                                <OutlineButton buttonLabel="Log In" buttonLink="/log-in"/>
+                            </div>
                         </Col>
                     </Row>
                 </Container>
