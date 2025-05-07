@@ -17,6 +17,9 @@ function Navbar() {
     },{
         value: '/about',
         label:"ABOUT"
+    },{
+        value: '/test',
+        label:"Product"
     }]
 
     return (
