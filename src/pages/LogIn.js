@@ -3,7 +3,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../pages/css/LogIn.css";
-import LoginForm from "../components/LoginRegisterForm";
+import LoginForm from "../components/LoginRegisterForms";
 
 function LogIn() {
   return (
