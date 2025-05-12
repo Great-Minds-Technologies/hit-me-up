@@ -13,42 +13,48 @@ function Footer() {
     const LogoRowTwo = [YoutubeLogo,FacebookLogo,InstagramLogo];
 
     return (
-        <div className='footer-container'>
-            <Link className='footer-button' to='/'>
-                <img src={BigLogo} className='footer-logo'/>
-            </Link> 
-            <div className='footer-page-links'>
-                <Container>
-                    <Row>
-                       <Link className='page-link' to='/'>HOME</Link> 
-                    </Row>
-                    <Row>
-                        <Link className='page-link' to='/shop'>SHOP</Link>
-                    </Row>
-                    <Row>
-                        <Link className='page-link' to='/about'>ABOUT</Link>
-                    </Row>
-                </Container>
-            </div>
-             
-            <div>
-                <Container>
-                    <Row className='socials-row'>
-                        {LogoRowOne.map((logo) => (
-                            <Col className='socials-column'>
-                                <img className='footer-socials' src={logo}/>
-                            </Col>
-                        ))}
-                    </Row>
-                    <Row className='socials-row'>
-                        {LogoRowTwo.map((logo) => (
-                            <Col className='socials-column'>
-                                <img className='footer-socials' src={logo}/>
-                            </Col>
-                        ))}
-                    </Row>
-                </Container>
-            </div>
+        <div className='footer'>
+            <Container className='footer-container'>
+                <Row>
+                    <Col md="4" className='logo-link-column'>
+                        <Link className='footer-button' to='/'>
+                            <img src={BigLogo} className='footer-logo'/>
+                        </Link> 
+                    </Col>
+                    <Col md="4" className='footer-page-links'>
+                        <Container>
+                            <Row>
+                               <Link className='page-link' to='/'>HOME</Link> 
+                            </Row>
+                            <Row>
+                                <Link className='page-link' to='/shop'>SHOP</Link>
+                            </Row>
+                            <Row>
+                                <Link className='page-link' to='/about'>ABOUT</Link>
+                            </Row>
+                        </Container>
+                    </Col>
+
+                    <Col md="4">
+                        <Container className='socials-container'>
+                            <Row className='socials-row'>
+                                {LogoRowOne.map((logo) => (
+                                    <Col className='socials-column'>
+                                        <img className='footer-socials' src={logo}/>
+                                    </Col>
+                                ))}
+                            </Row>
+                            <Row className='socials-row'>
+                                {LogoRowTwo.map((logo) => (
+                                    <Col className='socials-column'>
+                                        <img className='footer-socials' src={logo}/>
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Container>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

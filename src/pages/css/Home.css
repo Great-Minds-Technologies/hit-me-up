@@ -4,7 +4,7 @@ hr {
 }
 
 .home-container {
-    height: 305vh;
+    height: fit-content;
 }
 
 .landing-hero-section {
@@ -29,10 +29,6 @@ hr {
     margin-bottom: 6vh;
 }
 
-/* .landing-button {
-    justify-self: center;
-} */
-
 .hero-divider {
     width: 45%;
     justify-self: center;
@@ -40,8 +36,8 @@ hr {
 
 .landing-cta-section {
     width: 100%;
-    height: 100vh;
-    text-align: left;
+    height: fit-content;
+    margin-bottom: 5vh;
 }
 
 .cta-image-container {
@@ -55,6 +51,10 @@ hr {
     margin-left: -12vw;
 }
 
+.cta-text-row {
+    text-align: left;
+}
+
 .cta-heading {
     color: #EE5D02;
     margin-bottom: 2.5vh;
@@ -66,7 +66,6 @@ hr {
 }
 
 .cta-button-container {
-    height: fit-content;
     width: 60%;
 }
 
@@ -96,4 +95,43 @@ hr {
     color: #EE5D02;
     margin-bottom: 5vh;
     margin-top: 1.5vh;
+}
+
+@media (max-width: 768px) {
+    .cta-rows-container {
+        margin-bottom: 10vh;
+    }
+
+    .cta-image-container {
+        height: 65vh;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 25px;
+    }
+
+    .cta-image {
+        margin-top: -10vw;
+        margin-left: -75vw;
+    }
+    
+    .cta-image-row {
+        margin-bottom: 3.5vh;
+    }
+
+    .cta-text {
+        margin-bottom: 3vh;
+    }
+
+    .products-divider {
+        float: left;
+    }
+
+    #featured-hitmen-title {
+        margin-bottom: 3vh;
+    }
+
+    #featured-products-title {
+        text-align: left;
+        margin-bottom: 3vh;
+    }
 }
