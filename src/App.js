@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import Shop from './pages/Shop';
 import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
+import Register from './pages/Register';
 
 function App() {
 
@@ -26,6 +27,8 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/log-in' element={<LogIn/>} />
             <Route path='/sign-up' element={<SignUp/>} />
+            <Route path='/test' element={<Product/>} />
+            <Route path='/register' element={<Register/>} />
           </Routes>
         <Footer/>
       </div>
