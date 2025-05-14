@@ -14,12 +14,14 @@ import Shop from './pages/Shop';
 import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
 import Register from './pages/Register';
+import BlobBackground from '../src/components/BlobBackground';
 
 function App() {
 
   return (
+     <div className="App">
     <Router>
-      <div className="App">
+     
         <Navbar />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -31,8 +33,14 @@ function App() {
             <Route path='/register' element={<Register/>} />
           </Routes>
         <Footer/>
-      </div>
+  
     </Router>
+
+  <BlobBackground/>
+
+        </div>
+
+    
     
   );
 }
