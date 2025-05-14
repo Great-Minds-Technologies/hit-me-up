@@ -1,5 +1,6 @@
 .cart-item {
   border-bottom: 1px solid #eee;
+  color: white;
 }
 
 .cart-product-info {
@@ -9,8 +10,8 @@
 
 
 .cart-product-info img{
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
     margin-right: 10px;
 }
 
