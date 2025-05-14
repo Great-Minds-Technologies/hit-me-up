@@ -8,7 +8,7 @@ import DummyImg from '../assets/images/Asset_58x.png'
 const dummyCartData = [
   {
     id: 1,
-    name: 'Ghost Repellent',
+    name: 'Baddie gun',
     price: 150,
     quantity: 2,
     image: {DummyImg},
