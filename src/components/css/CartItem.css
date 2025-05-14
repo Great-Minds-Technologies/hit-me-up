@@ -2,13 +2,13 @@
   border-bottom: 1px solid #eee;
 }
 
-.product-info {
+.cart-product-info {
   display: flex;
   align-items: center;
 }
 
 
-.product-info img{
+.cart-product-info img{
     height: 40px;
     width: 40px;
     margin-right: 10px;
