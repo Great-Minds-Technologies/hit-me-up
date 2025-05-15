@@ -4,6 +4,8 @@ import OutlineButton from '../components/OutlineButton';
 import CTABillboard from '../assets/images/call-to-action.jpg';
 import './css/Home.css'
 import { useState } from 'react';
+import Landing from '../components/Landing';
+
 
 function Home() {
     const [hitmen, setHitmen] = useState();
@@ -11,11 +13,10 @@ function Home() {
 
     return (
         <div className="home-container">
+           
             <div className='landing-hero-section'>
-                <div className='landing-button-container'>
-                    <OutlineButton className="landing-button" buttonLabel='MEET THE MAN' buttonLink='/log-in'/>
-                </div>
-                <hr className='hero-divider'/>
+                <Landing/>
+               
             </div>
 
             <Container className='landing-cta-section'>

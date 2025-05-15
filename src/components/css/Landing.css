@@ -1,0 +1,130 @@
+.landing-circle-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10vh 5vw;
+  gap: 0;
+  flex-wrap: wrap;
+  z-index: 0;
+}
+
+/* Common circle styles */
+.circle {
+  width: 30vw;
+  height: 30vw;
+  border: 1px solid #DDAC7D;
+  border-radius: 50%;
+  background-color: transparent;
+  z-index: 2;
+}
+
+/* Overlap adjustments */
+.circle-left {
+  margin-right: -7vw;
+}
+
+.circle-right {
+  margin-left: -7vw;
+}
+
+/* Center wrapper for middle circle + dotted outline */
+.circle-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Dotted outline around center circle */
+.dotted-outline {
+ position: absolute;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+ 
+  z-index: 1;
+
+  /* Customize the dot length and gap here */
+  border-style: dashed;
+  border-width: 2px;
+  border-color: #ddac7d9b;
+
+
+
+}
+
+.circle-overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* allows clicks to pass through if needed */
+}
+
+.landing-welcome {
+     position: absolute;
+  text-align: center;
+  color: white;
+  pointer-events: auto;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.landing-welcome h1{
+     color: #DDAC7D;
+}
+
+.landing-welcome h2{
+    color: #EE5D02;
+    font-weight: 800;
+    font-size: 400%;
+   
+
+}
+
+.landingPair h1{
+    white-space: nowrap;
+  word-break: keep-all;
+}
+.landingPair{
+    position: absolute;
+  text-align: left;
+  color: white;
+  max-width: 200px;
+  pointer-events: auto;
+}
+
+.landing-1{
+   position: absolute;
+ top: 45%;
+  left: 15%;
+
+}
+.landing-2 {
+    
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.landing-3 {
+  top: 45%;
+  right: 20%;
+}
+
+.landing-button-container{
+     position: absolute;
+  top: 68%; /* Adjust this value to move the button up/down */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4; /* Ensure it stays above the circles */
+}
+
