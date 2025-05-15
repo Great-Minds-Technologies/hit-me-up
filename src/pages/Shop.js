@@ -27,7 +27,7 @@ function Shop() {
                 </div>
             </div>
 
-            // adding the chart here so that i can check it outline
+            {/* // adding the chart here so that i can check it outline */}
             <Cart/>
         </div>
     )
