@@ -1,5 +1,5 @@
- import '../components/css/Landing.css'
- import OutlineButton from '../components/OutlineButton';
+ import './css/Landing.css'
+ import OutlineButton from './OutlineButton';
 
 function Landing(){
     return(

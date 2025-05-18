@@ -1,6 +1,6 @@
 // components/CartItem.js
 import React from 'react';
-import '../components/css/CartItem.css'; // Create this CSS file for styling
+import './css/CartItem.css'; // Create this CSS file for styling
 
 function CartItem({ item, onRemove }) {
   return (

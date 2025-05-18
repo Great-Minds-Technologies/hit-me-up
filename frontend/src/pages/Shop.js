@@ -1,8 +1,8 @@
 import { Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
-import OutlineButton from "../components/OutlineButton";
+import OutlineButton from "../components/OutlineButton.js";
 import "./css/Shop.css";
-import Cart from '../pages/Cart.js'
+import Cart from './Cart.js'
 
 function Shop() {
     return (

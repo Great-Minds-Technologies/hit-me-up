@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "../pages/css/LogIn.css";
+import "./css/LogIn.css";
 import RegisterForm from "../components/LoginRegisterForms";
 
 function Register() {

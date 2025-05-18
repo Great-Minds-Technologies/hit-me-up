@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import placeholder from '../assets/images/call-to-action.jpg';
 import { Col } from 'react-bootstrap';
-import '../pages/css/IndividualProduct.css';
+import './css/IndividualProduct.css';
 import OutlineButton from '../components/OutlineButton';
 import Rating from '@mui/material/Rating';
 import Test from '../components/RatingDisplay';

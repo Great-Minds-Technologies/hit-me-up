@@ -14,7 +14,7 @@ import Shop from './pages/Shop';
 import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
 import Register from './pages/Register';
-import BlobBackground from '../src/components/BlobBackground';
+import BlobBackground from './components/BlobBackground';
 
 function App() {
 
