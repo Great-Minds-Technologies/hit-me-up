@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./css/LoginForm.css";
+import axios from 'axios';
 
 const mockDatabase = [
   { email: "user1@example.com", password: "password123" },
@@ -23,7 +24,7 @@ function LoginRegisterForm({ isLogin = true }) {
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
       //Login
@@ -50,9 +51,22 @@ function LoginRegisterForm({ isLogin = true }) {
         return;
       } else {
         //Success
-        setError("Success!");
-        setRenderError(true);
-        setIsError(false);
+        try {
+          const response = await axios.post('http://localhost:5000/api/users/register', {
+                email,
+                password
+        });
+         console.log("User registered!"+response.data);
+         setError("Success!");
+         setRenderError(true);
+         setIsError(false);
+         
+        } catch (error) {
+          setError("Error Creating User");
+          setRenderError(true);
+          setIsError(false);
+          console.error("Error registering user:", error);
+        }
         //Do logic to store user
         console.log({ email, password });
       }
