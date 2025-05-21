@@ -28,19 +28,18 @@ function LoginRegisterForm({ isLogin = true }) {
     e.preventDefault();
     if (isLogin) {
       //Login
-      const match = mockDatabase.find(
-        (user) => user.email == email && user.password == password
-      );
-      if (match) {
-        setError("Login successful!");
+      try {
+        const res = await axios.post('http://localhost:5000/api/users/login', {
+          email,
+          password
+        });
+        setError(res.data.message);
         setRenderError(true);
         setIsError(false);
-        console.log("Login successful!");
-      } else {
-        setError("Invalid email or password");
+      } catch (error) {
+        setError("Error logging in");
         setRenderError(true);
         setIsError(true);
-        console.log("Login failed!");
       }
     } else {
       //Register
