@@ -1,11 +1,11 @@
 // components/CartItem.js
 import React from 'react';
-import '../components/css/CartItem.css'; // Create this CSS file for styling
+import './css/CartItem.css'; // Create this CSS file for styling
 
 function CartItem({ item, onRemove }) {
   return (
     <tr className="cart-item">
-      <td className="product-info">
+      <td className="cart-product-info">
         <img src={item.image} alt={item.name} className="product-image" />
         <div className="product-details">
           <span>{item.name}</span>

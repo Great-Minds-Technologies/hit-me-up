@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import CartItem from '../components/CartItem';
 import OutlineButton from '../components/OutlineButton';
-import '../pages/css/Cart.css';
+import './css/Cart.css';
 import DummyImg from '../assets/images/Asset_58x.png'
 
 const dummyCartData = [
