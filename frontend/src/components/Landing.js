@@ -1,9 +1,9 @@
- import '../components/css/Landing.css'
- import OutlineButton from '../components/OutlineButton';
+ import './css/Landing.css'
+ import OutlineButton from './OutlineButton';
 
 function Landing(){
     return(
-        <div>
+        <div className='landing-container'>
                 <section className="landing-circle-section">
             <div className="circle circle-left"></div>
 

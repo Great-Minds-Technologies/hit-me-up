@@ -1,5 +1,5 @@
 import React from 'react';
-import '../components/css/BlobBackground.css';
+import './css/BlobBackground.css';
 
 const BlobBackground = () => {
   return (
