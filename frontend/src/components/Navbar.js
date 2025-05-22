@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './css/Navbar.css';
 import SmallLogo from '../assets/images/logo_hit_me_up8x.png';
 import OutlineButton from './OutlineButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 function Navbar() {
@@ -21,6 +21,14 @@ function Navbar() {
         value: '/test',
         label:"Product"
     }]
+
+    useEffect (() => {
+        const _user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        if (_user) {
+            setUser(_user);
+        }
+    }, []);
 
     return (
         <div className="navbar-container">
