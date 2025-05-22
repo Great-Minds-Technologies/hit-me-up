@@ -3,10 +3,10 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.post('/register', async (req, res) => {
-   const { name, email, password } = req.body;
+   const { name, email, password ,weapon} = req.body;
    try {
         console.log(req.body);
-        const user = new User({ name, email, password});
+        const user = new User({ name, email, password,weapon});
         await user.save();
         res.status(201).json({user});
    } catch (err) {
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password ,weapon} = req.body;
 
     try {
         const user = await User.findOne({ email });

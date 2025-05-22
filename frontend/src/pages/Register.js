@@ -11,10 +11,13 @@ function Register() {
       <Row className="login-row">
         <Col md={12} className="login-col">
           <h1 className="login-title">Register</h1>
+        
           {/* Form */}
           <div style={{ width: "100%" }}>
             <RegisterForm isLogin={false} />
           </div>
+
+          
           <div className="login-text">
             <p>
               Already have an account?{" "}

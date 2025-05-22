@@ -16,7 +16,7 @@ function Shop() {
                     <Typeahead
                         className='form-input'
                         onChange={(selected) => {
-                        }}
+                        }} 
                         options={['','','']}
                         selected=''
                         placeholder='Card Name...'
