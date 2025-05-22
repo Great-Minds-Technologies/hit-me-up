@@ -1,5 +1,6 @@
  import './css/Landing.css'
  import OutlineButton from './OutlineButton';
+ import { Link } from 'react-router-dom';
 
 function Landing(){
     return(
@@ -38,7 +39,9 @@ function Landing(){
 
                  
                 <div className='landing-button-container'>
-                    <OutlineButton className="landing-button" buttonLabel='MEET THE MAN' buttonLink='/log-in'/>
+                  <Link to="/shop" className="button-component btn-primary">
+  Meet the man
+</Link>
                 </div>
                
                        
