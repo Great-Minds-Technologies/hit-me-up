@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import "./css/LoginForm.css";
 import axios from 'axios';
 import { use } from "react";
+import { useNavigate } from "react-router-dom";
 
 const mockDatabase = [
   { email: "user1@example.com", password: "password123" },
@@ -25,6 +26,7 @@ function LoginRegisterForm({ isLogin = true }) {
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
   const [loggedInUser, setLoggedUser] = useState(null);
+  const navigate = useNavigate();
 
 
   useEffect( () => {
@@ -44,6 +46,7 @@ function LoginRegisterForm({ isLogin = true }) {
         setRenderError(true);
         setIsError(false);
         setLoggedUser(res.data.user);
+        navigate("/");
       } catch (error) {
         setError("Error logging in");
         setRenderError(true);
