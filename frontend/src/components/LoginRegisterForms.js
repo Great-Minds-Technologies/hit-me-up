@@ -3,10 +3,11 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import "./css/LoginForm.css";
 import axios from 'axios';
+import { use } from "react";
 
 const mockDatabase = [
   { email: "user1@example.com", password: "password123" },
@@ -23,6 +24,12 @@ function LoginRegisterForm({ isLogin = true }) {
   const [renderError, setRenderError] = useState(false);
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
+  const [loggedInUser, setLoggedUser] = useState(null);
+
+
+  useEffect( () => {
+    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+  }, [loggedInUser])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,6 +43,7 @@ function LoginRegisterForm({ isLogin = true }) {
         setError(res.data.message);
         setRenderError(true);
         setIsError(false);
+        setLoggedUser(res.data.user);
       } catch (error) {
         setError("Error logging in");
         setRenderError(true);
