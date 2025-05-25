@@ -40,3 +40,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 //Start the server
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes)
+
+const productRoutes = require('./routes/productRoutes');
+app.use('/api/products', productRoutes)

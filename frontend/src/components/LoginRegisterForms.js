@@ -9,6 +9,7 @@ import "./css/LoginForm.css";
 import axios from 'axios';
 import { use } from "react";
 import { useNavigate } from "react-router-dom";
+import WeaponChoice from "../components/WeaponChoice";
 
 const mockDatabase = [
   { email: "user1@example.com", password: "password123" },
@@ -26,6 +27,7 @@ function LoginRegisterForm({ isLogin = true }) {
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
   const [loggedInUser, setLoggedUser] = useState(null);
+    const [selectedWeapon, setSelectedWeapon] = useState("");
   const navigate = useNavigate();
 
 
@@ -59,12 +61,28 @@ function LoginRegisterForm({ isLogin = true }) {
         setRenderError(true);
         setIsError(true);
         return;
+
+          } else if (!selectedWeapon) {
+          setError("Please select a weapon");
+          setRenderError(true);
+          setIsError(true);
+          return;
+      
       } else {
         //Success
+          console.log("Selected Weapon:", selectedWeapon);
+
+         console.log("Sending registration data:", {
+            email,
+            password,
+            weapon: selectedWeapon,
+          });
+
         try {
           const response = await axios.post('http://localhost:5000/api/users/register', {
                 email,
-                password
+                password,
+                 weapon: selectedWeapon,
         });
          console.log("User registered!"+response.data);
          setError("Success!");
@@ -110,11 +128,12 @@ function LoginRegisterForm({ isLogin = true }) {
   }
   function RenderCombination() {
     if (isLogin) {
-      return <h1 className="combination-title">INPUT COMBINATION</h1>;
+      return <h1 className="combination-title">CHOOSE YOUR WEAPON</h1>;
     } else {
-      return <h1 className="combination-title">CREATE COMBINATION</h1>;
+      return <h1 className="combination-title">CHOOSE YOUR WEAPON</h1>;
     }
   }
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -148,11 +167,17 @@ function LoginRegisterForm({ isLogin = true }) {
                 required={true}
               />
             </FloatingLabel>
+
+      
+
             {isLogin ? null : RenderConfirm()}
             {RenderCombination()}
             {/* If login screen, do not show the confirm password field  */}
             {renderError ? RenderErrorMessage(isError) : null}
             <Row>
+            
+          <WeaponChoice onWeaponSelect={setSelectedWeapon} />
+
               <Col md={{span: 6, offset: 3}} xs={12}>
                 <Button className="login-submit" type="submit">
                   Submit
