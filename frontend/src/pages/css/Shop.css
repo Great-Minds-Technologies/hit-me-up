@@ -1,3 +1,7 @@
+.shop-container {
+    z-index: 1;
+}
+
 .shop-submenu {
     width: 100%;
     height: 7.5vh;
@@ -18,11 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    flex-direction: column;
-   
 }
-
-
 
 .filter-button-holder {
     width: 45%;

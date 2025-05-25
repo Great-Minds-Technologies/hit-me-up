@@ -21,7 +21,7 @@ const mockProduct = {
 };
 
 
-function Product(product = null) {
+function Product(productData) {
     // if (!product) {
     //     console.log("Product not found");
     //     return null;

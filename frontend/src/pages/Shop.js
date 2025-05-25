@@ -1,21 +1,37 @@
-import { Container, Form } from "react-bootstrap";
+import { Container, Row, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import OutlineButton from "../components/OutlineButton.js";
 import "./css/Shop.css";
 import Cart from './Cart.js'
 import { useEffect, useState } from 'react';
+import ShopItemCard from "../components/ShopItemCard.js";
 
 function Shop() {
-    const [displayCount, setDisplayCount] = useState(20);
+    const [displayMaxCount, setDisplayMaxCount] = useState(20);
+    const [products, setProducts] = useState([]);
     let count = 0;
-    let shopRows;
+    let shopRows = [];
+    let _tempRow = [];
 
-    for (let _i = 0; _i <= Math.trunc(displayCount/4); _i++) {
-        shopRows.push()
+    for (let _i = 0; _i < products.length && _i < displayMaxCount; _i++) {
+        _tempRow.push(<ShopItemCard/>);
+        if (_i === 3 || _i + 1 === products.length || _i + 1 === displayMaxCount) {
+            shopRows.push(
+                <Row>
+                    {_tempRow}
+                </Row>
+            );
+            _tempRow = [];
+        }
+        
     }
 
+    useEffect(() => {
+        
+    },[]);
+
     return (
-        <div>
+        <div className="shop-container">
             <div className="shop-submenu">
                 <h2 className="shop-title">ALL PRODUCTS</h2>
                 <div className="filter-options">
@@ -37,6 +53,7 @@ function Shop() {
                 </div>
             </div>
             <Container>
+                {shopRows}
             </Container>
         </div>
     )

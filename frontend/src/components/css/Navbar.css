@@ -33,6 +33,18 @@
     color: #DDAC7D;
 }
 
+#nav-profile-pic {
+    width: 35%;
+    height: 100%;
+    border-radius: 100%;
+    border-color: white;
+    border-style: solid;
+}
+
+#nav-profile-pic:hover {
+    cursor: pointer;
+}
+
 #entry-button-link {
     height: 65%;
     width: 11%;
@@ -57,4 +69,7 @@
     height: 100%;
     width: 11%;
     padding-top: 1%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
