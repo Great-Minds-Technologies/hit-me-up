@@ -2,12 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   padding: 10vh 5vw;
   gap: 0;
   flex-wrap: wrap;
   z-index: 0;
-
 }
 
 /* Common circle styles */
@@ -57,7 +55,6 @@
 }
 
 .circle-overlay-content {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -136,7 +133,7 @@
 }
 
 /* Button base styling */
-.button-component {
+.landing-button-component {
   height: 100%;
   width: 40vw; /* or adjust based on desired size */
   border-radius: 100px;

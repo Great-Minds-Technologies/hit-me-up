@@ -39,7 +39,7 @@ function Landing(){
 
                  
                 <div className='landing-button-container'>
-                  <Link to="/shop" className="button-component btn-primary">
+                  <Link to="/shop" className="landing-button-component btn-primary">
   Meet the man
 </Link>
                 </div>

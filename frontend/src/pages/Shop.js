@@ -1,10 +1,19 @@
-import { Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import OutlineButton from "../components/OutlineButton.js";
 import "./css/Shop.css";
 import Cart from './Cart.js'
+import { useEffect, useState } from 'react';
 
 function Shop() {
+    const [displayCount, setDisplayCount] = useState(20);
+    let count = 0;
+    let shopRows;
+
+    for (let _i = 0; _i <= Math.trunc(displayCount/4); _i++) {
+        shopRows.push()
+    }
+
     return (
         <div>
             <div className="shop-submenu">
@@ -19,7 +28,7 @@ function Shop() {
                         }}
                         options={['','','']}
                         selected=''
-                        placeholder='Card Name...'
+                        placeholder='Search'
                         clearButton={true}
                         inputProps={{
                             className:'form-text'
@@ -27,9 +36,8 @@ function Shop() {
                     />
                 </div>
             </div>
-
-            {/* // adding the chart here so that i can check it outline */}
-            <Cart/>
+            <Container>
+            </Container>
         </div>
     )
 }

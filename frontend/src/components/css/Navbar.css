@@ -5,11 +5,9 @@
     padding-bottom: 2vh;
     display: flex;
     justify-content: space-evenly;
-     position: fixed; /* or sticky, depending on your design */
-  top: 0;
-  width: 100%;
-  z-index: 9999; /* Very high to override BlobBackground */
-  pointer-events: auto;
+    top: 0;
+    width: 100%;
+    pointer-events: auto;
 
 }
 

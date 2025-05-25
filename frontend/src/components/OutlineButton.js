@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const OutlineButton = ({buttonLabel, buttonLink}) => {
     return (
-        <div className="button-container">
-            <Link className="button-link" to={buttonLink}>
-                <Button className="button-component">
+        <div className="outline-button-container">
+            <Link className="outline-button-link" to={buttonLink}>
+                <Button className="outline-button-component">
                     {buttonLabel}
                 </Button>
             </Link>
