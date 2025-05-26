@@ -18,10 +18,7 @@ app.use(cors({
   credentials: true
 }));
 //Middleware to parse JSON bodies
-<<<<<<< Updated upstream
-app.use(express.json({limit:'1mb'}));
-=======
-app.use(express.json());
+app.use(express.json({limit: '1mb'}));
 
 // Use Express session
 app.use(session({
@@ -39,7 +36,6 @@ app.use(session({
 // app.use((req,res,next) => {
 //     console.log(req.session);
 // });
->>>>>>> Stashed changes
 
 //MONGODB connection 
 app.get('/', (req, res) => {
