@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-
+const session = require('express-session');
 
 //load enviornment variables from .env file
 dotenv.config();
@@ -18,7 +18,18 @@ app.use(cors({
   credentials: true
 }));
 //Middleware to parse JSON bodies
-app.use(express.json({limit:'1mb'}));
+app.use(express.json());
+
+// Use Express session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+        httpOnly: true,
+        maxAge: parseInt(process.env.MAX_COOKIE_AGE)
+    }
+}))
 
 //MONGODB connection 
 app.get('/', (req, res) => {
@@ -44,3 +55,10 @@ app.use('/api/users', userRoutes)
 
 const productRoutes = require('./routes/productRoutes');
 app.use('/api/products', productRoutes)
+
+const requireAuth = (req, res, next) => {
+    const {user} = req.session;
+    if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+}
