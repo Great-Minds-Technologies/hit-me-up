@@ -15,6 +15,7 @@ import SignUp from './pages/SignUp';
 import Footer from './components/Footer';
 import Register from './pages/Register';
 import BlobBackground from './components/BlobBackground';
+import Admin from './pages/Admin';
 
 function App() {
 

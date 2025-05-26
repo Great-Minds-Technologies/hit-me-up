@@ -22,6 +22,9 @@ function Navbar() {
     },{
         value: '/about',
         label:"ABOUT"
+    },{
+        value: '/test',
+        label:"Admin"
     }]
 
     useEffect (() => {

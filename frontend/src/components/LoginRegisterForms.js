@@ -44,6 +44,7 @@ function LoginRegisterForm({ isLogin = true }) {
         const res = await axios.post("http://localhost:5000/api/users/login", {
           email,
           password,
+          weapon: selectedWeapon
         });
         setError(res.data.message);
         setRenderError(true);

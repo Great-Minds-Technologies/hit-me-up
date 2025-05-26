@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+
 //load enviornment variables from .env file
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(cors({
   credentials: true
 }));
 //Middleware to parse JSON bodies
-app.use(express.json());
+app.use(express.json({limit:'1mb'}));
 
 //MONGODB connection 
 app.get('/', (req, res) => {
