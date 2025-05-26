@@ -39,9 +39,6 @@ app.use(session({
 // app.use((req,res,next) => {
 //     console.log(req.session);
 // });
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
 
 //MONGODB connection 

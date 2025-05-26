@@ -67,9 +67,6 @@ router.post('/login', async (req, res) => {
         req.session.authenticated = true;
         console.log(`User session [${req.session}]`);
         console.log(req.sessionID);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
         
         res.status(200).json({ message: 'Login successful', user });
