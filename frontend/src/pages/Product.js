@@ -45,7 +45,7 @@ function Product(product = null) {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/products/6830978f0264e638c8ef65ed`
+        `http://localhost:5000/api/products/682f08248ce65d663109421b`
       );
       console.log("data fetched!" + res.data);
       setImage(res.data.image);
