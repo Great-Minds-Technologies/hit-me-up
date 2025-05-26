@@ -8,6 +8,7 @@ import EmptyCart from '../assets/glyphs/EmptyCart.svg';
 import FullCart from '../assets/glyphs/FullCart.svg';
 import Cart from '../pages/Cart';
 import App from '../App';
+import axios from 'axios';
 
 function Navbar() {
     const [user, setUser] = useState(null);
@@ -34,6 +35,14 @@ function Navbar() {
         if (_user) setUser(_user);
         if (_cart) setCart(_cart);
     }, []);
+
+    async function CheckCredentials() {
+        try {
+            const _user = await axios.get('http://localhost:5000/api/users/');
+        } catch (error) {
+            
+        }
+    }
 
     function LogOut () {
         localStorage.removeItem("loggedInUser");

@@ -26,15 +26,11 @@ function LoginRegisterForm({ isLogin = true }) {
   const [renderError, setRenderError] = useState(false);
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
-  const [loggedInUser, setLoggedUser] = useState(null);
   const [selectedWeapon, setSelectedWeapon] = useState("");
-  const [selectedTarget, setSelectedTarget] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState("");
+  const [selectedTarget, setSelectedTarget] = useState("Partner");
+  const [selectedRoom, setSelectedRoom] = useState("Bedroom");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-  }, [loggedInUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +47,6 @@ function LoginRegisterForm({ isLogin = true }) {
         setError(res.data.message);
         setRenderError(true);
         setIsError(false);
-        setLoggedUser(res.data.user);
         navigate("/");
       } catch (error) {
         setError("Error logging in");
