@@ -43,7 +43,9 @@ function LoginRegisterForm({ isLogin = true }) {
           weapon: selectedWeapon,
           victim: selectedTarget,
           murderLocation: selectedRoom
-        });
+        }, {
+              withCredentials:true
+            });
         setError(res.data.message);
         setRenderError(true);
         setIsError(false);

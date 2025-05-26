@@ -18,6 +18,9 @@ app.use(cors({
   credentials: true
 }));
 //Middleware to parse JSON bodies
+<<<<<<< Updated upstream
+app.use(express.json({limit:'1mb'}));
+=======
 app.use(express.json());
 
 // Use Express session
@@ -26,14 +29,20 @@ app.use(session({
     saveUninitialized: true,
     resave: false,
     cookie: {
-        maxAge: parseInt(process.env.MAX_COOKIE_AGE)
+        httpOnly: true,
+        maxAge: parseInt(process.env.MAX_COOKIE_AGE),
+        sameSite: 'lax',
+        secure: false
     }
 }))
 
-app.use((req,res,next) => {
-    console.log(req.session);
-    next();
-});
+// app.use((req,res,next) => {
+//     console.log(req.session);
+// });
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
 //MONGODB connection 
 app.get('/', (req, res) => {
