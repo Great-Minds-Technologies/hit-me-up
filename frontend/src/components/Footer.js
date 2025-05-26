@@ -16,26 +16,18 @@ function Footer() {
         <div className='footer'>
             <Container className='footer-container'>
                 <Row>
-                    <Col md="4" className='logo-link-column'>
+                    <Col className='logo-link-column'>
                         <Link className='footer-button' to='/'>
                             <img src={BigLogo} className='footer-logo'/>
                         </Link> 
                     </Col>
                     <Col md="4" className='footer-page-links'>
-                        <Container>
-                            <Row>
-                               <Link className='page-link' to='/'>HOME</Link> 
-                            </Row>
-                            <Row>
-                                <Link className='page-link' to='/shop'>SHOP</Link>
-                            </Row>
-                            <Row>
-                                <Link className='page-link' to='/about'>ABOUT</Link>
-                            </Row>
-                        </Container>
-                    </Col>
+    <Link className='page-link' to='/'>HOME</Link> 
+    <Link className='page-link' to='/shop'>SHOP</Link>
+    <Link className='page-link' to='/about'>ABOUT</Link>
+</Col>
 
-                    <Col md="4">
+                    <Col >
                         <Container className='socials-container'>
                             <Row className='socials-row'>
                                 {LogoRowOne.map((logo) => (
