@@ -25,7 +25,7 @@ app.use(express.json());
 // Use Express session
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false,
     cookie: {
         httpOnly: true,

@@ -73,4 +73,15 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.get('/logged', async (req, res) => {
+    const user = req.session.cookie;
+    console.log(user);
+    if (!user) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    res.status(200).json({ message: 'Login successful', user });
+});
+
+
 module.exports = router;
