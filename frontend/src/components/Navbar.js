@@ -23,7 +23,7 @@ function Navbar() {
         value: '/about',
         label:"ABOUT"
     },{
-        value: '/test',
+        value: '/product',
         label:"Admin"
     }]
 

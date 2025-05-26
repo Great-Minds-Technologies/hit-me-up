@@ -44,7 +44,9 @@ function LoginRegisterForm({ isLogin = true }) {
         const res = await axios.post("http://localhost:5000/api/users/login", {
           email,
           password,
-          weapon: selectedWeapon
+          weapon: selectedWeapon,
+          victim: selectedTarget,
+          murderLocation: selectedRoom
         });
         setError(res.data.message);
         setRenderError(true);
@@ -68,7 +70,19 @@ function LoginRegisterForm({ isLogin = true }) {
         setRenderError(true);
         setIsError(true);
         return;
-      } else {
+      } 
+      else if (!selectedTarget) {
+        setError("Please select a target");
+        setRenderError(true);
+        setIsError(true);
+        return;
+      }
+      else if (!selectedRoom) {
+        setError("Please select a room");
+        setRenderError(true);
+        setIsError(true);
+        return;
+      }else {
         //Success
         console.log("Selected Weapon:", selectedWeapon);
 
@@ -76,6 +90,8 @@ function LoginRegisterForm({ isLogin = true }) {
           email,
           password,
           weapon: selectedWeapon,
+          victim: selectedTarget,
+          murderLocation: selectedRoom
         });
 
         try {
@@ -85,6 +101,8 @@ function LoginRegisterForm({ isLogin = true }) {
               email,
               password,
               weapon: selectedWeapon,
+              victim: selectedTarget,
+              murderLocation: selectedRoom
             }
           );
           console.log("User registered!" + response.data);
