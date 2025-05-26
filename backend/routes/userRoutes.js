@@ -61,16 +61,10 @@ router.post('/login', async (req, res) => {
         if (!await bcrypt.compare(murderLocation, user.murderLocation)) {
             return res.status(401).json({ error: 'Incorrect location' });
         }   
-<<<<<<< Updated upstream
-=======
         req.session.user = user;
         req.session.authenticated = true;
         console.log(`User session [${req.session}]`);
         console.log(req.sessionID);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         req.session.user = user;
         req.session.authenticated = true;
         console.log(`User session ${req.sessionID}`);
