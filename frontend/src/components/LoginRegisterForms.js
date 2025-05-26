@@ -48,7 +48,7 @@ function LoginRegisterForm({ isLogin = true }) {
         setRenderError(true);
         setIsError(false);
         navigate("/");
-        console.log(res);
+        window.location.reload();
       } catch (error) {
         setError("Error logging in");
         setRenderError(true);
