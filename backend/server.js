@@ -39,7 +39,6 @@ app.use(session({
 //     console.log(req.session);
 // });
 
-
 //MONGODB connection 
 app.get('/', (req, res) => {
     res.send('Hello World!');
