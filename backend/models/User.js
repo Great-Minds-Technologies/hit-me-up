@@ -10,8 +10,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-      weapon: { type: String,
-         required: true },
+      weapon: { 
+        type: String,
+        required: true }
 });
 
 module.exports = mongoose.model('Hitman_User', userSchema);

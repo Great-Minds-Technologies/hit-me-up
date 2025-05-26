@@ -5,7 +5,7 @@ import './css/RatingDisplay.css';
 
 function RatingDisplay({value}) {
   return (
-      <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly className='custom-rating'  sx={{
+      <Rating name="half-rating-read" value={value} precision={0.5} readOnly className='custom-rating'  sx={{
     color: '#EE5D02'
   }}/>
   );
