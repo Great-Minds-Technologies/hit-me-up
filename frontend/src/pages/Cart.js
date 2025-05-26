@@ -79,11 +79,7 @@ function Cart() {
             <span>R{grandTotal.toFixed(2)}</span>
           </div>
 
-          <OutlineButton 
-            buttonLabel="BUY"
-            buttonLink="/checkout"
-            className="buy-button"
-          />
+         <button>BUY</button>
         </div>
       </div>
     </div>
