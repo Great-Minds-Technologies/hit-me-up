@@ -26,10 +26,13 @@ app.use(session({
     saveUninitialized: true,
     resave: false,
     cookie: {
-        httpOnly: true,
         maxAge: parseInt(process.env.MAX_COOKIE_AGE)
     }
 }))
+
+app.use((req,res,next) => {
+    // console.log(req.session);
+});
 
 //MONGODB connection 
 app.get('/', (req, res) => {
