@@ -5,11 +5,9 @@
     padding-bottom: 2vh;
     display: flex;
     justify-content: space-evenly;
-     position: fixed; /* or sticky, depending on your design */
-  top: 0;
-  width: 100%;
-  z-index: 9999; /* Very high to override BlobBackground */
-  pointer-events: auto;
+    top: 0;
+    width: 100%;
+    pointer-events: auto;
 
 }
 
@@ -33,6 +31,18 @@
 .navbar-link {
     text-decoration: none;
     color: #DDAC7D;
+}
+
+#nav-profile-pic {
+    width: 35%;
+    height: 100%;
+    border-radius: 100%;
+    border-color: white;
+    border-style: solid;
+}
+
+#nav-profile-pic:hover {
+    cursor: pointer;
 }
 
 #entry-button-link {
@@ -59,4 +69,7 @@
     height: 100%;
     width: 11%;
     padding-top: 1%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

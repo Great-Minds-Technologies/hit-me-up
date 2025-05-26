@@ -10,7 +10,7 @@ function Register() {
     <Container style={{ minHeight: "100vh" }}>
       <Row className="login-row">
         <Col md={12} className="login-col">
-          <h1 className="login-title">Register</h1>
+          <h1 className="login-title">REGISTER</h1>
         
           {/* Form */}
           <div style={{ width: "100%" }}>

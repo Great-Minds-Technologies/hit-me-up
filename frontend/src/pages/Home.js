@@ -3,13 +3,23 @@ import FeaturedCard from '../components/FeaturedCard';
 import OutlineButton from '../components/OutlineButton';
 import CTABillboard from '../assets/images/call-to-action.jpg';
 import './css/Home.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Landing from '../components/Landing';
 
 
 function Home() {
     const [hitmen, setHitmen] = useState();
     const [products, setProducts] = useState();
+    const [user, setUser] = useState(null);
+    const [cart, setCart] = useState(null);
+
+    useEffect (() => {
+        const _user = JSON.parse(localStorage.getItem("loggedInUser"));
+        const _cart = JSON.parse(localStorage.getItem("userCart"));
+
+        if (_user) setUser(_user);
+        if (_cart) setCart(_cart);
+    }, []);
 
     return (
         <div className="home-container">
@@ -32,7 +42,7 @@ function Home() {
                         <h2 className='cta-heading'>ALREADY PART OF THE UNDERGROUND ELITE?</h2>
                         <p className='cta-text'>Already part of the underground elite? Sign in to access your hit history, view progress, or upgrade to Premium Discreet&trade;.</p>
                         <div className='cta-button-container'>
-                            <OutlineButton buttonLabel="Log In" buttonLink="/log-in"/>
+                            <OutlineButton buttonLabel={user? "Shop Now" : "Log In"} buttonLink={user ? "/shop":"/log-in"}/>
                         </div>
                     </Col>
                 </Row>

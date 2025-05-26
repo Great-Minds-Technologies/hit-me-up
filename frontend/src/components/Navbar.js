@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 import EmptyCart from '../assets/glyphs/EmptyCart.svg';
 import FullCart from '../assets/glyphs/FullCart.svg';
 import Cart from '../pages/Cart';
+import App from '../App';
 
 function Navbar() {
     const [user, setUser] = useState(null);
@@ -34,6 +35,11 @@ function Navbar() {
         if (_cart) setCart(_cart);
     }, []);
 
+    function LogOut () {
+        localStorage.removeItem("loggedInUser");
+        window.location.reload();
+    }
+
     return (
         <div className="navbar-container">
             <Link className='logo-link' to='/'>
@@ -58,6 +64,7 @@ function Navbar() {
             and cart if login information is present  */}
             {user ? 
             <div className='user-nav-buttons'>
+                <div id='nav-profile-pic' onClick={LogOut}></div>
                 <Link to='/cart'>
                     <img src={cart ? FullCart : EmptyCart} alt='Cart'/>
                 </Link>

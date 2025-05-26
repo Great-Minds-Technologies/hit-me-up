@@ -46,3 +46,23 @@
     font-weight: normal;
     margin-top: 2vh;
 }
+
+.form-select-bar {
+    color: #DDAC7D;
+    font-size: 1rem;
+    height: 6vh;
+    width: 100%;
+    border-radius: 100px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0.2vw;
+    border-color: #DDAC7D;
+    
+    margin-bottom: 2.5vh;
+}
+
+.form-select-title {
+    text-align: left;
+    color: #eac29e;
+    margin-bottom: 2vh;
+    margin-top: 2.5vh;
+}
