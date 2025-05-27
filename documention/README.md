@@ -4,19 +4,19 @@
 The Hit Me Up page is a bold, dark-humored contact and service page for the fictional Hitman site. It allows users to sign up or log in to their account in order to book a hitman or purchase weapons. The page is designed with an edgy, underground aesthetic to match the theme, while maintaining clean layout and functionality. It's the gateway for users to enter the darker side of business—discreet, direct, and deadly efficient.
 ## Features
 
-User Authentication
-Users can create an account or log in securely to access services.
+#### [User Authentication](https://drive.google.com/file/d/1GDPLpWfwR1_LXFcudjPadTlC7BAxB8dm/view?usp=sharing)
+Users can create an account or log in securely to access services. [Breakdown Video](https://drive.google.com/file/d/1GDPLpWfwR1_LXFcudjPadTlC7BAxB8dm/view?usp=sharing)
 
-Product Viewing
+#### Product Viewing
 Logged-in users can view available weapons or hitman services with details and pricing.
 
-Dark-Themed UI
+#### Dark-Themed UI
 A sleek, underground-inspired design that matches the hitman aesthetic.
 
-Modular Code Structure
+#### Modular Code Structure
 Built with reusable components for easy scalability and maintenance.
 
-Route Navigation
+#### Route Navigation
 Smooth navigation using react-router-dom for different sections of the site.
 
 

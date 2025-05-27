@@ -8,10 +8,12 @@ import EmptyCart from '../assets/glyphs/EmptyCart.svg';
 import FullCart from '../assets/glyphs/FullCart.svg';
 import Cart from '../pages/Cart';
 import App from '../App';
+import axios from 'axios';
 
 function Navbar() {
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const navHeading = [{
         value: '/',
@@ -23,7 +25,7 @@ function Navbar() {
         value: '/about',
         label:"ABOUT"
     },{
-        value: '/test',
+        value: '/product',
         label:"Admin"
     }]
 
@@ -35,10 +37,40 @@ function Navbar() {
         if (_cart) setCart(_cart);
     }, []);
 
-    function LogOut () {
-        localStorage.removeItem("loggedInUser");
-        window.location.reload();
+    async function CheckCredentials() {
+        try {
+            const _user = await axios.get('http://localhost:5000/api/users/logged');
+            if (_user) setUser(_user);
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    async function LogOut () {
+        try {
+            const _user = await axios.get('http://localhost:5000/api/users/logout');
+            setUser(_user);
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    
+
+    function LogOutInitiated () {
+        // setIsLoggingOut(true);
+    }
+
+    useEffect (() => {
+        CheckCredentials();
+    },[]);
+
+    useEffect (() => {
+        if (isLoggingOut) {
+            LogOut();
+        }
+    },[isLoggingOut]);
 
     return (
         <div className="navbar-container">
@@ -64,7 +96,7 @@ function Navbar() {
             and cart if login information is present  */}
             {user ? 
             <div className='user-nav-buttons'>
-                <div id='nav-profile-pic' onClick={LogOut}></div>
+                <div id='nav-profile-pic' onClick={LogOutInitiated}></div>
                 <Link to='/cart'>
                     <img src={cart ? FullCart : EmptyCart} alt='Cart'/>
                 </Link>

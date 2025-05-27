@@ -26,15 +26,11 @@ function LoginRegisterForm({ isLogin = true }) {
   const [renderError, setRenderError] = useState(false);
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
-  const [loggedInUser, setLoggedUser] = useState(null);
   const [selectedWeapon, setSelectedWeapon] = useState("");
-  const [selectedTarget, setSelectedTarget] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState("");
+  const [selectedTarget, setSelectedTarget] = useState("Partner");
+  const [selectedRoom, setSelectedRoom] = useState("Bedroom");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-  }, [loggedInUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,13 +40,17 @@ function LoginRegisterForm({ isLogin = true }) {
         const res = await axios.post("http://localhost:5000/api/users/login", {
           email,
           password,
-          weapon: selectedWeapon
-        });
+          weapon: selectedWeapon,
+          victim: selectedTarget,
+          murderLocation: selectedRoom
+        }, {
+              withCredentials:true
+            });
         setError(res.data.message);
         setRenderError(true);
         setIsError(false);
-        setLoggedUser(res.data.user);
         navigate("/");
+        window.location.reload();
       } catch (error) {
         setError("Error logging in");
         setRenderError(true);
@@ -68,7 +68,19 @@ function LoginRegisterForm({ isLogin = true }) {
         setRenderError(true);
         setIsError(true);
         return;
-      } else {
+      } 
+      else if (!selectedTarget) {
+        setError("Please select a target");
+        setRenderError(true);
+        setIsError(true);
+        return;
+      }
+      else if (!selectedRoom) {
+        setError("Please select a room");
+        setRenderError(true);
+        setIsError(true);
+        return;
+      }else {
         //Success
         console.log("Selected Weapon:", selectedWeapon);
 
@@ -76,6 +88,8 @@ function LoginRegisterForm({ isLogin = true }) {
           email,
           password,
           weapon: selectedWeapon,
+          victim: selectedTarget,
+          murderLocation: selectedRoom
         });
 
         try {
@@ -85,6 +99,8 @@ function LoginRegisterForm({ isLogin = true }) {
               email,
               password,
               weapon: selectedWeapon,
+              victim: selectedTarget,
+              murderLocation: selectedRoom
             }
           );
           console.log("User registered!" + response.data);
