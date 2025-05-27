@@ -17,6 +17,21 @@ const AdminView = () => {
   // TODO: Fetch product image
   // TODO: Add Save/Update logic
 
+
+  //button states flag- ou6t of stock
+  const [isFlagged, setIsFlagged] = useState(false);  // flag state
+const [outOfStock, setOutOfStock] = useState(false); // out of stock toggle state
+
+// Handler to toggle flagged state
+const handleFlag = () => {
+  setIsFlagged(prev => !prev);
+};
+
+// Handler to toggle outOfStock state
+const handleStockChange = (e) => {
+  setOutOfStock(e.target.checked);
+};
+
   return (
     <div className="admin-container">
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
@@ -72,6 +87,35 @@ const AdminView = () => {
                     className="admin-input"
                   />
                 </Form.Group>
+
+
+  <div className="admin-button-group">
+
+  {/* Flag Product button styled similarly but with red outline/danger */}
+  <Button
+    variant={isFlagged ? "danger" : "outline-danger"}
+    className="admin-flag-button"
+    onClick={handleFlag}
+  >
+    {isFlagged ? "Flagged" : "Flag Product"}
+  </Button>
+</div>
+
+
+<Form.Group controlId="formStock" className="admin-toggle-group">
+  <Form.Label className="admin-label">Out of Stock</Form.Label>
+  
+  {/* Toggle switch */}
+  <label className="admin-toggle-switch">
+    <input
+      type="checkbox"
+      checked={outOfStock}
+      onChange={handleStockChange}
+    />
+    <span className="admin-slider" />
+  </label>
+</Form.Group>
+
 
                 <Button variant="outline-warning" className="admin-submit-button">
                   Save Changes
