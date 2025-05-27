@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import AdminView from '../components/AdminView';
+import AddProductPage from '../components/AddProduct';
 
 function About() {
     const [users, setUsers] = useState([]);
@@ -31,6 +32,7 @@ function About() {
 
             {/* ADMINVIEEW */}
             <AdminView/>
+            <AddProductPage/>
         </div>
     );
 }
