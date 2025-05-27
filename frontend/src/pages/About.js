@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import AdminView from '../components/AdminView';
+
 function About() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
@@ -26,6 +28,9 @@ function About() {
                     <li key={user._id}>{user.name} ({user.email})</li>
                 ))}
             </ul>
+
+            {/* ADMINVIEEW */}
+            <AdminView/>
         </div>
     );
 }
