@@ -55,14 +55,14 @@ function Shop() {
           {products.slice(0, displayMaxCount).map((product, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3}>
               <Link to={`/product/${product._id}`}>
-                <button>
+               
                   <ShopItemCard
                     productImage={product.image}
                     productName={product.productName}
                     productPrice={product.price}
                     productRating={product.rating}
                   />
-                </button>
+              
               </Link>
             </Col>
           ))}

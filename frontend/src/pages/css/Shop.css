@@ -1,5 +1,11 @@
 .shop-container {
     z-index: 1;
+
+}
+
+.shop-container a {
+  text-decoration: none;
+ 
 }
 
 .shop-submenu {
@@ -47,6 +53,7 @@
 #shop-item-shop-container{
     padding-top: 2%;
     padding-bottom: 2%;
+   
 }
 
 
