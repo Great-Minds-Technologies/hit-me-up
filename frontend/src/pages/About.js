@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import AdminView from '../components/AdminView';
+import EditProduct from '../components/AdminView';
 import AddProductPage from '../components/AddProduct';
 
 function About() {
@@ -31,7 +31,8 @@ function About() {
             </ul>
 
             {/* ADMINVIEEW */}
-            <AdminView/>
+            {/* We need to rename adminview to edit product. */}
+            <EditProduct/>
             <AddProductPage/>
         </div>
     );
