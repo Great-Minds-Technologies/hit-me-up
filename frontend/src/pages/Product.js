@@ -9,6 +9,7 @@ import RatingDisplay from "../components/RatingDisplay";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 const mockProduct = {
   image: placeholder,
@@ -23,7 +24,7 @@ const mockProduct = {
   vendor: "Baby Girl Defense Systems LTD",
 };
 
-function Product(product = null) {
+function Product() {
   // if (!product) {
   //     console.log("Product not found");
   //     return null;
@@ -38,14 +39,15 @@ function Product(product = null) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
+  const { id } = useParams();
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [id]);
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/products/682f08248ce65d663109421b`
+        `http://localhost:5000/api/products/${id}`
       );
       console.log("data fetched!" + res.data);
       setImage(res.data.image);
