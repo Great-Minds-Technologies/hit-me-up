@@ -1,14 +1,12 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import placeholder from "../assets/images/call-to-action.jpg";
-import { Col } from "react-bootstrap";
 import "./css/IndividualProduct.css";
 import OutlineButton from "../components/OutlineButton";
-import Rating from "@mui/material/Rating";
 import RatingDisplay from "../components/RatingDisplay";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const mockProduct = {
   image: placeholder,
@@ -24,14 +22,8 @@ const mockProduct = {
 };
 
 function Product(product = null) {
-  // if (!product) {
-  //     console.log("Product not found");
-  //     return null;
-  // }
-  //Test ids
-  // 682f08248ce65d663109421b
-  // 682f0c54492bf60f7f8ccdce
-  // 6830978f0264e638c8ef65ed
+  const navigate = useNavigate();
+
   const [image, setImage] = useState("");
   const [productName, setProductName] = useState("");
   const [rating, setRating] = useState(0);
@@ -42,6 +34,7 @@ function Product(product = null) {
   useEffect(() => {
     fetchProducts();
   }, []);
+
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
@@ -58,8 +51,17 @@ function Product(product = null) {
       console.log("Error fetching product data:", error);
     }
   };
+
+  const handleEditClick = () => {
+    navigate("/about"); // Admin page
+  };
+
   return (
-    <div>
+    <div className="product-page-container">
+      <button className="edit-button" onClick={handleEditClick}>
+        Edit
+      </button>
+
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
           style={{
@@ -71,7 +73,6 @@ function Product(product = null) {
           className="indivProduct-row"
         >
           <Col md={6} lg={6} className="product-image-col">
-            {/* <img src={product.image} alt={product.name} className="product-image" /> */}
             <img src={image} alt="Product" className="product-image" />
           </Col>
           <Col md={{ span: 5, offset: 1 }}>

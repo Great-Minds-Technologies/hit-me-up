@@ -50,3 +50,26 @@
   align-items: center;
   margin-top: 5vh;
 }
+
+.product-page-container {
+  position: relative;
+}
+
+.edit-button {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  background-color: #ffa11e;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #ff5151;
+}
