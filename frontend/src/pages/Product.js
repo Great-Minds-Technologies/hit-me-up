@@ -9,7 +9,9 @@ import RatingDisplay from "../components/RatingDisplay";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; //lets us read the id
+import { useNavigate } from "react-router-dom";
+
 
 const mockProduct = {
   image: placeholder,
@@ -61,7 +63,12 @@ function Product() {
     }
   };
   return (
-    <div>
+    <div className="product-page-container">
+      <Link to={`/about/${id}`}>
+      <button className="edit-button" onClick={handleEditClick}>
+        Edit
+      </button>
+      </Link>
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
           style={{

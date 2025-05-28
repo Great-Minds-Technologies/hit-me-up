@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import EditProduct from '../components/AdminView';
 import AddProductPage from '../components/AddProduct';
 
+
 function About() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
+    const { id } = useParams();
 
     const displayData = async (event) => {
         event.preventDefault();
@@ -32,7 +35,7 @@ function About() {
 
             {/* ADMINVIEEW */}
             {/* We need to rename adminview to edit product. */}
-            <EditProduct/>
+            <EditProduct id={id}/>
             <AddProductPage/>
         </div>
     );
