@@ -23,11 +23,20 @@ const AdminView = () => {
 
   //button states flag- ou6t of stock
   const [isFlagged, setIsFlagged] = useState(false);  // flag state (What is flag state?)
-const [outOfStock, setOutOfStock] = useState(false); // out of stock toggle state
+  const [outOfStock, setOutOfStock] = useState(false); // out of stock toggle state
 
 // Handler to toggle flagged state
-const handleFlag = () => {
-  setIsFlagged(prev => !prev);
+const handleDelete = async(e) => {
+  console.log("deleting product...");
+  
+  try {
+    const res = await axios.delete("http://localhost:5000/api/products/delete/682f08248ce65d663109421b")
+    console.log("Product deleted"+ res.data);
+     
+  } catch (error) {
+    console.log("Error deleting product");
+    
+  }
 };
 
 // Handler to toggle outOfStock state
@@ -129,7 +138,7 @@ const handleUpdate = async(e) => {
   <Button
     variant={isFlagged ? "danger" : "outline-danger"}
     className="admin-flag-button"
-    onClick={handleFlag}
+    onClick={handleDelete}
   >
     {isFlagged ? "Flagged" : "Flag Product"}
   </Button>
