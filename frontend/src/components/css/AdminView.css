@@ -47,6 +47,16 @@
   color: white;
 }
 
+.admin-submit-button:hover,
+.admin-submit-button:focus {
+  outline: none;
+  border-color: #ee5d02;
+  background-color: #ee5d02;
+  color: white;
+  box-shadow: none;
+}
+
+
 .admin-product-row {
   display: flex;
   justify-content: center;
