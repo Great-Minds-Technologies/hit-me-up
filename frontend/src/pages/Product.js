@@ -6,8 +6,9 @@ import OutlineButton from "../components/OutlineButton";
 import RatingDisplay from "../components/RatingDisplay";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; //lets us read the id
 import { useNavigate } from "react-router-dom";
+
 
 const mockProduct = {
   image: placeholder,
@@ -59,10 +60,11 @@ function Product() {
 
   return (
     <div className="product-page-container">
-      <button className="edit-button" onClick={handleEditClick}>
+      <Link to={`/about/${id}`}>
+      <button className="edit-button">
         Edit
       </button>
-
+      </Link>
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
           style={{
