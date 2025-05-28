@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import placeholder from "../assets/images/call-to-action.jpg";
 import "./css/AdminView.css"; // New CSS for admin-specific styles
 import RatingDisplay from "../components/RatingDisplay";
+import axios from "axios";
 
 const AdminView = () => {
   const [productName, setProductName] = useState("Her little Glock 18");
@@ -12,6 +13,8 @@ const AdminView = () => {
     "The perfect self defense tool for the little lady in your life.\nSelect fire with semi-auto and fully automatic modes.\nBeautiful faceted jewels"
   );
   const [price, setPrice] = useState("149.99");
+  const [image, setImage] = useState("");
+  const [productID, setProductId] = useState("")
 
   // TODO: Link to MongoDB
   // TODO: Fetch product image
@@ -19,7 +22,7 @@ const AdminView = () => {
 
 
   //button states flag- ou6t of stock
-  const [isFlagged, setIsFlagged] = useState(false);  // flag state
+  const [isFlagged, setIsFlagged] = useState(false);  // flag state (What is flag state?)
 const [outOfStock, setOutOfStock] = useState(false); // out of stock toggle state
 
 // Handler to toggle flagged state
@@ -31,6 +34,37 @@ const handleFlag = () => {
 const handleStockChange = (e) => {
   setOutOfStock(e.target.checked);
 };
+const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result); // Base64 string
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+const handleUpdate = async(e) => {
+  e.preventDefault();
+  try {
+    const res = await axios.put("http://localhost:5000/api/products/update/6830978f0264e638c8ef65ed", {
+    productName,
+    description,
+    price,
+    rating,
+    vendor,
+  }); //Replace the id with this products id
+    console.log(res);
+    console.log("Successfully updated product");
+    
+    
+  } catch (error) {
+    
+  }
+}
 
   return (
     <div className="admin-container">
@@ -41,7 +75,7 @@ const handleStockChange = (e) => {
           </Col>
           <Col md={{ span: 5, offset: 1 }} className="admin-form-col">
             <div className="admin-form-wrapper">
-              <Form>
+              <Form onSubmit={handleUpdate}>
                 <Form.Group controlId="formProductName">
                   <Form.Label className="admin-label">Product Name</Form.Label>
                   <Form.Control
@@ -64,7 +98,7 @@ const handleStockChange = (e) => {
 
                 <Form.Group controlId="formRating">
                   <Form.Label className="admin-label">Rating</Form.Label>
-                  <RatingDisplay value={rating} />
+                  <RatingDisplay value={rating} onChange={(e, newRating) => setRating(newRating)} readOnly={false}/>
                 </Form.Group>
 
                 <Form.Group controlId="formDescription">
@@ -117,7 +151,7 @@ const handleStockChange = (e) => {
 </Form.Group>
 
 
-                <Button variant="outline-warning" className="admin-submit-button">
+                <Button variant="outline-warning" className="admin-submit-button" type="submit">
                   Save Changes
                 </Button>
               </Form>

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "../components/css/AddProduct.css";
 
@@ -7,15 +8,29 @@ const AddProductPage = () => {
   const [vendor, setVendor] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [rating, setRating] = useState("");
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("");
+  const [productId, setProductId] = useState([]);
+  const [productImage, setProductImage] = useState([]);
 
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImage(file);
-    setPreviewUrl(URL.createObjectURL(file));
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setImage(reader.result); // Base64 string
+      setPreviewUrl(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+
+    }
   };
 
   const triggerFileInput = () => {
@@ -24,10 +39,64 @@ const AddProductPage = () => {
     }
   };
 
-  const handlePostProduct = () => {
-    alert("Product posted!");
-    // Hook up to backend/database later
+  ///////////////
+  //////////////
+  ///////////////
+  //////////////
+  /////////////
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log({
+        productName,
+        description,
+        price: parseFloat(price),
+        image,
+        rating: parseFloat(rating),
+        vendor,
+        type,
+      });
+
+      const res = await axios.post(
+        "http://localhost:5000/api/products/register",
+        {
+          productName,
+          description,
+          price: parseFloat(price),
+          image,
+          rating: parseFloat(rating),
+          vendor,
+          type,
+        }
+      );
+      setMessage("Product added successfully!");
+      console.log(res.data);
+    } catch (error) {
+      console.error("Error creating product:", error);
+      setMessage("Failed to add product.");
+    }
   };
+
+  const fetchProducts = async () =>{
+    try {
+      console.log("Fetching product IDs...");
+      
+      const res = await axios.get("http://localhost:5000/api/products");
+      console.log("fetched!");
+      
+      const ids = res.data.map(product => product._id);
+      const dataImages = res.data.map(product => product.image);
+      setProductId(ids);
+      setProductImage(dataImages);
+    } catch (error) {
+      console.error("Error fetching product IDs:", error);
+    }
+  }
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="addproduct-container">
@@ -67,7 +136,7 @@ const AddProductPage = () => {
 
           <Col md={{ span: 5, offset: 1 }} className="addproduct-form-col">
             <div className="addproduct-form-wrapper">
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formProductName">
                   <Form.Label className="addproduct-label">Product Name</Form.Label>
                   <Form.Control
@@ -112,7 +181,7 @@ const AddProductPage = () => {
                 <Button
                   variant="outline-success"
                   className="addproduct-button mt-3"
-                  onClick={handlePostProduct}
+                  type="submit"
                 >
                   Post Product
                 </Button>

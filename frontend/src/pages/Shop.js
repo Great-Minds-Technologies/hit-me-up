@@ -5,6 +5,7 @@ import "./css/Shop.css";
 import Cart from './Cart.js'
 import { useEffect, useState } from 'react';
 import ShopItemCard from "../components/ShopItemCard.js";
+import axios from 'axios';
 
 function Shop() {
     const [displayMaxCount, setDisplayMaxCount] = useState(20);
@@ -14,7 +15,7 @@ function Shop() {
     let _tempRow = [];
 
     for (let _i = 0; _i < products.length && _i < displayMaxCount; _i++) {
-        _tempRow.push(<ShopItemCard/>);
+        _tempRow.push(<ShopItemCard productImage={products[_i].image} productName={products[_i].productName} productPrice={products[_i].price} productRating={products[_i].rating}/>);
         if (_i === 3 || _i + 1 === products.length || _i + 1 === displayMaxCount) {
             shopRows.push(
                 <Row>
@@ -27,8 +28,18 @@ function Shop() {
     }
 
     useEffect(() => {
-        
-    },[]);
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/products');
+                console.log('Fetched products:', response.data);
+
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+        fetchProducts();
+    }, []);
 
     return (
         <div className="shop-container">
