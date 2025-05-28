@@ -23,6 +23,18 @@ router.post('/register', async (req, res) => {
     }
 });
 
+
+//routes for logout 
+router.get('/logout', (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        sameSite: 'Lax', // Use 'None' + secure:true if working cross-origin with credentials
+        secure: false    // true if your site is HTTPS
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+});
+
+
 router.get('/', async (req, res) => {
     try {
         const users=await User.find();

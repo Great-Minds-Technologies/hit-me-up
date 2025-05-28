@@ -5,7 +5,7 @@ import CTABillboard from '../assets/images/call-to-action.jpg';
 import './css/Home.css'
 import { useEffect, useState } from 'react';
 import Landing from '../components/Landing';
-
+import ShopItemCard from '../components/ShopItemCard';
 
 function Home() {
     const [hitmen, setHitmen] = useState();
@@ -69,11 +69,14 @@ function Home() {
                     <h3 id='featured-products-title'>Featured Products</h3>
                     {products ? products.map((index) =>
                         <Col sm='3'>
-                            <FeaturedCard
-                                description={index.description}
-                                image={index.image}
-                                name={index.name}
-                                price={index.price}
+
+                            {/* this shop item is not working yet */}
+
+                            <ShopItemCard
+                                productImage={index.image}
+                                productName={index.name}
+                                productPrice={index.price}
+                                productRating={index.rating}
                             />
                         </Col>
                     ):
