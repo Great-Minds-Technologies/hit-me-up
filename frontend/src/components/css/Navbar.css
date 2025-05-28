@@ -73,3 +73,21 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.logout-button {
+  background-color: transparent;
+  
+  color: #DDAC7D;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  border-color: #DDAC7D;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.logout-button:hover {
+  color: #ff7b00; /* Feel free to adjust this to match your theme */
+ border-color: rgb(255, 120, 30);
+}

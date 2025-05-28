@@ -1,25 +1,20 @@
-import { Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import "./css/ShopItemCard.css";
-import { Link } from "react-router-dom";
+import RatingDisplay from "./RatingDisplay";
 
-const ShopItemCard = ({productImage,productName, productPrice, productRating}) => {
+const ShopItemCard = ({ productImage, productName, productPrice, productRating }) => {
     return (
-        <Col md="3">
-            <Link to="/product">
-                <div className="shop-card-container">
-                    <img/>
-                    <div className="shop-card-information">
-                        <img src={productImage ? productImage : "https://via.placeholder.com/150"} alt="Product" />
-                        <p>{productName ? productName : "Product Name"}</p>
-                        <p>R {productPrice ? productPrice : "00.00"}</p>
-                        <div>
-                            <p>{productRating ? productRating : "0.0"}</p>
-                        </div>
-                    </div>
-                </div>
-            </Link>
-        </Col>
+        <Card className="shop-item-card">
+            <Card.Img variant="top" src={productImage} className="shop-item-image" />
+            <Card.Body className="shop-item-body">
+                <Card.Title className="shop-item-title">{productName}</Card.Title>
+                <Card.Text className="shop-item-text">
+                    <RatingDisplay value={productRating} readOnly={true} />
+                </Card.Text>
+                <Card.Text className="shop-item-price">R {productPrice}</Card.Text>
+            </Card.Body>
+        </Card>
     );
-}
+};
 
 export default ShopItemCard;

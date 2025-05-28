@@ -9,11 +9,17 @@ import FullCart from '../assets/glyphs/FullCart.svg';
 import Cart from '../pages/Cart';
 import App from '../App';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function Navbar() {
+    
+const navigate = useNavigate();
+
+
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
-    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const navHeading = [{
         value: '/',
@@ -29,7 +35,7 @@ function Navbar() {
         label:"Admin"
     }]
 
-    useEffect (() => {
+    useEffect(() => {
         const _user = JSON.parse(localStorage.getItem("loggedInUser"));
         const _cart = JSON.parse(localStorage.getItem("userCart"));
 
@@ -46,31 +52,29 @@ function Navbar() {
         }
     }
 
-    async function LogOut () {
-        try {
-            const _user = await axios.get('http://localhost:5000/api/users/logout');
-            setUser(_user);
-            window.location.reload();
-        } catch (error) {
-            console.log(error);
-        }
+    ///logout function
+       async function LogOut() {
+    try {
+        await axios.get('http://localhost:5000/api/users/logout', {
+            withCredentials: true,
+        });
+
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("userCart");
+
+        setUser(null);
+        setCart(null);
+
+        // ✅ Go to home page
+        navigate('/');
+    } catch (error) {
+        console.error("Logout failed", error);
     }
+}
 
-    
-
-    function LogOutInitiated () {
-        // setIsLoggingOut(true);
-    }
-
-    useEffect (() => {
+    useEffect(() => {
         CheckCredentials();
-    },[]);
-
-    useEffect (() => {
-        if (isLoggingOut) {
-            LogOut();
-        }
-    },[isLoggingOut]);
+    }, []);
 
     return (
         <div className="navbar-container">
@@ -81,6 +85,7 @@ function Navbar() {
             <div className="center-buttons">
                 {navHeading.map((_heading) => (
                     <NavLink 
+                        key={_heading.value}
                         to={_heading.value}
                         className="navbar-link"
                         style={({ isActive }) => ({
@@ -92,11 +97,11 @@ function Navbar() {
                 ))}
             </div>
 
-            {/* JSX ternery operater to change button to profile image 
-            and cart if login information is present  */}
             {user ? 
             <div className='user-nav-buttons'>
-                <div id='nav-profile-pic' onClick={LogOutInitiated}></div>
+                <button className='logout-button' onClick={LogOut}>
+                    Logout
+                </button>
                 <Link to='/cart'>
                     <img src={cart ? FullCart : EmptyCart} alt='Cart'/>
                 </Link>
