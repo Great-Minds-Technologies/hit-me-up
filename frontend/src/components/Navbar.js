@@ -25,7 +25,7 @@ function Navbar() {
         value: '/about',
         label:"ABOUT"
     },{
-        value: '/product',
+        value: '/admin',
         label:"Admin"
     }]
 

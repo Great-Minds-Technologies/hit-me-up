@@ -33,6 +33,7 @@ function App() {
             <Route path='/product' element={<Product/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/cart' element={<Cart/>}/>
+            <Route path='/admin' element={<Admin/>}/>
           </Routes>
         <Footer/>
   
