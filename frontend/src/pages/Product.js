@@ -65,7 +65,7 @@ function Product() {
   return (
     <div className="product-page-container">
       <Link to={`/about/${id}`}>
-      <button className="edit-button" onClick={handleEditClick}>
+      <button className="edit-button">
         Edit
       </button>
       </Link>
