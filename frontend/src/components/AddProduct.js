@@ -16,6 +16,9 @@ const AddProductPage = () => {
   const [productId, setProductId] = useState([]);
   const [productImage, setProductImage] = useState([]);
 
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
@@ -29,7 +32,6 @@ const AddProductPage = () => {
 
     if (file) {
       reader.readAsDataURL(file);
-
     }
   };
 
@@ -39,17 +41,10 @@ const AddProductPage = () => {
     }
   };
 
-  ///////////////
-  //////////////
-  ///////////////
-  //////////////
-  /////////////
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log({
+      const res = await axios.post("http://localhost:5000/api/products/register", {
         productName,
         description,
         price: parseFloat(price),
@@ -59,33 +54,29 @@ const AddProductPage = () => {
         type,
       });
 
-      const res = await axios.post(
-        "http://localhost:5000/api/products/register",
-        {
-          productName,
-          description,
-          price: parseFloat(price),
-          image,
-          rating: parseFloat(rating),
-          vendor,
-          type,
-        }
-      );
       setMessage("Product added successfully!");
-      console.log(res.data);
+      setShowSuccess(true);
+      setShowError(false);
+
+      setTimeout(() => {
+        window.location.href = "/shop"; // Redirect
+      }, 2000);
+
     } catch (error) {
       console.error("Error creating product:", error);
       setMessage("Failed to add product.");
+      setShowSuccess(false);
+      setShowError(true);
+
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
     }
   };
 
-  const fetchProducts = async () =>{
+  const fetchProducts = async () => {
     try {
-      console.log("Fetching product IDs...");
-      
       const res = await axios.get("http://localhost:5000/api/products");
-      console.log("fetched!");
-      
       const ids = res.data.map(product => product._id);
       const dataImages = res.data.map(product => product.image);
       setProductId(ids);
@@ -93,13 +84,27 @@ const AddProductPage = () => {
     } catch (error) {
       console.error("Error fetching product IDs:", error);
     }
-  }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   return (
     <div className="addproduct-container">
+      {/* Success and Error Popups */}
+      {showSuccess && (
+        <div className="admin-success-popup">
+          Product added successfully!
+        </div>
+      )}
+
+      {showError && (
+        <div className="admin-success-popup error">
+          Failed to add product. Please try again.
+        </div>
+      )}
+
       <Container className="mt-5 mb-5">
         <Row className="addproduct-row">
           <Col md={6} className="addproduct-image-col">
