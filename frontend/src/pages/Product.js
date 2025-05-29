@@ -60,7 +60,7 @@ function Product() {
 
   return (
     <div className="product-page-container">
-      <Link to={`/about/${id}`}>
+      <Link to={`/adminEdit/${id}`}>
       <button className="edit-button">
         Edit
       </button>
