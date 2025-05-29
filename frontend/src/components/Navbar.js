@@ -55,9 +55,7 @@ const navigate = useNavigate();
     ///logout function
     async function LogOut() {
         try {
-            await axios.get('http://localhost:5000/api/users/logout', {
-                withCredentials: true,
-            });
+            await axios.get('http://localhost:5000/api/users/logout');
         
             localStorage.removeItem("loggedInUser");
             localStorage.removeItem("userCart");

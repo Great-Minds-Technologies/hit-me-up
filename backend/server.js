@@ -62,6 +62,9 @@ app.use('/api/users', userRoutes)
 const productRoutes = require('./routes/productRoutes');
 app.use('/api/products', productRoutes)
 
+const reviewRoutes = require('./routes/reviewRoutes');
+app.use('/api/reviews', reviewRoutes)
+
 const requireAuth = (req, res, next) => {
     const {user} = req.session;
     if (!user) {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt'); 
+const session = require('express-session');
 
 router.post('/register', async (req, res) => {
    const {email, password ,weapon, victim, murderLocation} = req.body;
@@ -75,8 +76,7 @@ router.post('/login', async (req, res) => {
         }   
         req.session.user = user;
         req.session.authenticated = true;
-        console.log(`User session [${req.session}]`);
-        console.log(req.sessionID);
+        console.log(req.session.user);
         
         res.status(200).json({ message: 'Login successful', user });
 
@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/logged', async (req, res) => {
-    const user = req.session.cookie;
+    const user = req.session.user;
     console.log(user);
     if (!user) {
         return res.status(401).json({ message: 'Unauthorized' });
