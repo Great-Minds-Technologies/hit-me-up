@@ -18,7 +18,7 @@ import BlobBackground from './components/BlobBackground';
 import Admin from './pages/Admin';
 import AddProductPage from './pages/AddProductPage';
 import AdminEditPage from './pages/AdminEditPage';
-
+import Wishlist from './pages/Wishlist';
 
 function App() {
 
