@@ -31,7 +31,7 @@ const navigate = useNavigate();
         value: '/about',
         label:"ABOUT"
     },{
-        value: '/product',
+        value: '/admin',
         label:"Admin"
     }]
 
@@ -53,24 +53,22 @@ const navigate = useNavigate();
     }
 
     ///logout function
-       async function LogOut() {
-    try {
-        await axios.get('http://localhost:5000/api/users/logout', {
-            withCredentials: true,
-        });
-
-        localStorage.removeItem("loggedInUser");
-        localStorage.removeItem("userCart");
-
-        setUser(null);
-        setCart(null);
-
-        // ✅ Go to home page
-        navigate('/');
-    } catch (error) {
-        console.error("Logout failed", error);
+    async function LogOut() {
+        try {
+            await axios.get('http://localhost:5000/api/users/logout');
+        
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("userCart");
+        
+            setUser(null);
+            setCart(null);
+        
+            // ✅ Go to home page
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
     }
-}
 
     useEffect(() => {
         CheckCredentials();
