@@ -177,6 +177,15 @@ const AdminView = ({ id }) => {
                   </Button>
                 </div>
 
+                 <Button
+    variant="danger"
+    className="admin-delete-button"
+    onClick={handleDelete}
+    style={{ marginLeft: "10px" }}
+  >
+    Delete Product
+  </Button>
+
                 <Form.Group controlId="formStock" className="admin-toggle-group">
                   <Form.Label className="admin-label">Out of Stock</Form.Label>
                   <label className="admin-toggle-switch">
