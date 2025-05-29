@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 import Register from './pages/Register';
 import BlobBackground from './components/BlobBackground';
 import Admin from './pages/Admin';
+import Wishlist from './pages/Wishlist';
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
             <Route path='/product/:id' element={<Product/>} />
             <Route path='/register' element={<Register/>} />
             <Route path='/cart' element={<Cart/>}/>
-            <Route path='/admin' element={<Admin/>}/>
+            <Route path='/admin' element={<Wishlist/>}/>
           </Routes>
         <Footer/>
   

@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
 });
 router.get('/:email', async (req, res) => {
     try {
-        const users=await User.findOne(req.params.email);
+        const users=await User.findOne({email: req.params.email});
         console.log(users);
         
         res.status(200).json(users);
@@ -120,7 +120,13 @@ router.put('/wishlist/:email', async(req, res) => {
             await user.save();
             res.status(200).json({message: "Successfully added to wishlist"});
             console.log(user.wishlist);
+        }
+        else{
+            console.log("attempting to remove");
+            const index = user.wishlist.findIndex(id => id === productID);
             
+            user.wishlist.splice(index, 1);
+            await user.save();
         }
     } catch (error) {
         console.log("Error Adding to wishlist"+error);
