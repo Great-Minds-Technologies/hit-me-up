@@ -23,17 +23,27 @@ function Wishlist() {
 useEffect(() => {
   if (!email) return;
 
-  console.log("Email ready:", email); // ✅ should log correct email
+  console.log("Email found:", email);
 
   const fetchProducts = async () => {
     try {
-      const userRes = await axios.get(`http://localhost:5000/api/users/${encodeURIComponent(email)}`);
+      const userRes = await axios.get(`http://localhost:5000/api/users/${email}`);
       const productIDs = userRes.data.wishlist;
-      const productPromises = productIDs.map(id =>
-        axios.get(`http://localhost:5000/api/products/${id}`)
-      );
-      const productResponses = await Promise.all(productPromises);
-      setProducts(productResponses.map(res => res.data));
+      const productPromises = productIDs.map(async (id) => {
+        try {
+          const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+          return res.data;
+        } catch (err) {
+          //run logic to remove this from the users wishlist
+          console.log(`Product not found: ${id}`, err.response?.status);
+          return null;
+        }
+      });
+      let productResponses = await Promise.all(productPromises);
+      productResponses = productResponses.filter(data => data != null);
+      console.log(productResponses);
+      
+      setProducts(productResponses.map(res => res));
     } catch (error) {
       console.error("Fetch error:", error);
     }

@@ -118,6 +118,8 @@ router.put('/wishlist/:email', async(req, res) => {
         if (!user.wishlist.includes(productID)) {
             user.wishlist.push(productID);
             await user.save();
+            console.log("Successfully added to wishlist");
+            
             res.status(200).json({message: "Successfully added to wishlist"});
             console.log(user.wishlist);
         }
