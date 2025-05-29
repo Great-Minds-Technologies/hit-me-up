@@ -36,10 +36,10 @@ const navigate = useNavigate();
     }]
 
     useEffect(() => {
-        const _user = JSON.parse(localStorage.getItem("loggedInUser"));
+        const _userEmail = JSON.parse(localStorage.getItem("email"));
         const _cart = JSON.parse(localStorage.getItem("userCart"));
 
-        if (_user) setUser(_user);
+        if (_userEmail) setUser(_userEmail);
         if (_cart) setCart(_cart);
     }, []);
 
@@ -57,7 +57,7 @@ const navigate = useNavigate();
         try {
             await axios.get('http://localhost:5000/api/users/logout');
         
-            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("email");
             localStorage.removeItem("userCart");
         
             setUser(null);

@@ -49,6 +49,9 @@ function LoginRegisterForm({ isLogin = true }) {
         setError(res.data.message);
         setRenderError(true);
         setIsError(false);
+        localStorage.setItem("email", JSON.stringify(email));
+        console.log(localStorage.getItem("email"));
+        
         navigate("/");
         window.location.reload();
       } catch (error) {
