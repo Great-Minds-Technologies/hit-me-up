@@ -29,6 +29,11 @@ function Shop() {
     <div className="shop-container">
       <div className="shop-submenu">
         <h2 className="shop-title">ALL PRODUCTS</h2>
+
+            <Link to="/addProduct" className="add-product-button">
+      + Add Product
+    </Link>
+
         <div className="filter-options">
           <div className="filter-button-holder">
             <OutlineButton
