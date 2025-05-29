@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import placeholder from "../assets/images/call-to-action.jpg";
 import "./css/AdminView.css"; // New CSS for admin-specific styles
 import RatingDisplay from "../components/RatingDisplay";
 import axios from "axios";
 
-const AdminView = () => {
+const AdminView = ({id}) => {
   const [productName, setProductName] = useState("Her little Glock 18");
   const [vendor, setVendor] = useState("Baby Girl Defense Systems LTD");
   const [rating, setRating] = useState(3.5);
@@ -30,7 +30,7 @@ const handleDelete = async(e) => {
   console.log("deleting product...");
   
   try {
-    const res = await axios.delete("http://localhost:5000/api/products/delete/682f08248ce65d663109421b")
+    const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`)
     console.log("Product deleted"+ res.data);
      
   } catch (error) {
@@ -59,7 +59,7 @@ const handleImageUpload = (e) => {
 const handleUpdate = async(e) => {
   e.preventDefault();
   try {
-    const res = await axios.put("http://localhost:5000/api/products/update/6830978f0264e638c8ef65ed", {
+    const res = await axios.put(`http://localhost:5000/api/products/update/${id}`, {
     productName,
     description,
     price,
@@ -74,13 +74,40 @@ const handleUpdate = async(e) => {
     
   }
 }
+  useEffect(() => {
+    // Example: fetch product details from API and set state
+    const fetchProduct = async () => {
+      console.log(id);
+      try {
+        // Replace with actual product ID or prop
+        
+        const productId = id;
+        const res = await axios.get(`http://localhost:5000/api/products/${productId}`);
+        const data = res.data;
+
+        setProductName(data.productName || "");
+        setVendor(data.vendor || "");
+        setRating(data.rating || 0);
+        setDescription(data.description || "");
+        setPrice(data.price || "");
+        setImage(data.image || "");
+        setProductId(data._id || "");
+        setOutOfStock(data.outOfStock || false);
+        setIsFlagged(data.isFlagged || false);
+      } catch (error) {
+        console.log("Error fetching product details to edit", error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
 
   return (
     <div className="admin-container">
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row className="admin-product-row">
           <Col md={6} lg={6} className="admin-image-col">
-            <img src={placeholder} alt="Product" className="admin-image" />
+            <img src={image} alt="Product" className="admin-image" />
           </Col>
           <Col md={{ span: 5, offset: 1 }} className="admin-form-col">
             <div className="admin-form-wrapper">
