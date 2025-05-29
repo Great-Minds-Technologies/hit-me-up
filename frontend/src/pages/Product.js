@@ -75,8 +75,10 @@ function Product() {
 
   return (
     <div className="product-page-container">
-      <Link to={`/about/${id}`}>
-        <button className="edit-button">Edit</button>
+      <Link to={`/adminEdit/${id}`}>
+      <button className="edit-button">
+        Edit
+      </button>
       </Link>
 
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>

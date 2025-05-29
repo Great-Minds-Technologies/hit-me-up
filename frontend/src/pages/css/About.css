@@ -1,0 +1,190 @@
+.about-page {
+  padding: 40px;
+  color: #eee;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+    align-items: center;
+}
+
+.about-intro {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-intro h1 {
+  color: #F3B86D;
+  font-size: 7rem;
+}
+
+.about-intro-content {
+  display: flex;
+  flex-direction: row; /* ensures row */
+  justify-content: space-between; /* space between children */
+  gap: 40px; /* space between flex items */
+  width: 80%; /* widen it a bit */
+  max-width: 900px; /* optional max-width */
+  flex-wrap: nowrap; /* prevent wrapping to column */
+  margin-top: 30px;
+}
+
+
+.about-description {
+  width: 400px;
+  min-height: 550px;
+  background-color: #f3b96d9d;
+  padding: 20px;
+  border-radius: 12px;
+  letter-spacing: 0.05em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.about-team h2{
+    color: #F3B86D;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.about-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.about-btn {
+  margin-top: auto;
+  padding: 12px 20px;
+  background-color: #f1a94c;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: #EE5D02;
+  transform: scale(1.05);
+}
+
+.about-how {
+  margin-top: 60px;
+  background-color: #68626290;
+  padding: 40px;
+  border-radius: 12px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-how-heading {
+  font-size: 3rem;
+  color: #F3B86D;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.about-how ol {
+  list-style-position: inside;
+  padding-left: 0;
+  margin-left: 20px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.about-how li {
+  margin-bottom: 12px;
+  padding-left: 10px;
+  text-indent: -10px; /* Keeps the number out and text aligned */
+}
+
+.about-how p {
+  font-size: 0.95rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.about-team {
+  margin-top: 60px;
+  width: 80%;
+}
+
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+}
+
+.team-member {
+  background-color: #ff801f91;
+  padding: 20px;
+  border-radius: 12px;
+  width: 30%;
+  text-align: center;
+  height: 600px
+}
+
+.team-member img {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.team-text{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.about-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 40px;
+}
+
+.about-tech {
+  margin-top: 60px;
+  background-color: #68626290; /* same translucent grey */
+  padding: 40px;
+  border-radius: 12px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-tech h2 {
+  font-size: 3rem;
+  color: #F3B86D;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.about-tech ul {
+  list-style-position: inside;
+  padding-left: 0;
+  margin-left: 20px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: left;
+  color: #eee; /* so text stands out on the grey background */
+}
+
+.about-tech li {
+  margin-bottom: 12px;
+  padding-left: 10px;
+  text-indent: -10px; /* same style as .about-how li */
+}
