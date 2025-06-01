@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import placeholder from "../assets/images/call-to-action.jpg";
-import "./css/AdminView.css"; // New CSS for admin-specific styles
+import "./css/AdminView.css";
 import RatingDisplay from "../components/RatingDisplay";
 import axios from "axios";
 
-const AdminView = ({id}) => {
+const AdminView = ({ id }) => {
+  const navigate = useNavigate();
+
   const [productName, setProductName] = useState("Her little Glock 18");
   const [vendor, setVendor] = useState("Baby Girl Defense Systems LTD");
   const [rating, setRating] = useState(3.5);
@@ -14,41 +17,32 @@ const AdminView = ({id}) => {
   );
   const [price, setPrice] = useState("149.99");
   const [image, setImage] = useState("");
-  const [productID, setProductId] = useState("")
+  const [productID, setProductId] = useState("");
 
-  // TODO: Link to MongoDB
-  // TODO: Fetch product image
-  // TODO: Add Save/Update logic
+  const [isFlagged, setIsFlagged] = useState(false);
+  const [outOfStock, setOutOfStock] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false); // New: success message state
 
+  const handleDelete = async (e) => {
+    console.log("deleting product...");
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`);
+      console.log("Product deleted" + res.data);
+    } catch (error) {
+      console.log("Error deleting product");
+    }
+  };
 
-  //button states flag- ou6t of stock
-  const [isFlagged, setIsFlagged] = useState(false);  // flag state (What is flag state?)
-  const [outOfStock, setOutOfStock] = useState(false); // out of stock toggle state
+  const handleStockChange = (e) => {
+    setOutOfStock(e.target.checked);
+  };
 
-// Handler to toggle flagged state
-const handleDelete = async(e) => {
-  console.log("deleting product...");
-  
-  try {
-    const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`)
-    console.log("Product deleted"+ res.data);
-     
-  } catch (error) {
-    console.log("Error deleting product");
-    
-  }
-};
-
-// Handler to toggle outOfStock state
-const handleStockChange = (e) => {
-  setOutOfStock(e.target.checked);
-};
-const handleImageUpload = (e) => {
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setImage(reader.result); // Base64 string
+      setImage(reader.result);
     };
 
     if (file) {
@@ -56,31 +50,34 @@ const handleImageUpload = (e) => {
     }
   };
 
-const handleUpdate = async(e) => {
-  e.preventDefault();
-  try {
-    const res = await axios.put(`http://localhost:5000/api/products/update/${id}`, {
-    productName,
-    description,
-    price,
-    rating,
-    vendor,
-  }); //Replace the id with this products id
-    console.log(res);
-    console.log("Successfully updated product");
-    
-    
-  } catch (error) {
-    
-  }
-}
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(`http://localhost:5000/api/products/update/${id}`, {
+        productName,
+        description,
+        price,
+        rating,
+        vendor,
+      });
+
+      console.log(res);
+      console.log("Successfully updated product");
+
+      setShowSuccess(true); // Show success message
+
+      setTimeout(() => {
+        navigate("/shop"); // Redirect after 2 seconds
+      }, 800);
+
+    } catch (error) {
+      console.log("Error updating product", error);
+    }
+  };
+
   useEffect(() => {
-    // Example: fetch product details from API and set state
     const fetchProduct = async () => {
-      console.log(id);
       try {
-        // Replace with actual product ID or prop
-        
         const productId = id;
         const res = await axios.get(`http://localhost:5000/api/products/${productId}`);
         const data = res.data;
@@ -111,6 +108,14 @@ const handleUpdate = async(e) => {
           </Col>
           <Col md={{ span: 5, offset: 1 }} className="admin-form-col">
             <div className="admin-form-wrapper">
+
+              {/* Success Message */}
+              {showSuccess && (
+                <div className="admin-success-popup">
+                  Product updated successfully! 
+                </div>
+              )}
+
               <Form onSubmit={handleUpdate}>
                 <Form.Group controlId="formProductName">
                   <Form.Label className="admin-label">Product Name</Form.Label>
@@ -134,7 +139,11 @@ const handleUpdate = async(e) => {
 
                 <Form.Group controlId="formRating">
                   <Form.Label className="admin-label">Rating</Form.Label>
-                  <RatingDisplay value={rating} onChange={(e, newRating) => setRating(newRating)} readOnly={false}/>
+                  <RatingDisplay
+                    value={rating}
+                    onChange={(e, newRating) => setRating(newRating)}
+                    readOnly={false}
+                  />
                 </Form.Group>
 
                 <Form.Group controlId="formDescription">
@@ -158,34 +167,36 @@ const handleUpdate = async(e) => {
                   />
                 </Form.Group>
 
+                <div className="admin-button-group">
+                  <Button
+                    variant={isFlagged ? "danger" : "outline-danger"}
+                    className="admin-flag-button"
+                    onClick={handleDelete}
+                  >
+                    {isFlagged ? "Flagged" : "Flag Product"}
+                  </Button>
+                </div>
 
-  <div className="admin-button-group">
-
-  {/* Flag Product button styled similarly but with red outline/danger */}
-  <Button
-    variant={isFlagged ? "danger" : "outline-danger"}
-    className="admin-flag-button"
+                 <Button
+    variant="danger"
+    className="admin-delete-button"
     onClick={handleDelete}
+    style={{ marginLeft: "10px" }}
   >
-    {isFlagged ? "Flagged" : "Flag Product"}
+    Delete Product
   </Button>
-</div>
 
-
-<Form.Group controlId="formStock" className="admin-toggle-group">
-  <Form.Label className="admin-label">Out of Stock</Form.Label>
-  
-  {/* Toggle switch */}
-  <label className="admin-toggle-switch">
-    <input
-      type="checkbox"
-      checked={outOfStock}
-      onChange={handleStockChange}
-    />
-    <span className="admin-slider" />
-  </label>
-</Form.Group>
-
+                <Form.Group controlId="formStock" className="admin-toggle-group">
+                  <Form.Label className="admin-label">Out of Stock</Form.Label>
+                  <label className="admin-toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={outOfStock}
+                      onChange={handleStockChange}
+                    />
+                    <span className="admin-slider" />
+                  </label>
+                </Form.Group>
 
                 <Button variant="outline-warning" className="admin-submit-button" type="submit">
                   Save Changes

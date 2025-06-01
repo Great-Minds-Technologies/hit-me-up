@@ -16,6 +16,9 @@ import Footer from './components/Footer';
 import Register from './pages/Register';
 import BlobBackground from './components/BlobBackground';
 import Admin from './pages/Admin';
+import AddProductPage from './pages/AddProductPage';
+import AdminEditPage from './pages/AdminEditPage';
+import Wishlist from './pages/Wishlist';
 
 function App() {
 
@@ -27,13 +30,15 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/shop' element={<Shop />} />
-            <Route path='/about/:id' element={<About />} />
+            <Route path='/adminEdit/:id' element={<AdminEditPage />} />
             <Route path='/log-in' element={<LogIn/>} />
             <Route path='/sign-up' element={<SignUp/>} />
             <Route path='/product/:id' element={<Product/>} />
             <Route path='/register' element={<Register/>} />
+            <Route path='/about' element={<About/>}/>
             <Route path='/cart' element={<Cart/>}/>
-            <Route path='/admin' element={<Admin/>}/>
+            <Route path='/addProduct' element={<AddProductPage/>}/>
+            <Route path='/admin' element={<Wishlist/>}/>
           </Routes>
         <Footer/>
   

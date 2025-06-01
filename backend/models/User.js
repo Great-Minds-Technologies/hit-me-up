@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Product = require("./Product");
+const Reviews = require("./Reviews");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -22,6 +24,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  wishlist: {
+    type: [String],
+    default: []
+  },
+  reviews: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Reviews'
+  }]
 });
 
 module.exports = mongoose.model("Hitman_User", userSchema);

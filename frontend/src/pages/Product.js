@@ -6,10 +6,9 @@ import OutlineButton from "../components/OutlineButton";
 import RatingDisplay from "../components/RatingDisplay";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from 'react-router-dom'; //lets us read the id
+import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
 import ReviewContainer from "../components/ReviewContainer";
-
 
 const mockProduct = {
   image: placeholder,
@@ -33,16 +32,18 @@ function Product() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
+  const [email,setEmail] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     fetchProducts();
+    setEmail(JSON.parse(localStorage.getItem("email")));
+    console.log("Fetched all");
+    
   }, [id]);
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/products/${id}`
-      );
+      const res = await axios.get(`http://localhost:5000/api/products/${id}`);
       console.log("data fetched!" + res.data);
       setImage(res.data.image);
       setProductName(res.data.productName);
@@ -54,6 +55,20 @@ function Product() {
       console.log("Error fetching product data:", error);
     }
   };
+  const addToWishlist = async () => {
+    console.log(email);
+    
+    try {
+      const res = await axios.put(`http://localhost:5000/api/users/wishlist/${email}`, {
+        productID : id,
+      })
+      console.log("Product Added To Wishlist");
+      
+    } catch (error) {
+      console.log("Error adding to wishlist"+error);
+      
+    }
+  }
 
   const handleEditClick = () => {
     navigate("/about"); // Admin page
@@ -61,11 +76,12 @@ function Product() {
 
   return (
     <div className="product-page-container">
-      <Link to={`/about/${id}`}>
+      <Link to={`/adminEdit/${id}`}>
       <button className="edit-button">
         Edit
       </button>
       </Link>
+
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
           style={{
@@ -93,7 +109,9 @@ function Product() {
                 </Col>
                 <Col md={{ span: 5, offset: 2 }} className="product-buy-col">
                   <OutlineButton buttonLabel={"Buy Now"} buttonLink={"/"} />
+                  {/* add to the cart */}
                 </Col>
+                  <button onClick={addToWishlist}>Wishlist</button>
               </Row>
             </div>
           </Col>

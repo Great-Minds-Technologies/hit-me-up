@@ -46,6 +46,16 @@ router.get('/', async (req, res) => {
         res.status(400).json({error: err.message});
     }
 });
+router.get('/:email', async (req, res) => {
+    try {
+        const users=await User.findOne({email: req.params.email});
+        console.log(users);
+        
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(400).json({error: err.message});
+    }
+});
 
 router.post('/login', async (req, res) => {
     const { email, password ,weapon, victim, murderLocation} = req.body;
@@ -94,6 +104,59 @@ router.get('/logged', async (req, res) => {
 
     res.status(200).json({ message: 'Login successful', user });
 });
+
+router.put('/wishlist/:email', async(req, res) => {
+    const { productID } = req.body;
+    console.log(req.params.email);
+    try {
+        const user = await User.findOne({email: req.params.email});
+        console.log(user.wishlist);
+        
+        if (!user) {
+            return res.status(404).json({message: "Cannot find user"});
+        }
+        if (!user.wishlist.includes(productID)) {
+            user.wishlist.push(productID);
+            await user.save();
+            console.log("Successfully added to wishlist");
+            
+            res.status(200).json({message: "Successfully added to wishlist"});
+            console.log(user.wishlist);
+        }
+        else{
+            console.log("attempting to remove");
+            const index = user.wishlist.findIndex(id => id === productID);
+            
+            user.wishlist.splice(index, 1);
+            await user.save();
+        }
+    } catch (error) {
+        console.log("Error Adding to wishlist"+error);
+    }
+});
+
+// router.put("/update/:id", async (req, res) => {
+//   const { productName, description, price, image, rating, vendor, type } =
+//     req.body;
+//   console.log("Updating...");
+//   console.log(req.body);
+  
+//   try {
+//     const product = await Product.findById(req.params.id);
+//     product.productName = productName ?? product.productName;
+//     product.description = description ?? product.description;
+//     product.price = price ?? product.price;
+//     product.image = image ?? product.image;
+//     product.rating = rating ?? product.rating;
+//     product.vendor = vendor ?? product.vendor;
+//     product.type = type ?? product.type;
+
+//     await product.save();
+//     res.status(200).json(product);
+//   } catch (error) {
+//     console.log("error updating data: " + error);
+// }
+// });
 
 
 module.exports = router;
