@@ -113,8 +113,7 @@ router.delete ('/delete/:id', async (req, res) => {
   router.get ("/:id/reviews", async (req, res) => {
     try {
       const _product = await Product.findById(req.params.id);
-      const _review = await review.find({product: {_product}});
-      console.log(_review);
+      const _review = await Review.find({product: {_product}});
     } catch (error) {
       console.log(error);
     }
@@ -125,9 +124,11 @@ router.delete ('/delete/:id', async (req, res) => {
       const { _rating, _productReview, _user } = req.body;
       const _product = await Product.findById(req.params.id);
       const _review = new Review({
-
+        _rating,
+        _productReview,
+        _user,
+        _product
       });
-      console.log(_review);
     } catch (error) {
       console.log(error);
     }

@@ -1,8 +1,9 @@
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import RatingDisplay from "./RatingDisplay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReviewSection from "./ReviewSection";
 import "./css/ReviewContainer.css";
+import axios from "axios";
 
 const ReviewContainer = ({productId}) => {
     const [reviews, setReviews] = useState([]);
@@ -33,20 +34,47 @@ const ReviewContainer = ({productId}) => {
         )
     }
 
-    function CaptureReviewInformation () {
-
+    async function CaptureReviewInformation () {
+        try {
+            const _tempProduct = await axios.get(`http://localhost:5000/api/products/${productId}`);
+            const _currentUser = await axios.get(`http://localhost:5000/api/user/logged`);
+            const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
+                _rating: itemRating,
+                _productReview: reviewText,
+                _user: _currentUser,
+                _product: _tempProduct
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    async function GrabReviews() {
+        try {
+            const _reviews = await axios.get(`http://localhost:5000/api/products/${productId}/reviews`);
+            console.log(_reviews.data);
+            setReviews(_reviews.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect (() => {
+        GrabReviews();
+    },[]); 
 
     return (
         <div>
-            <Form onSubmit={CaptureReviewInformation}>
-                <RatingDisplay onChange={itemRating}/>
-                <input
+            <Form className="review-form" onSubmit={CaptureReviewInformation}>
+                <div className="review-rating-display">
+                    <RatingDisplay  onChange={setItemRating}/>
+                </div>
+                <textarea
                     className="review-text-input"
                     placeholder="Review (Optional)"
                     onChange={setReviewText}
                 />
-                <Button type="submit">Post Review</Button>
+                <Button className="review-submit-button" type="submit">Post Review</Button>
             </Form>
             <Container>
                 <hr/>

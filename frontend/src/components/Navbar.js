@@ -46,6 +46,7 @@ const navigate = useNavigate();
     async function CheckCredentials() {
         try {
             const _user = await axios.get('http://localhost:5000/api/users/logged');
+            console.log(_user);
             if (_user) setUser(_user);
         } catch (error) {
             console.log(error);

@@ -3,7 +3,7 @@ import { Rating } from "@mui/material";
 import "./css/ReviewSection.css";
 import { Col } from "react-bootstrap";
 
-const ReviewSection = ({ratingValue, reviewText}) => {
+const ReviewSection = ({ratingValue, reviewText, reviewer}) => {
 
     return (
         <Col className="review-section-container" md="4">
@@ -16,7 +16,7 @@ const ReviewSection = ({ratingValue, reviewText}) => {
                     />
                     <br/>
                     <Link>
-                        User
+                        {"User"}
                     </Link>
                 </div>
                 
