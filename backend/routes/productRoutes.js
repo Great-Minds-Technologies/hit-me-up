@@ -104,7 +104,7 @@ router.delete ('/delete/:id', async (req, res) => {
         }
         res.json({message: "Product deleted", deletedProduct})
     } catch (error) {
-        console.log("Error deleting data"+error);
+        console.log("Error deleting data "+error);
         
     }
 
@@ -114,8 +114,10 @@ router.delete ('/delete/:id', async (req, res) => {
     try {
       const _product = await Product.findById(req.params.id);
       const _review = await Review.find({product: {_product}});
+      console.log(_review);
+      if (_review) res.status(200).json(_review);
     } catch (error) {
-      console.log(error);
+      console.log("Error getting reviews");
     }
   })
   
@@ -129,6 +131,7 @@ router.delete ('/delete/:id', async (req, res) => {
         _user,
         _product
       });
+      console.log(_review);
     } catch (error) {
       console.log(error);
     }
