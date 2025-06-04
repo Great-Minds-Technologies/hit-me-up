@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
+import ReviewContainer from "../components/ReviewContainer";
 
 const mockProduct = {
   image: placeholder,
@@ -99,7 +100,7 @@ function Product() {
               <h1 className="product-title">{productName}</h1>
               <h4 className="product-vendor">{vendor}</h4>
               <div className="product-rating">
-                <RatingDisplay value={rating} />
+                <RatingDisplay value={rating} readOnly={true}/>
               </div>
               <p className="product-features">{description}</p>
               <Row>
@@ -116,6 +117,7 @@ function Product() {
           </Col>
         </Row>
       </Container>
+      <ReviewContainer productId={id}/>
     </div>
   );
 }

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product");
 const multer = require("multer");
-const review = require("../models/Reviews");
+const Review = require("../models/Reviews");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -109,6 +109,30 @@ router.delete ('/delete/:id', async (req, res) => {
     }
 
 });
+
+  router.get ("/:id/reviews", async (req, res) => {
+    try {
+      const _product = await Product.findById(req.params.id);
+      const _review = await Review.find({product: {_product}});
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  
+  router.post ("/:id/review/post", async (req, res) => {
+    try {
+      const { _rating, _productReview, _user } = req.body;
+      const _product = await Product.findById(req.params.id);
+      const _review = new Review({
+        _rating,
+        _productReview,
+        _user,
+        _product
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  })
 
 
 module.exports = router;

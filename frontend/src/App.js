@@ -18,7 +18,7 @@ import BlobBackground from './components/BlobBackground';
 import Admin from './pages/Admin';
 import AddProductPage from './pages/AddProductPage';
 import AdminEditPage from './pages/AdminEditPage';
-
+import Wishlist from './pages/Wishlist';
 
 function App() {
 
@@ -38,6 +38,7 @@ function App() {
             <Route path='/about' element={<About/>}/>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/addProduct' element={<AddProductPage/>}/>
+            <Route path='/admin' element={<Wishlist/>}/>
           </Routes>
         <Footer/>
   
