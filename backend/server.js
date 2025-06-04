@@ -70,4 +70,13 @@ const requireAuth = (req, res, next) => {
     if (!user) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
+    next();
+}
+
+const requireAdmin = (req,res,next) => {
+    const [user] = req.session;
+    if (!user || user.role != "admin"){
+        return res.status(401).json({ message : 'Unauthorized'});
+    }
+    next();
 }

@@ -30,6 +30,15 @@ const userSchema = new mongoose.Schema({
   },
   reviews: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Reviews'
+  }],
+  role: {
+    type: String,
+    default: "user",
+    enum: ["user","vendor", "admin"], //Prevents bad values 
+  },
+  cartIds: [{
+    type: String,
+    default: [],
   }]
 });
 
