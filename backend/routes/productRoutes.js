@@ -113,11 +113,12 @@ router.delete ('/delete/:id', async (req, res) => {
   router.get ("/:id/reviews", async (req, res) => {
     try {
       const _product = await Product.findById(req.params.id);
-      const _review = await Review.find({product: {_product}});
-      console.log(_review);
+      const _productName = _product.productName;
+      const _review = await Review.find({product: {_productName}});
+      console.log("Reviews: " +_review);
       if (_review) res.status(200).json(_review);
     } catch (error) {
-      console.log("Error getting reviews");
+      console.log(err);
     }
   })
   

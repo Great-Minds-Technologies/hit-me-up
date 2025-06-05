@@ -51,8 +51,8 @@ const ReviewContainer = ({productId}) => {
 
     async function GrabReviews() {
         try {
-            // const _reviews = await axios.get(`http://localhost:5000/api/products/${productId}/reviews`);
-            const _reviews = await axios.get(`http://localhost:5000/api/reviews/`);
+            const _reviews = await axios.get(`http://localhost:5000/api/products/${productId}/reviews`);
+            // const _reviews = await axios.get(`http://localhost:5000/api/reviews/`);
             console.log(_reviews.data);
             setReviews(_reviews.data);
         } catch (error) {
