@@ -38,3 +38,28 @@
 .remove-btn:hover {
   text-decoration: underline;
 }
+
+.quantity-cart button{
+  
+  all: unset;              /* Remove all default button styles */
+  display: inline-block;   /* Make it behave like a button */
+  background-color: #ff6600; /* Orange color */
+  color: white;            /* White text */
+  padding: 5px 10px;      /* Some padding */
+  border-radius: 50px;     /* Rounded borders */
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;       /* Prevent text selection on click */
+  transition: background-color 0.3s ease;
+}
+
+.quantity-cart button:hover {
+  background-color: #FDB964; 
+  color: black;
+}
+
+.quantity-cart button:active {
+  background-color: red;
+  color: white;
+}

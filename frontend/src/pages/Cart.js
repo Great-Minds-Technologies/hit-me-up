@@ -95,6 +95,42 @@ function Cart() {
   setSubTotal(tempSubTotal);
   }, [cartItems])
 
+  // Function to handle increase and decrease of quantity
+
+ const handleIncrease = async (productId) => {
+  if (!email) {
+    console.warn("Email not set yet");
+    return;
+  }
+
+  try {
+   await axios.put(`http://localhost:5000/api/users/increaseFromCart/${email}`, {
+      productID: productId
+    });
+    fetchProducts(); 
+  } catch (error) {
+    console.error("Error increasing quantity:", error);
+  }
+};
+
+const handleDecrease = async (productId) => {
+  if (!email) {
+    console.warn("Email not set yet");
+    return;
+  }
+
+  try {
+    await axios.put(`http://localhost:5000/api/users/decreaseFromCart/${email}`, {
+      productID: productId
+    });
+    fetchProducts();
+  } catch (error) {
+    console.error("Error decreasing quantity:", error);
+  }
+};
+
+
+
   return (
     <div className="cart-container">
       <h1>Your Cart</h1>
@@ -110,7 +146,8 @@ function Cart() {
         <tbody>
           {cartItems.length > 0 ? (
             cartItems.map((item) => (
-              <CartItem key={item.product._id} item={item} onRemove={handleRemove} />
+              <CartItem key={item.product._id} item={item} onRemove={handleRemove} onIncrease={handleIncrease}
+               onDecrease={handleDecrease}/>
             ))
           ) : (
             <tr>
