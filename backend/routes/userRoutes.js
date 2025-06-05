@@ -170,6 +170,21 @@ router.put("/removeFromCart/:email", async (req, res) => {
     console.log("Error Adding to wishlist" + error);
   }
 });
+router.put("/removeOneFromCart/:email", async (req, res) => {
+  const { productID } = req.body;
+  console.log(req.params.email);
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    const index = await user.cartIds.findIndex((id) => id==productID);
+    console.log(productID);
+    
+    user.cartIds.splice(index,1);
+    await user.save();
+    res.status(200).json({message: "Removed field"});
+  } catch (error) {
+    console.log("Error Adding to wishlist" + error);
+  }
+});
 router.put("/promoteAdmin/:email", async (req, res) => {
   console.log(req.params.email);
   try {
