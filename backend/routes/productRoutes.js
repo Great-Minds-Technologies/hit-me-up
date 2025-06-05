@@ -133,7 +133,8 @@ router.delete ('/delete/:id', async (req, res) => {
   
   router.post ("/:id/review/post", async (req, res) => {
     try {
-      const { _rating, _productReview, _user } = req.body;
+      const _user = req.session.user;
+      const { _rating, _productReview } = req.body;
       const _product = await Product.findById(req.params.id);
       const _review = new Review({
         _rating,

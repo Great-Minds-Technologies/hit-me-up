@@ -13,12 +13,22 @@ function Home() {
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
 
+    async function GetProductsServices() {
+        try {
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect (() => {
         const _user = JSON.parse(localStorage.getItem("loggedInUser"));
         const _cart = JSON.parse(localStorage.getItem("userCart"));
 
         if (_user) setUser(_user);
         if (_cart) setCart(_cart);
+
+        GetProductsServices();
     }, []);
 
     return (

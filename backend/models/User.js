@@ -28,9 +28,6 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: []
   },
-  reviews: [{
-    type: mongoose.Schema.Types.ObjectId, ref: 'Reviews'
-  }],
   role: {
     type: String,
     default: "user",
