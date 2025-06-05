@@ -156,6 +156,7 @@ router.put("/cart/:email", async (req, res) => {
     console.log("Error Adding to wishlist" + error);
   }
 });
+
 router.put("/removeFromCart/:email", async (req, res) => {
   const { productID } = req.body;
   console.log(req.params.email);
@@ -170,6 +171,7 @@ router.put("/removeFromCart/:email", async (req, res) => {
     console.log("Error Adding to wishlist" + error);
   }
 });
+
 router.put("/removeOneFromCart/:email", async (req, res) => {
   const { productID } = req.body;
   console.log(req.params.email);
@@ -185,6 +187,7 @@ router.put("/removeOneFromCart/:email", async (req, res) => {
     console.log("Error Adding to wishlist" + error);
   }
 });
+
 router.put("/promoteAdmin/:email", async (req, res) => {
   console.log(req.params.email);
   try {
@@ -203,27 +206,48 @@ router.put("/promoteAdmin/:email", async (req, res) => {
   } catch (error) {}
 });
 
-// router.put("/update/:id", async (req, res) => {
-//   const { productName, description, price, image, rating, vendor, type } =
-//     req.body;
-//   console.log("Updating...");
-//   console.log(req.body);
+// Decrease quantity of a product in cart
+router.put('/decreaseFromCart/:email', async (req, res) => {
+  const { email } = req.params;
+  const { productID } = req.body;
 
-//   try {
-//     const product = await Product.findById(req.params.id);
-//     product.productName = productName ?? product.productName;
-//     product.description = description ?? product.description;
-//     product.price = price ?? product.price;
-//     product.image = image ?? product.image;
-//     product.rating = rating ?? product.rating;
-//     product.vendor = vendor ?? product.vendor;
-//     product.type = type ?? product.type;
+  try {
+    const user = await User.findOne({ email });
 
-//     await product.save();
-//     res.status(200).json(product);
-//   } catch (error) {
-//     console.log("error updating data: " + error);
-// }
-// });
+    if (!user) return res.status(404).send("User not found");
+
+    const index = user.cartIds.indexOf(productID);
+    if (index !== -1) {
+      user.cartIds.splice(index, 1); // Remove one instance
+      await user.save();
+          res.status(200).json({ message: "Product quantity increased" })
+    } else {
+      return res.status(400).send("Product not in cart");
+    }
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+router.put("/increaseFromCart/:email", async (req, res) => {
+  const { productID } = req.body;
+  try {
+    const user = await User.findOne({ email: req.params.email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.cartIds.push(productID); // Add another of the same product
+    await user.save();
+
+    res.status(200).json({ message: "Product quantity increased" });
+  } catch (error) {
+    console.error("Error increasing quantity:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 
 module.exports = router;

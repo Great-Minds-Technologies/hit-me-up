@@ -2,7 +2,7 @@
 import React from 'react';
 import './css/CartItem.css'; // Create this CSS file for styling
 
-function CartItem({ item, onRemove }) {
+function CartItem({ item, onRemove,  onIncrease, onDecrease }) {
   if (!item || !item.product) return null;
   return (
     <tr className="cart-item">
@@ -14,7 +14,11 @@ function CartItem({ item, onRemove }) {
         </div>
       </td>
       <td>R{item.product.price}</td>
-      <td>{item.quantity}</td>
+       <td className='quantity-cart'>
+      <button  onClick={() => onDecrease(item.product._id)}>-</button>
+      <span style={{ margin: '0 8px' }}>{item.quantity}</span>
+      <button  onClick={() => onIncrease(item.product._id)}>+</button>
+    </td>
       <td>R{item.product.price * item.quantity}</td>
     </tr>
   );
