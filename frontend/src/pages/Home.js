@@ -6,20 +6,32 @@ import './css/Home.css'
 import { useEffect, useState } from 'react';
 import Landing from '../components/Landing';
 import ShopItemCard from '../components/ShopItemCard';
+import axios from 'axios';
 
 function Home() {
-    const [hitmen, setHitmen] = useState();
-    const [products, setProducts] = useState();
+    const [hitmen, setHitmen] = useState([]);
+    const [products, setProducts] = useState([]);
     const [user, setUser] = useState(null);
     const [cart, setCart] = useState(null);
 
     async function GetProductsServices() {
         try {
-            
+            const _items = await axios.get("http://localhost:5000/api/products");
+            const _products = _items.data.filter((index) => index.type === "Product");
+            const _services = _items.data.filter((index) => index.type === "Service");
+            _products.sort((a, b) => b.rating - a.rating );
+            _services.sort((a, b) => b.rating - a.rating);
+            setProducts(_products.slice(0,4));
+            setHitmen(_services.slice(0,4));
         } catch (error) {
             console.log(error);
         }
     }
+
+    // const filteredProducts = products.filter((item) => {
+    //     if (filter === "all") return true;
+    //     return item.type === filter;
+    // });
 
     useEffect (() => {
         const _user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -56,44 +68,45 @@ function Home() {
                         </div>
                     </Col>
                 </Row>
-                <hr className='hitmen-divider'/>
-                <Row className='featured-row'>
-                    <h3 id='featured-hitmen-title'>Featured Hitmen</h3>
-                    {hitmen ? hitmen.map((index) =>
-                        <Col sm='6' md='3'>
-                            <FeaturedCard
-                                description={index.description}
-                                image={index.image}
-                                name={index.name}
-                                price={index.price}
-                            />
-                        </Col>
-                    ):
-                    
-                    <Col sm = '6' md='3'>
-                        <FeaturedCard/>
-                    </Col> }
-                </Row>
-                <hr className='products-divider'/>
-                <Row className='featured-row'>
-                    <h3 id='featured-products-title'>Featured Products</h3>
-                    {products ? products.map((index) =>
-                        <Col sm='3'>
+                {hitmen.length > 0 ?<hr className='hitmen-divider'/> : <div></div>}
+                {hitmen.length > 0 ?
+                    <Row className='featured-row'>
+                        <h3 id='featured-hitmen-title'>Featured Hitmen</h3>
+                        {hitmen.map((index) =>
+                           <Col sm='6' md='3'>
+                               <FeaturedCard
+                                   description={index.description}
+                                   image={index.image}
+                                   name={index.name}
+                                   price={index.price}
+                               />
+                           </Col>
+                        )}
+                    </Row> 
+                    :
+                    <Row></Row>
+                }
+                {products.length > 0 ? <hr className='products-divider'/> : <div></div>}
+                {products.length > 0 ? 
+                    <Row className='featured-row'>
+                        <h3 id='featured-products-title'>Featured Products</h3>
+                        {products.map((index) =>
+                            <Col sm='3'>
 
-                            {/* this shop item is not working yet */}
+                                {/* this shop item is not working yet */}
 
-                            <ShopItemCard
-                                productImage={index.image}
-                                productName={index.name}
-                                productPrice={index.price}
-                                productRating={index.rating}
-                            />
-                        </Col>
-                    ):
-                    <Col sm = '6' md = '3'>
-                        <FeaturedCard/>
-                    </Col> }
-                </Row>
+                                <ShopItemCard
+                                    productImage={index.image}
+                                    productName={index.productName}
+                                    productPrice={index.price}
+                                    productRating={index.rating}
+                                />
+                            </Col>
+                        )}
+                    </Row>
+                : 
+                    <Row></Row>
+                }
             </Container>
         </div>
     )
