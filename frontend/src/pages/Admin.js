@@ -85,6 +85,7 @@ function ProductForm() {
     <div style={{ maxWidth: "600px", margin: "auto" }}>
       <h2>Create a Product</h2>
       <form onSubmit={handleSubmit}>
+
         <input
           type="text"
           placeholder="Name"

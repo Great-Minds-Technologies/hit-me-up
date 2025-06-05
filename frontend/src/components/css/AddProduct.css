@@ -114,9 +114,45 @@
   align-items: center;
 }
 
-/* Optional: Styling for the error version */
-.admin-success-popup.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border-color: #f5c6cb;
+.addPorS-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.addPorS-button {
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #ddac7d;
+  background-color: transparent;
+  color: #ddac7d;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: none;
+}
+
+.addPorS-button:hover {
+  background-color: #ddac7d;
+  color: #1a1a1a;
+}
+
+.addPorS-button:focus,
+.addPorS-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #ddac7d;
+  color: #1a1a1a;
+}
+
+.addPorS-active {
+  background-color: #ddac7d;
+  color: #1a1a1a;
+}
+
+.addPorS-button:focus,
+.addPorS-button:active,
+.addPorS-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }

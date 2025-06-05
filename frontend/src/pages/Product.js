@@ -9,6 +9,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
 import ReviewContainer from "../components/ReviewContainer";
+// import { set } from "mongoose";
 
 const mockProduct = {
   image: placeholder,
@@ -33,14 +34,43 @@ function Product() {
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
   const [email,setEmail] = useState("");
+  const [type, setType] = useState("");
+  const [role, setRole] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     fetchProducts();
     setEmail(JSON.parse(localStorage.getItem("email")));
+
     console.log("Fetched all");
-    
   }, [id]);
+  useEffect(() => {
+    fetchUserRole();
+  }, [email]);
+  const fetchUserRole = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
+      console.log(res);
+      console.log(res.data.role);
+      setRole(res.data.role);
+    } catch (error) {
+      console.log("Error finding the user's role");
+    }
+  };
+  const addToCart = async () => {
+    console.log(email);
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/users/cart/${email}`,
+        {
+          productID: id,
+        }
+      );
+      console.log("Product Added To Cart");
+    } catch (error) {
+      console.log("Error adding to cart" + error);
+    }
+  }
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
@@ -51,36 +81,35 @@ function Product() {
       setDescription(res.data.description);
       setPrice(res.data.price);
       setVendor(res.data.vendor);
+      setType(res.data.type);
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
   const addToWishlist = async () => {
     console.log(email);
-    
-    try {
-      const res = await axios.put(`http://localhost:5000/api/users/wishlist/${email}`, {
-        productID : id,
-      })
-      console.log("Product Added To Wishlist");
-      
-    } catch (error) {
-      console.log("Error adding to wishlist"+error);
-      
-    }
-  }
 
-  const handleEditClick = () => {
-    navigate("/about"); // Admin page
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/users/wishlist/${email}`,
+        {
+          productID: id,
+        }
+      );
+      console.log("Product Added To Wishlist");
+    } catch (error) {
+      console.log("Error adding to wishlist" + error);
+    }
   };
+  
 
   return (
     <div className="product-page-container">
-      <Link to={`/adminEdit/${id}`}>
-      <button className="edit-button">
-        Edit
-      </button>
-      </Link>
+      {(role === "admin" || role === "vendor") && (
+        <Link to={`/adminEdit/${id}`}>
+          <button className="edit-button">Edit</button>
+        </Link>
+      )}
 
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
@@ -99,8 +128,9 @@ function Product() {
             <div className="product-info">
               <h1 className="product-title">{productName}</h1>
               <h4 className="product-vendor">{vendor}</h4>
+              <h4 className="product-type">{type}</h4> 
               <div className="product-rating">
-                <RatingDisplay value={rating} readOnly={true}/>
+                <RatingDisplay value={rating} readOnly={true} />
               </div>
               <p className="product-features">{description}</p>
               <Row>
@@ -108,16 +138,18 @@ function Product() {
                   <p className="product-price">{`R ` + price}</p>
                 </Col>
                 <Col md={{ span: 5, offset: 2 }} className="product-buy-col">
-                  <OutlineButton buttonLabel={"Buy Now"} buttonLink={"/"} />
+                  {/* <OutlineButton buttonLabel={"Buy Now"} onClick={addToCart} buttonLink={""}  /> */}
+                  {/* The outline button is not letting me do an onclick. we need to add functionality for that*/}
+                   <button onClick={addToCart}>Buy Now</button>
                   {/* add to the cart */}
                 </Col>
-                  <button onClick={addToWishlist}>Wishlist</button>
+                <button onClick={addToWishlist}>Wishlist</button>
               </Row>
             </div>
           </Col>
         </Row>
       </Container>
-      <ReviewContainer productId={id}/>
+      <ReviewContainer productId={id} />
     </div>
   );
 }

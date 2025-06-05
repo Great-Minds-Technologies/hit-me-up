@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 function Shop() {
   const [displayMaxCount, setDisplayMaxCount] = useState(20);
   const [products, setProducts] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,6 +26,11 @@ function Shop() {
     fetchProducts();
   }, []);
 
+    const filteredProducts = products.filter((item) => {
+    if (filter === "all") return true;
+    return item.type === filter;
+  });
+
   return (
     <div className="shop-container">
       <div className="shop-submenu">
@@ -34,40 +40,53 @@ function Shop() {
       + Add Product
     </Link>
 
-        <div className="filter-options">
-          <div className="filter-button-holder">
-            <OutlineButton
-              className="filter-button"
-              buttonLabel="Shop By Category"
-            />
-          </div>
-          <Typeahead
-            className="form-input"
-            onChange={() => {}}
-            options={["", "", ""]}
-            selected=""
-            placeholder="Search"
-            clearButton={true}
-            inputProps={{
-              className: "form-text",
-            }}
-          />
+  {/* Filter buttons */}
+
+ <div className="shop-filter-wrapper">
+          <div className="shop-filter-buttons">
+            <button
+              className={`shop-filter-button ${
+                filter === "all" ? "shop-filter-active" : ""
+              }`}
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+            <button
+              className={`shop-filter-button ${
+                filter === "product" ? "shop-filter-active" : ""
+              }`}
+              onClick={() => setFilter("product")}
+            >
+              Products
+            </button>
+            <button
+              className={`shop-filter-button ${
+                filter === "service" ? "shop-filter-active" : ""
+              }`}
+              onClick={() => setFilter("service")}
+            >
+              Services
+            </button>
+         
         </div>
       </div>
 
+      </div>
+
+      
+      {/* Display filtered products */}
       <Container id="shop-item-shop-container">
         <Row className="g-4 justify-content-center">
-          {products.slice(0, displayMaxCount).map((product, index) => (
+          {filteredProducts.slice(0, displayMaxCount).map((product, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3}>
               <Link to={`/product/${product._id}`}>
-               
-                  <ShopItemCard
-                    productImage={product.image}
-                    productName={product.productName}
-                    productPrice={product.price}
-                    productRating={product.rating}
-                  />
-              
+                <ShopItemCard
+                  productImage={product.image}
+                  productName={product.productName}
+                  productPrice={product.price}
+                  productRating={product.rating}
+                />
               </Link>
             </Col>
           ))}

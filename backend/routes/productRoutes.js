@@ -15,6 +15,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/register", async (req, res) => {
+
+   console.log("Received from frontend my friend:", req.body);  // <-- Add it here
+
   const { productName, description, price, image, rating, vendor, type } =
     req.body;
   try {
@@ -26,7 +29,7 @@ router.post("/register", async (req, res) => {
       image,
       rating : 0,
       vendor,
-      type : "Product",
+      type 
     });
     console.log("Product created");
 
@@ -36,8 +39,14 @@ router.post("/register", async (req, res) => {
     res.status(201).json({ product });
     console.log(req.body);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+  console.error("Error saving product:", err.message);
+  if (err.errors) {
+    for (const key in err.errors) {
+      console.error(`${key}: ${err.errors[key].message}`);
+    }
   }
+  res.status(400).json({ error: err.message });
+}
 });
 
 router.get("/", async (req, res) => {
