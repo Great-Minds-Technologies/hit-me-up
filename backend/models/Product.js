@@ -27,8 +27,10 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     type: { //product or service
-        type: String,
-        required: true,
+       type: String,
+        enum: ['product', 'service'],
+        default: 'product',
+        required: true
     },
 });
 

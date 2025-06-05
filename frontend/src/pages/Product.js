@@ -9,6 +9,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
 import ReviewContainer from "../components/ReviewContainer";
+// import { set } from "mongoose";
 
 const mockProduct = {
   image: placeholder,
@@ -33,11 +34,13 @@ function Product() {
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
   const [email,setEmail] = useState("");
+  const [type, setType] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
     fetchProducts();
     setEmail(JSON.parse(localStorage.getItem("email")));
+
     console.log("Fetched all");
     
   }, [id]);
@@ -51,6 +54,7 @@ function Product() {
       setDescription(res.data.description);
       setPrice(res.data.price);
       setVendor(res.data.vendor);
+      setType(res.data.type);
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
@@ -99,6 +103,7 @@ function Product() {
             <div className="product-info">
               <h1 className="product-title">{productName}</h1>
               <h4 className="product-vendor">{vendor}</h4>
+              <h4 className="product-type">{type}</h4> 
               <div className="product-rating">
                 <RatingDisplay value={rating} readOnly={true}/>
               </div>

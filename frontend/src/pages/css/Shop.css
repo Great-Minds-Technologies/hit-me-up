@@ -95,3 +95,46 @@
   background-color: #ddac7d;
   color: black;
 }
+
+
+/* filterr css---------------- */
+
+/* Container for the filter buttons */
+.shop-filter-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Button group styles */
+.shop-filter-buttons {
+  display: flex;
+  gap: 1rem;
+ 
+}
+
+.shop-filter-buttons button {
+  padding: 0.6rem 1.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Base button style */
+.shop-filter-button {
+  padding: 0.6rem 1.5rem;
+  border: 2px solid #DDAC7D; /* fallback green */
+  border-radius: 30px;
+  background-color: transparent;
+  color: #DDAC7D;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+}
+
+/* Active button style */
+.shop-filter-active {
+  background-color: #DDAC7D;
+  color: rgb(0, 0, 0);
+  border-color: #DDAC7D;
+}

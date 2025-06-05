@@ -11,7 +11,8 @@ const AddProductPage = () => {
   const [image, setImage] = useState("");
   const [previewUrl, setPreviewUrl] = useState(null);
   const [rating, setRating] = useState("");
-  const [type, setType] = useState("");
+  // const [type, setType] = useState("");
+  const [selectedType, setSelectedType] = useState("product");
   const [message, setMessage] = useState("");
   const [productId, setProductId] = useState([]);
   const [productImage, setProductImage] = useState([]);
@@ -51,10 +52,10 @@ const AddProductPage = () => {
         image,
         rating: parseFloat(rating),
         vendor,
-        type,
+        type: selectedType,
       });
 
-      setMessage("Product added successfully!");
+      setMessage(`${selectedType === "product" ? "Product" : "Service"} Product added successfully!`);
       setShowSuccess(true);
       setShowError(false);
 
@@ -64,7 +65,7 @@ const AddProductPage = () => {
 
     } catch (error) {
       console.error("Error creating product:", error);
-      setMessage("Failed to add product.");
+      setMessage(`Failed to add ${selectedType === "product" ? "product" : "service"}.`);
       setShowSuccess(false);
       setShowError(true);
 
@@ -92,6 +93,28 @@ const AddProductPage = () => {
 
   return (
     <div className="addproduct-container">
+
+    <Row className="addPorS-container mb-4">
+  <Col className="addPorS-button-group d-flex justify-content-center gap-3">
+    <Button
+      className={`addPorS-button ${selectedType === "product" ? "addPorS-active" : ""}`}
+      onClick={() => setSelectedType("product")}
+     
+    >
+      Add Product
+    </Button>
+    <Button
+      className={`addPorS-button ${selectedType === "service" ? "addPorS-active" : ""}`}
+      onClick={() => setSelectedType("service")}
+     
+    >
+      Add Service
+    </Button>
+  </Col>
+</Row>
+
+
+
       {/* Success and Error Popups */}
       {showSuccess && (
         <div className="admin-success-popup">
