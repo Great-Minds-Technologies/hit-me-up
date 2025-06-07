@@ -36,14 +36,14 @@ const ReviewContainer = ({productId}) => {
 
     async function CaptureReviewInformation () {
         try {
-            const _tempProduct = await axios.get(`http://localhost:5000/api/products/${productId}`);
-            const _currentUser = await axios.get(`http://localhost:5000/api/user/logged`);
+            const _tempUser = await axios.get(`http://localhost:5000/api/user/logged`);
+            const _currentUser = await axios.get(`http://localhost:5000/api/user/${_tempUser.data.user.email}`);
             const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
                 _rating: itemRating,
                 _productReview: reviewText,
-                _user: _currentUser,
-                _product: _tempProduct
-            })
+                _user: _currentUser
+            });
+            
         } catch (error) {
             console.log(error);
         }
