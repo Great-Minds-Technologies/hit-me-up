@@ -38,7 +38,7 @@ function App() {
             <Route path='/about' element={<About/>}/>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/addProduct' element={<AddProductPage/>}/>
-            <Route path='/admin' element={<Wishlist/>}/>
+            <Route path='/wishlist' element={<Wishlist/>}/>
           </Routes>
         <Footer/>
   

@@ -91,3 +91,7 @@
   color: #ff7b00; /* Feel free to adjust this to match your theme */
  border-color: rgb(255, 120, 30);
 }
+
+.wishlist-Button {
+    max-width: 75%;
+}

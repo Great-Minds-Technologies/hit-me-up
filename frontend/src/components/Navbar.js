@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import EmptyCart from '../assets/glyphs/EmptyCart.svg';
 import FullCart from '../assets/glyphs/FullCart.svg';
+import wishlistIcon from '../assets/images/HeartIcon.png';
 import Cart from '../pages/Cart';
 import App from '../App';
 import axios from 'axios';
@@ -105,6 +106,9 @@ const navigate = useNavigate();
                 </button>
                 <Link to='/cart'>
                     <img src={cart ? FullCart : EmptyCart} alt='Cart'/>
+                </Link>
+                <Link to='/wishlist'>
+                    <img className='wishlist-Button' src={wishlistIcon} />
                 </Link>
             </div>
             :
