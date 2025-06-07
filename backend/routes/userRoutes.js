@@ -1,8 +1,30 @@
 const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
 const session = require("express-session");
+const MongoStore = require("connect-mongo"); // For session persistence
+const bcrypt = require("bcrypt");
+const User = require("../models/User");
+
+const app = express();
+const router = express.Router();
+
+// Session middleware configuration
+app.use(
+  session({
+    secret: "your-secret-key", // Replace with a strong secret key
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost:27017/yourDatabaseName", // Replace with your MongoDB connection string
+      collectionName: "sessions",
+    }),
+    cookie: {
+      secure: false, // Set to true if using HTTPS
+      httpOnly: true,
+      sameSite: "Lax", // Use 'None' if working cross-origin with credentials
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    },
+  })
+);
 
 router.post("/register", async (req, res) => {
   const { email, password, weapon, victim, murderLocation } = req.body;
@@ -31,14 +53,65 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//routes for logout
+// Login route with session storage
+router.post("/login", async (req, res) => {
+  const { email, password, weapon, victim, murderLocation } = req.body;
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    if (!(await bcrypt.compare(weapon, user.weapon))) {
+      return res.status(401).json({ error: "Incorrect weapon" });
+    }
+
+    if (!(await bcrypt.compare(victim, user.victim))) {
+      return res.status(401).json({ error: "Incorrect victim" });
+    }
+
+    if (!(await bcrypt.compare(murderLocation, user.murderLocation))) {
+      return res.status(401).json({ error: "Incorrect location" });
+    }
+
+    // Store only non-sensitive user details in the session
+    req.session.user = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    };
+    req.session.authenticated = true;
+
+    res.status(200).json({ message: "Login successful", user: req.session.user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Logged-in user route
+router.get("/logged", async (req, res) => {
+  const user = req.session.user;
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  res.status(200).json({ message: "Login successful", user });
+});
+
+// Logout route
 router.get("/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    sameSite: "Lax", // Use 'None' + secure:true if working cross-origin with credentials
-    secure: false, // true if your site is HTTPS
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to log out" });
+    }
+    res.clearCookie("connect.sid"); // Clear the session cookie
+    res.status(200).json({ message: "Logged out successfully" });
   });
-  res.status(200).json({ message: "Logged out successfully" });
 });
 
 router.get("/", async (req, res) => {
@@ -60,53 +133,6 @@ router.get("/:email", async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
-
-router.post("/login", async (req, res) => {
-  const { email, password, weapon, victim, murderLocation } = req.body;
-  console.log(req.body);
-  console.log(weapon);
-  console.log(victim);
-  console.log(murderLocation);
-  try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(400).json({ error: "User not found" });
-    }
-    console.log(`User found: ${user.email}`);
-
-    if (!(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: "Incorrect password" });
-    }
-
-    if (!(await bcrypt.compare(weapon, user.weapon))) {
-      return res.status(401).json({ error: "Incorrect weapon" });
-    }
-    if (!(await bcrypt.compare(victim, user.victim))) {
-      return res.status(401).json({ error: "Incorrect victim" });
-    }
-    if (!(await bcrypt.compare(murderLocation, user.murderLocation))) {
-      return res.status(401).json({ error: "Incorrect location" });
-    }
-    req.session.user = user;
-    req.session.authenticated = true;
-    console.log(req.session.user);
-
-    res.status(200).json({ message: "Login successful", user });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get("/logged", async (req, res) => {
-  const user = req.session.user;
-  console.log(user);
-  if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  res.status(200).json({ message: "Login successful", user });
 });
 
 router.put("/wishlist/:email", async (req, res) => {
@@ -162,7 +188,7 @@ router.put("/removeFromCart/:email", async (req, res) => {
   console.log(req.params.email);
   try {
     const user = await User.findOne({ email: req.params.email });
-    console.log(productID);
+    console.log(productID); 
     
     user.cartIds = user.cartIds.filter(id => id !== productID);
     await user.save();

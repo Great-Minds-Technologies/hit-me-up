@@ -45,11 +45,13 @@ const navigate = useNavigate();
 
     async function CheckCredentials() {
         try {
-            const _user = await axios.get('http://localhost:5000/api/users/logged');
+            const _user = await axios.get('http://localhost:5000/api/users/logged', {
+                withCredentials: true, // Ensure cookies are sent with the request
+            });
             console.log(_user);
-            if (_user) setUser(_user);
+            if (_user.data) setUser(_user.data.user); // Adjust based on your backend response structure
         } catch (error) {
-            console.log(error);
+            console.log("Error checking credentials:", error);
         }
     }
 
