@@ -39,6 +39,7 @@ function App() {
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/addProduct' element={<AddProductPage/>}/>
             <Route path='/wishlist' element={<Wishlist/>}/>
+            <Route path='/admin' element={<Admin/>}/>
           </Routes>
         <Footer/>
   

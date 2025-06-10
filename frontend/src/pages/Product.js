@@ -24,7 +24,7 @@ const mockProduct = {
   vendor: "Baby Girl Defense Systems LTD",
 };
 
-function Product() {
+function Admin() {
   const navigate = useNavigate();
 
   const [image, setImage] = useState("");
@@ -45,7 +45,10 @@ function Product() {
     console.log("Fetched all");
   }, [id]);
   useEffect(() => {
-    fetchUserRole();
+    if (email) {
+      fetchUserRole();
+      
+    }
   }, [email]);
   const fetchUserRole = async () => {
     try {
@@ -154,4 +157,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Admin;
