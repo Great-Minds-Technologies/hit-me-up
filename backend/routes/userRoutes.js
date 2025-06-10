@@ -133,8 +133,9 @@ router.put("/wishlist/:email", async (req, res) => {
       user.wishlist.splice(index, 1);
       await user.save();
     }
+    res.status(200).json({ message: "Successfully removed from wishlist" });
   } catch (error) {
-    console.log("Error Adding to wishlist" + error);
+    res.status(500).json({ error: error.message });
   }
 });
 router.put("/cart/:email", async (req, res) => {

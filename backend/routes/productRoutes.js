@@ -137,9 +137,13 @@ router.delete ('/delete/:id', async (req, res) => {
   router.get ("/:id/reviews", async (req, res) => {
     try {
       const _product = await Product.findById(req.params.id);
+      if (!_product) {
+      return res.status(404).json({ message: "Product not found" });
+      }
       const _review = await Review.find({product: {_product}});
+      res.status(200).json(_review);
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: "Server error" });
     }
   })
   
@@ -153,8 +157,9 @@ router.delete ('/delete/:id', async (req, res) => {
         _user,
         _product
       });
+      res.status(201).json(_review);
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: error.message || "Server error" });
     }
   })
 
