@@ -97,7 +97,7 @@ function Shop() {
       </div>
 
       {/* Display filtered products */}
-      <Container id="shop-item-shop-container">
+      <Container id="shop-item-shop-container" style={{marginTop: '10vh'}}>
         <Row className="g-4 justify-content-center">
           {filteredProducts.slice(0, displayMaxCount).map((product, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3}>

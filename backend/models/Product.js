@@ -32,6 +32,11 @@ const productSchema = new mongoose.Schema({
         default: 'product',
         required: true
     },
+    status: {
+        type:String,
+        enum: ['pending', 'approved', 'flagged'],
+        default: 'pending',
+    }
 });
 
 module.exports = mongoose.model('Product', productSchema);
