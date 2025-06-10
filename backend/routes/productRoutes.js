@@ -91,6 +91,21 @@ router.put("/update/:id", async (req, res) => {
     console.log("error updating data: " + error);
   }
 });
+router.put("/updateStatus/:id", async (req, res) => {
+  const { status } =
+    req.body;
+  console.log("Updating...");
+  
+  try {
+    const product = await Product.findById(req.params.id);
+    product.status = status ?? product.status;
+
+    await product.save();
+    res.status(200).json(product);
+  } catch (error) {
+    console.log("error updating data: " + error);
+  }
+});
 
 // Deleting a Product
 // router.delete ('/delete/:id', getProduct, async (req, res) => {

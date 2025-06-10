@@ -26,7 +26,7 @@ const mockProduct = {
 
 function Product() {
   const navigate = useNavigate();
-
+  const [isLoaded, setIsLoaded] = useState(false);
   const [image, setImage] = useState("");
   const [productName, setProductName] = useState("");
   const [rating, setRating] = useState(0);
@@ -36,7 +36,9 @@ function Product() {
   const [email,setEmail] = useState("");
   const [type, setType] = useState("");
   const [role, setRole] = useState("");
+  const [pendingProducts, setPendingProducts] = useState ([]);
   const { id } = useParams();
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     fetchProducts();
@@ -45,8 +47,12 @@ function Product() {
     console.log("Fetched all");
   }, [id]);
   useEffect(() => {
+    displayIndividualProducts();
+  }, [isLoaded]);
+  useEffect(() => {
     fetchUserRole();
   }, [email]);
+
   const fetchUserRole = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/users/${email}`);
@@ -57,60 +63,68 @@ function Product() {
       console.log("Error finding the user's role");
     }
   };
-  const addToCart = async () => {
-    console.log(email);
-    try {
-      const res = await axios.put(
-        `http://localhost:5000/api/users/cart/${email}`,
-        {
-          productID: id,
-        }
-      );
-      console.log("Product Added To Cart");
-    } catch (error) {
-      console.log("Error adding to cart" + error);
-    }
-  }
+  //Fetch all products and only display pending products one at a time
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-      console.log("data fetched!" + res.data);
-      setImage(res.data.image);
-      setProductName(res.data.productName);
-      setRating(res.data.rating);
-      setDescription(res.data.description);
-      setPrice(res.data.price);
-      setVendor(res.data.vendor);
-      setType(res.data.type);
+      setIsLoaded(false);
+      const res = await axios.get(`http://localhost:5000/api/products/`);
+      console.log(res.data);
+      let pending = [];
+      for (let index = 0; index < res.data.length; index++) {
+        let temp = res.data[index];
+        if (temp.status === "pending") {
+          pending.push(temp);
+        }
+      }
+      //Add all pending products to the useState
+      setPendingProducts(pending);
+      setIsLoaded(true);
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
-  const addToWishlist = async () => {
-    console.log(email);
-
-    try {
-      const res = await axios.put(
-        `http://localhost:5000/api/users/wishlist/${email}`,
-        {
-          productID: id,
-        }
-      );
-      console.log("Product Added To Wishlist");
-    } catch (error) {
-      console.log("Error adding to wishlist" + error);
+  const displayIndividualProducts = () => {
+    if (pendingProducts.length<=0) {
+      return;
     }
-  };
+    setImage(pendingProducts[0].image);
+    setProductName(pendingProducts[0].productName);
+    setRating(pendingProducts[0].rating);
+    setDescription(pendingProducts[0].description);
+    setPrice(pendingProducts[0].price);
+    setVendor(pendingProducts[0].vendor);
+    setType(pendingProducts[0].type);
+  }
+  const approveProduct = async() => {
+    //run update
+    const status = 'approved';
+
+    console.log(pendingProducts[0]._id);
+    
+    try {
+      const res = await axios.put(`http://localhost:5000/api/products/updateStatus/${pendingProducts[0]._id}`, {
+        status
+      });
+      fetchProducts();
+    } catch (error) {
+      console.log("Error updating status to approved", error);
+      
+    }
+  }
+  const denyProduct = async() => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/products/delete/${pendingProducts[0]._id}`);
+      console.log("Product deleted" + res.data);
+      fetchProducts();
+    } catch (error) {
+      console.log("Error updating status to approved", error);
+      
+    }
+  }
   
 
   return (
     <div className="product-page-container">
-      {(role === "admin" || role === "vendor") && (
-        <Link to={`/adminEdit/${id}`}>
-          <button className="edit-button">Edit</button>
-        </Link>
-      )}
-
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
           style={{
@@ -138,18 +152,22 @@ function Product() {
                   <p className="product-price">{`R ` + price}</p>
                 </Col>
                 <Col md={{ span: 5, offset: 2 }} className="product-buy-col">
-                  {/* <OutlineButton buttonLabel={"Buy Now"} onClick={addToCart} buttonLink={""}  /> */}
-                  {/* The outline button is not letting me do an onclick. we need to add functionality for that*/}
-                   <button onClick={addToCart}>Buy Now</button>
-                  {/* add to the cart */}
+
                 </Col>
-                <button onClick={addToWishlist}>Wishlist</button>
+                
               </Row>
             </div>
           </Col>
         </Row>
+        <Row>
+          <Col lg={6}>
+            <button onClick={approveProduct}>Approve</button>
+          </Col>
+          <Col lg={6}>
+            <button onClick={denyProduct}>Deny</button>
+          </Col>
+        </Row>
       </Container>
-      <ReviewContainer productId={id} />
     </div>
   );
 }
