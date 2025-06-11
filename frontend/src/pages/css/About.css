@@ -64,10 +64,15 @@
 .about-btn {
   margin-top: auto;
   padding: 12px 20px;
-  background-color: #f1a94c;
-  color: #111;
+  width: fit-content; /* lets the button size to its content */
+  
+  color: white;
+  background: transparent;
   border: none;
-  border-radius: 8px;
+  outline: 2px solid white;      /* visible outline */
+  outline-offset: 0px;           /* flush with the button edge */
+
+  border-radius: 30px;
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
@@ -75,7 +80,7 @@
 }
 
 .about-btn:hover {
-  background-color: #EE5D02;
+ 
   transform: scale(1.05);
 }
 

@@ -4,6 +4,8 @@ import Team1 from '../assets/images/call-to-action.jpg';
 import Team2 from '../assets/images/call-to-action.jpg';
 import Team3 from '../assets/images/call-to-action.jpg';
 import { useNavigate } from 'react-router-dom';
+import HitmanDark from "../assets/images/HitmanDark.jpeg";
+
 
 function About() {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ function About() {
         <h1>Welcome to Hit Me Up</h1>
         <div className="about-intro-content">
           <div className="about-description">
-            <img src={Team1} alt="Intro Visual 1" className="about-img" />
+            <img src={HitmanDark} alt="Intro Visual 1" className="about-img" />
             <p>
               Ever wanted to hire a hitman or shop for illegal arms online? Well, you're in the right place.
               <strong> Hit Me Up </strong> is a completely satirical service that parodies the dark web marketplace — for educational and humorous purposes only.
