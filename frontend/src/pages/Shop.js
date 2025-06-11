@@ -12,20 +12,23 @@ function Shop() {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("all");
   const [user, setUser] = useState("");
+  const [pageCount, setPageCount] = useState(1);
+  const [pages, setPages] = useState([]);
+  const [activePage, setActivePage] = useState(1);
 
   async function GetCurrentUser() {
-        try {
-            const _res = await axios.get("http://localhost:5000/api/users/logged", {
-                withCredentials: true, // Ensure cookies are sent with the request
-            });
-            if (_res.data){
-              setUser(_res.data.user);
-            } 
-            
-        } catch (error) {
-            console.log("Error checking credentials:", error);
-        }
-    }
+      try {
+          const _res = await axios.get("http://localhost:5000/api/users/logged", {
+              withCredentials: true, // Ensure cookies are sent with the request
+          });
+          if (_res.data){
+            setUser(_res.data.user);
+          } 
+          
+      } catch (error) {
+          console.log("Error checking credentials:", error);
+      }
+  }
 
   useEffect(() => {
     GetCurrentUser();
@@ -47,6 +50,28 @@ function Shop() {
     if (filter === "all") return true;
     return item.type === filter;
   });
+
+  useEffect(() => {
+    UpdatePageCount();
+  }, [filteredProducts]);
+
+  function UpdatePageCount () {
+      let _tempCount = Math.trunc(filteredProducts.length / displayMaxCount) + 1;
+      <Pagination.Item>{1}</Pagination.Item>
+      setPageCount(_tempCount);
+      let _tempPages = [];
+      for (let _i = 0; _i < pageCount && _i < 5; _i++) {
+          _tempPages.push(<Pagination.Item>{_i + 1}</Pagination.Item>);
+      }
+      if (pageCount <= 7 && pageCount > 5) {
+        _tempPages.push(<Pagination.Item>{6}</Pagination.Item>);
+        if (pageCount === 7) _tempPages.push(<Pagination.Item>{7}</Pagination.Item>);
+      } else if (pageCount > 7) {
+        _tempPages.push(<Pagination.Ellipsis/>);
+        _tempPages.push(<Pagination.Item>{pageCount}</Pagination.Item>);
+      }
+      setPages(_tempPages);
+  }
 
   return (
     <div className="shop-container">
@@ -104,9 +129,13 @@ function Shop() {
             </Col>
           ))}
         </Row>
-        {/* <Pagination>
-
-        </Pagination> */}
+        <Pagination>
+          <Pagination.First/>
+          <Pagination.Prev/>
+          {pages}
+          <Pagination.Next/>
+          <Pagination.Last/>
+        </Pagination>
       </Container>
     </div>
   );
