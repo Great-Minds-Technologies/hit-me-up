@@ -121,8 +121,15 @@ function Product() {
       
     }
   }
+  if (!pendingProducts.length>0) {
+    return (
+      <div style={{height:'65vh'}}>
+        <h1>No new products to review</h1>
+      </div>
+    )
+  }
+  console.log(pendingProducts.length);
   
-
   return (
     <div className="product-page-container">
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>

@@ -28,6 +28,7 @@ const AdminView = ({ id }) => {
     try {
       const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`);
       console.log("Product deleted" + res.data);
+      navigate('/shop');
     } catch (error) {
       console.log("Error deleting product");
     }

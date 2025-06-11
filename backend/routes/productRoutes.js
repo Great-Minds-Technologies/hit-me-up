@@ -119,6 +119,7 @@ router.put("/updateStatus/:id", async (req, res) => {
 // });
 router.delete ('/delete/:id', async (req, res) => {
     console.log("Attempting to delete product");
+    console.log(req.params.id);
     
     try {
         const deletedProduct = await Product.findByIdAndDelete(req.params.id);
