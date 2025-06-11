@@ -12,9 +12,16 @@ hr {
 
 /* Hero section */
 .landing-hero-section {
-  height: auto;
-  min-height: 60vh;
+  
+  
   overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .landing-hero-section {
+    height: 30vh;
+  }
+  
 }
 
 .landing-button-container {
