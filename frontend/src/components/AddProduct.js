@@ -199,7 +199,7 @@ const AddProductPage = () => {
                 <Form.Group controlId="formPrice">
                   <Form.Label className="addproduct-label">Price (R)</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     className="addproduct-input"
