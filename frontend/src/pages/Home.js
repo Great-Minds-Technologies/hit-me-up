@@ -17,8 +17,8 @@ function Home() {
     async function GetProductsServices() {
         try {
             const _items = await axios.get("http://localhost:5000/api/products");
-            const _products = _items.data.filter((index) => index.type === "Product");
-            const _services = _items.data.filter((index) => index.type === "Service");
+            const _products = _items.data.filter((index) => index.type === "product");
+            const _services = _items.data.filter((index) => index.type === "service");
             _products.sort((a, b) => b.rating - a.rating );
             _services.sort((a, b) => b.rating - a.rating);
             setProducts(_products.slice(0,4));
@@ -77,7 +77,7 @@ function Home() {
                                <FeaturedCard
                                    description={index.description}
                                    image={index.image}
-                                   name={index.name}
+                                   name={index.productName}
                                    price={index.price}
                                />
                            </Col>
