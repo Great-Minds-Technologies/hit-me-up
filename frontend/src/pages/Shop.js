@@ -8,7 +8,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Shop() {
-  const [displayMaxCount, setDisplayMaxCount] = useState(20);
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("all");
   const [user, setUser] = useState("");
@@ -50,28 +49,6 @@ function Shop() {
     if (filter === "all") return true;
     return item.type === filter;
   });
-
-  useEffect(() => {
-    UpdatePageCount();
-  }, [filteredProducts]);
-
-  function UpdatePageCount () {
-      let _tempCount = Math.trunc(filteredProducts.length / displayMaxCount) + 1;
-      <Pagination.Item>{1}</Pagination.Item>
-      setPageCount(_tempCount);
-      let _tempPages = [];
-      for (let _i = 0; _i < pageCount && _i < 5; _i++) {
-          _tempPages.push(<Pagination.Item>{_i + 1}</Pagination.Item>);
-      }
-      if (pageCount <= 7 && pageCount > 5) {
-        _tempPages.push(<Pagination.Item>{6}</Pagination.Item>);
-        if (pageCount === 7) _tempPages.push(<Pagination.Item>{7}</Pagination.Item>);
-      } else if (pageCount > 7) {
-        _tempPages.push(<Pagination.Ellipsis/>);
-        _tempPages.push(<Pagination.Item>{pageCount}</Pagination.Item>);
-      }
-      setPages(_tempPages);
-  }
 
   return (
     <div className="shop-container">
@@ -116,7 +93,7 @@ function Shop() {
       {/* Display filtered products */}
       <Container id="shop-item-shop-container">
         <Row>
-          {filteredProducts.slice(0, displayMaxCount).map((product) => (
+          {filteredProducts.map((product) => (
             <Col xs={12} sm={6} md={4} lg={3}>
               <Link to={`/product/${product._id}`}>
                 <ShopItemCard
@@ -129,13 +106,6 @@ function Shop() {
             </Col>
           ))}
         </Row>
-        <Pagination>
-          <Pagination.First/>
-          <Pagination.Prev/>
-          {pages}
-          <Pagination.Next/>
-          <Pagination.Last/>
-        </Pagination>
       </Container>
     </div>
   );
