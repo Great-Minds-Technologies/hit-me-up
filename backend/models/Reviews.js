@@ -15,10 +15,9 @@ const reviewSchema = new mongoose.Schema({
         required: true,
     },
     product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        type: String,
         required: true,
     }
 });
 
-module.exports = mongoose.model("Item_Review", reviewSchema);
+module.exports = mongoose.model("Review", reviewSchema);

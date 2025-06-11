@@ -7,13 +7,36 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
 function Shop() {
   const [displayMaxCount, setDisplayMaxCount] = useState(20);
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const fetchUserRole = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
+      console.log(email);
+      console.log(res);
+      console.log(res.data.role);
+      setRole(res.data.role);
+      console.log(role);
+    } catch (error) {
+      console.log("Error finding the user's role");
+    }
+  };
 
   useEffect(() => {
+    console.log(email);
+    if (email) {
+      fetchUserRole();
+    }
+  }, [email]);
+  useEffect(() => {
+    const emailTemp = JSON.parse(localStorage.getItem("email"));
+    if (emailTemp) {
+      setEmail(emailTemp);
+    }
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/products");
@@ -24,9 +47,11 @@ function Shop() {
       }
     };
     fetchProducts();
+    console.log(JSON.parse(localStorage.getItem("email")));
+    // setEmail(JSON.parse(localStorage.getItem("email")));
   }, []);
 
-    const filteredProducts = products.filter((item) => {
+  const filteredProducts = products.filter((item) => {
     if (filter === "all") return true;
     return item.type === filter;
   });
@@ -35,14 +60,13 @@ function Shop() {
     <div className="shop-container">
       <div className="shop-submenu">
         <h2 className="shop-title">ALL PRODUCTS</h2>
-
-            <Link to="/addProduct" className="add-product-button">
-      + Add Product
-    </Link>
-
-  {/* Filter buttons */}
-
- <div className="shop-filter-wrapper">
+        {role === "admin" || role === "vendor" ? (
+          <Link to="/addProduct" className="add-product-button">
+            + Add Product
+          </Link>
+        ) : null}
+        ;{/* Filter buttons */}
+        <div className="shop-filter-wrapper">
           <div className="shop-filter-buttons">
             <button
               className={`shop-filter-button ${
@@ -68,15 +92,12 @@ function Shop() {
             >
               Services
             </button>
-         
+          </div>
         </div>
       </div>
 
-      </div>
-
-      
       {/* Display filtered products */}
-      <Container id="shop-item-shop-container">
+      <Container id="shop-item-shop-container" style={{marginTop: '10vh'}}>
         <Row className="g-4 justify-content-center">
           {filteredProducts.slice(0, displayMaxCount).map((product, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3}>

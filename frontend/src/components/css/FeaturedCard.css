@@ -16,8 +16,8 @@
 }
 
 .featured-text-container {
-    background-color: rgba(0, 0, 0, 0.264);
-    color: #DDAC7D;
+    background-color: rgba(0, 0, 0);
+    color: white;
     position: relative;
     top: 65%;
    
@@ -26,8 +26,6 @@
   text-decoration: none;
   color: inherit;
 }
-
-
 
 .card-title {
     color: #ffffff;

@@ -11,9 +11,9 @@ const FeaturedCard = ({ name, description, image, price }) => {
                 </div>
                 <Card.Body className="featured-text-container">
                     {name ? (
-                        <Card.Title>{name}</Card.Title>
+                        <Card.Title className="card-title">{name}</Card.Title>
                     ) : (
-                        <Card.Title>Card Title</Card.Title>
+                        <Card.Title className="card-title">Card Title</Card.Title>
                     )}
 
                     {description ? (
