@@ -1,46 +1,43 @@
 .footer {
     width: 100%;
-    height: fit-content;
     background-color: #2f2f2f;
-    
-}
-
-
-
-.logo-link-column {
     padding-top: 5vh;
     padding-bottom: 5vh;
-    width: 15%;
-    margin-right: 5vh;
-
 }
-/* 
-changed */
 
-.footer-page-links,
-.logo-link-column,
-.footer-socials-column {
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-link-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3vh;
+}
+
+.footer-logo {
+    width: 60%;
+    height: auto;
+}
+
+.footer-page-links {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.footer-logo {
-    height: auto;
-    width: 60%;
-}
-
-.footer-page-links {
-    text-decoration: none;
-   text-align: center;
+    text-align: center;
+    margin-bottom: 3vh;
 }
 
 .page-link {
     text-decoration: none;
     color: #DDAC7D;
-    margin-top: 1.5vh;
-    margin-bottom: 1.5vh;
+    margin: 1.5vh 0;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .page-link:hover {
@@ -51,57 +48,59 @@ changed */
     color: #DDAC7D;
 }
 
-.socials-container{
-    width: 60%;
+.socials-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.socials-row {
+    display: flex;
+    justify-content: center;
+    margin: 2.5vh 0;
+    gap: 1vw;
 }
 
 .socials-column {
-    margin-left: 0.125vw;
-    margin-right: 0.125vw;
-}
-
-
-
-.socials-row {
-    margin-top: 2.5vh;
-    margin-bottom: 2.5vh;
-}
-
-.footer .row{
-     align-items: center;
-}
-
-.row{
-    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
 }
 
 .footer-socials {
-    height: 100%;
     width: 100%;
-     padding: 7%;  
+    height: 100%;
+    padding: 7%;
     box-sizing: content-box;
 }
 
+/* Responsive layout for mobile */
 @media (max-width: 768px) {
     .logo-link-column {
-        height: 30vh;
-        padding-left: 17.5vw;
-        padding-right: 15vw;
+        padding: 0 15vw;
+    }
+
+    .footer-logo {
+        width: 70%;
     }
 
     .footer-page-links {
-        margin-top: 3vh;
-        margin-bottom: 3vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .socials-row {
+        flex-wrap: wrap;
+        gap: 2vw;
     }
 
     .socials-column {
-        margin-left: -2vw;
-        margin-right: -2vw;
+        width: 2.75rem;
+        height: 2.75rem;
     }
 
-    .footer-socials {
-        height: 100%;
-        width: 50%;
-    }
+   
 }

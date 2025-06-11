@@ -41,7 +41,8 @@ function Shop() {
       try {
         const response = await axios.get("http://localhost:5000/api/products");
         console.log("Fetched products:", response.data);
-        setProducts(response.data);
+        const approvedProducts = response.data.filter( (product) => product.status =="approved");
+        setProducts(approvedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -97,7 +98,7 @@ function Shop() {
       </div>
 
       {/* Display filtered products */}
-      <Container id="shop-item-shop-container">
+      <Container id="shop-item-shop-container" style={{marginTop: '10vh'}}>
         <Row className="g-4 justify-content-center">
           {filteredProducts.slice(0, displayMaxCount).map((product, index) => (
             <Col key={index} xs={12} sm={6} md={4} lg={3}>

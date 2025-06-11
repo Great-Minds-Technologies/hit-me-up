@@ -91,6 +91,21 @@ router.put("/update/:id", async (req, res) => {
     console.log("error updating data: " + error);
   }
 });
+router.put("/updateStatus/:id", async (req, res) => {
+  const { status } =
+    req.body;
+  console.log("Updating...");
+  
+  try {
+    const product = await Product.findById(req.params.id);
+    product.status = status ?? product.status;
+
+    await product.save();
+    res.status(200).json(product);
+  } catch (error) {
+    console.log("error updating data: " + error);
+  }
+});
 
 // Deleting a Product
 // router.delete ('/delete/:id', getProduct, async (req, res) => {
@@ -104,6 +119,7 @@ router.put("/update/:id", async (req, res) => {
 // });
 router.delete ('/delete/:id', async (req, res) => {
     console.log("Attempting to delete product");
+    console.log(req.params.id);
     
     try {
         const deletedProduct = await Product.findByIdAndDelete(req.params.id);
@@ -122,18 +138,24 @@ router.delete ('/delete/:id', async (req, res) => {
   router.get ("/:id/reviews", async (req, res) => {
     try {
       const _product = await Product.findById(req.params.id);
-      const _productName = _product.productName;
+      
+      if (!_product) {
+      return res.status(404).json({ message: "Product not found" });
+      }
+       const _productName = _product.productName;
       const _review = await Review.find({product: {_productName}});
       console.log("Reviews: " +_review);
-      if (_review) res.status(200).json(_review);
+      // if (_review) res.status(200).json(_review);   //commented out incase of hangs
+      res.status(200).json(_review);
     } catch (error) {
-      console.log(err);
+      res.status(500).json({ error: "Server error" });
     }
   })
   
   router.post ("/:id/review/post", async (req, res) => {
     try {
-      const { _rating, _productReview, _user } = req.body;
+      const _user = req.session.user;
+      const { _rating, _productReview } = req.body;
       const _product = await Product.findById(req.params.id);
       const _review = new Review({
         _rating,
@@ -141,10 +163,10 @@ router.delete ('/delete/:id', async (req, res) => {
         _user,
         _product
       });
-      await _review.save();
-      res.status(200).json(product);
+      console.log(_review);
+      res.status(201).json(_review);
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: error.message || "Server error" });
     }
   })
 
