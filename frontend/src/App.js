@@ -19,6 +19,7 @@ import Admin from './pages/Admin';
 import AddProductPage from './pages/AddProductPage';
 import AdminEditPage from './pages/AdminEditPage';
 import Wishlist from './pages/Wishlist';
+import PurchaseConfirmation from './pages/PurchaseConfirmation';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path='/addProduct' element={<AddProductPage/>}/>
             <Route path='/wishlist' element={<Wishlist/>}/>
             <Route path='/admin' element={<Admin/>}/>
+            <Route path='/purchase' element={<PurchaseConfirmation />}/>
           </Routes>
         <Footer/>
   
