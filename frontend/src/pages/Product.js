@@ -36,8 +36,22 @@ function Admin() {
   const [email, setEmail] = useState("");
   const [type, setType] = useState("");
   const [role, setRole] = useState("");
+  const [isFlagged, setIsFlagged] = useState(false);
   const { id } = useParams();
-
+  const flagProduct = async() => {
+    //run update
+    const status = 'flagged';
+    
+    try {
+      const res = await axios.put(`http://localhost:5000/api/products/updateStatus/${id}`, {
+        status
+      });
+      setIsFlagged(true);
+    } catch (error) {
+      console.log("Error updating status to flagged", error);
+      
+    }
+  }
   useEffect(() => {
     fetchProducts();
     setEmail(JSON.parse(localStorage.getItem("email")));
@@ -76,7 +90,7 @@ function Admin() {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-      console.log("data fetched!" + res.data);
+      console.log("data fetched!" , res.data);
       setImage(res.data.image);
       setProductName(res.data.productName);
       setRating(res.data.rating);
@@ -84,6 +98,11 @@ function Admin() {
       setPrice(res.data.price);
       setVendor(res.data.vendor);
       setType(res.data.type);
+      if (res.data.status == "flagged") {
+        setIsFlagged(true);
+        console.log("setisflaggedtotrue");
+        
+      }
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
@@ -155,6 +174,15 @@ function Admin() {
                 </Col>
               </Row>
               <Row style={{marginTop: '2vh'}}>
+                <div className="admin-button-group">
+                  <Button
+                    variant={isFlagged ? "danger" : "outline-danger"}
+                    className="admin-flag-button"
+                    onClick={flagProduct} 
+                  >
+                    {isFlagged ? "Flagged" : "Flag Product"}
+                  </Button>
+                </div>
               </Row>
             </div>
           </Col>
