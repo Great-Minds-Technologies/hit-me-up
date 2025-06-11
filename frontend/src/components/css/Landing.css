@@ -1,5 +1,7 @@
 .landing-circle-section {
   display: flex;
+  width: 100%;
+  height: auto;
   justify-content: center;
   align-items: center;
   padding: 10vh 5vw;
@@ -8,11 +10,15 @@
   z-index: 0;
   margin-top: 0.5%;
   margin-bottom: 5%;
+  position: relative;
+}
+.landing-container{
+  height: auto;
 }
 
 .landing-outlinebtn {
-  position:absolute ;
-  top: 75%;
+  
+  top: 76%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 20%;
@@ -65,19 +71,54 @@
 .landing-button-container {
   width: 50%;
 }
-
 .circle-overlay-content {
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 3;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  width: 100%;
+  
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 3;
+  padding: 5vh 2vw;
   pointer-events: auto;
+  
 }
+@media screen and (max-width: 768px) {
+  .landing-welcome h1 {
+    font-size: clamp(1rem, 4vw, 2rem);
+  }
+
+  .landing-welcome h2 {
+    font-size: clamp(1.5rem, 8vw, 3rem);
+  }
+
+  .landingPair h1 {
+    font-size: clamp(0.9rem, 3vw, 1.8rem);
+  }
+
+  .landing-button-component {
+    font-size: clamp(0.7rem, 4vw, 1.2rem);
+  }
+
+  .circle-overlay-content {
+    top: 18%;
+    gap: 3vh;
+    padding: 3vh 4vw;
+  }
+
+  .landingPair {
+    max-width: 140px;
+    font-size: 5px;
+  }
+
+}
+
+
 
 .landing-welcome {
   position: absolute;
@@ -104,12 +145,13 @@
 .landingPair h1 {
   white-space: nowrap;
   word-break: keep-all;
-  font-size: clamp(1rem, 2.5vw, 2.5rem); /* ✅ Responsive */
+  font-size: clamp(0.5rem, 2.5vw, 2.5rem); /* ✅ Responsive */
 }
 
 .landingPair {
   position: absolute;
   text-align: left;
+  margin-top: 5%;
   color: white;
   max-width: 200px;
   pointer-events: auto;
