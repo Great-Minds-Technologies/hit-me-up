@@ -30,6 +30,7 @@ function Landing(){
                    <div className='landingPair landing-2'>
                     <h1>No Witness.<br/>No Worries.</h1>
                     <p>We bring closure</p>
+                  
                  </div>
 
                    <div className='landingPair landing-3'>
@@ -38,14 +39,14 @@ function Landing(){
                  </div>
 
                  
-                <div className='landing-button-container'>
-                  <Link to="/shop" className="landing-button-component btn-primary">
-  Meet the man
-</Link>
-                </div>
-               
+            
                        
              </div>
+               <div className='landing-outlinebtn'>
+                 
+            <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
+              
+               </div>
              
         </div>
     );
