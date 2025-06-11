@@ -11,6 +11,12 @@
     background-color: rgba(0, 0, 0, 0);
     border-width: 0.15vw;
 }
+ @media screen and (max-width: 768px) {
+    .outline-button-container {
+        height: 4vh;
+    }
+    
+ }
 
 .outline-button-component:hover {
     background-color: #DDAC7D;

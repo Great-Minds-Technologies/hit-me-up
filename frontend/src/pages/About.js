@@ -1,8 +1,8 @@
 import React from 'react';
 import '../pages/css/About.css';
-import Team1 from '../assets/images/call-to-action.jpg';
-import Team2 from '../assets/images/call-to-action.jpg';
-import Team3 from '../assets/images/call-to-action.jpg';
+import Team1 from '../assets/images/kai.jpg';
+import Team2 from '../assets/images/gun.png';
+import Team3 from '../assets/images/danae.jpg';
 import { useNavigate } from 'react-router-dom';
 import HitmanDark from "../assets/images/HitmanDark.jpeg";
 
@@ -59,21 +59,21 @@ function About() {
       <img src={Team1} alt="Team member 1" />
       <div className="team-text">
         <h3>Kai the Killer</h3>
-        <p>Frontend Developer – Designed the entire UI and handled all React routing.</p>
+        <p>Handled front-end design and back-end development, connecting the visual layout with the logic behind the scenes.</p>
       </div>
     </div>
     <div className="team-member">
       <img src={Team2} alt="Team member 2" />
       <div className="team-text">
-        <h3>onti the mastermind</h3>
-        <p>Backend & API – Built all the fake endpoints, weapon listings, and logic.</p>
+        <h3>Onti the Mastermind</h3>
+        <p>Developed the interface users interact with, while also managing the systems and code that power the site behind the scenes.</p>
       </div>
     </div>
     <div className="team-member">
       <img src={Team3} alt="Team member 3" />
       <div className="team-text">
-        <h3>Dan the man</h3>
-        <p>UX Designer – Crafted the dark, edgy, yet fun visual identity of the site.</p>
+        <h3>Dan the Man</h3>
+        <p>Built both the front end and back end — crafting the user interface and developing core functionality for a smooth user experience.</p>
       </div>
     </div>
   </div>

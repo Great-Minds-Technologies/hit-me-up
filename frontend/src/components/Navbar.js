@@ -71,9 +71,9 @@ function Navbar() {
     }
   }
 
-//   useEffect(() => {
-//     // CheckCredentials();
-//   }, []);
+
+const [menuOpen, setMenuOpen] = useState(false);
+
 
   return (
     <div className="navbar-container">
@@ -81,7 +81,17 @@ function Navbar() {
         <img className="logo-image" src={SmallLogo} alt="Logo" />
       </Link>
 
-      <div className="center-buttons">
+      {/* Hamburger Icon */}
+    <div
+      className="hamburger"
+      onClick={() => setMenuOpen((prev) => !prev)}
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+      <div className={`center-buttons ${menuOpen ? "open" : ""}`}>
         {navHeading.map((_heading) => (
           <NavLink
             key={_heading.value}

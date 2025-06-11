@@ -4,7 +4,7 @@
 
 function Landing(){
     return(
-        <div className='landing-container'>
+        <section className='landing-container'>
                 <section className="landing-circle-section">
             <div className="circle circle-left"></div>
 
@@ -30,7 +30,9 @@ function Landing(){
                    <div className='landingPair landing-2'>
                     <h1>No Witness.<br/>No Worries.</h1>
                     <p>We bring closure</p>
-                  
+                    <div landing-outlinebtn>
+                     <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
+                  </div>
                  </div>
 
                    <div className='landingPair landing-3'>
@@ -39,16 +41,18 @@ function Landing(){
                  </div>
 
                  
+
+                 
             
                        
              </div>
-               <div className='landing-outlinebtn'>
+               {/* <div className='landing-outlinebtn'>
                  
             <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
               
-               </div>
+               </div> */}
              
-        </div>
+        </section>
     );
 }
 
