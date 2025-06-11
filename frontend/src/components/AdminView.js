@@ -26,14 +26,32 @@ const AdminView = ({ id }) => {
   const handleDelete = async (e) => {
     console.log("deleting product...");
     try {
-      const res = await axios.delete(`http://localhost:5000/api/products/delete/${id}`);
+      const res = await axios.delete(
+        `http://localhost:5000/api/products/delete/${id}`
+      );
       console.log("Product deleted" + res.data);
-      navigate('/shop');
+      navigate("/shop");
     } catch (error) {
       console.log("Error deleting product");
     }
   };
+  const flagProduct = async () => {
+    //run update
+    const status = "flagged";
 
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/products/updateStatus/${id}`,
+        {
+          status,
+        }
+      );
+      setIsFlagged(true);
+      console.log("Flagged Product Successfully");
+    } catch (error) {
+      console.log("Error updating status to flagged", error);
+    }
+  };
   const handleStockChange = (e) => {
     setOutOfStock(e.target.checked);
   };
@@ -54,13 +72,16 @@ const AdminView = ({ id }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:5000/api/products/update/${id}`, {
-        productName,
-        description,
-        price,
-        rating,
-        vendor,
-      });
+      const res = await axios.put(
+        `http://localhost:5000/api/products/update/${id}`,
+        {
+          productName,
+          description,
+          price,
+          rating,
+          vendor,
+        }
+      );
 
       console.log(res);
       console.log("Successfully updated product");
@@ -70,7 +91,6 @@ const AdminView = ({ id }) => {
       setTimeout(() => {
         navigate("/shop"); // Redirect after 2 seconds
       }, 800);
-
     } catch (error) {
       console.log("Error updating product", error);
     }
@@ -80,7 +100,9 @@ const AdminView = ({ id }) => {
     const fetchProduct = async () => {
       try {
         const productId = id;
-        const res = await axios.get(`http://localhost:5000/api/products/${productId}`);
+        const res = await axios.get(
+          `http://localhost:5000/api/products/${productId}`
+        );
         const data = res.data;
 
         setProductName(data.productName || "");
@@ -109,11 +131,10 @@ const AdminView = ({ id }) => {
           </Col>
           <Col md={{ span: 5, offset: 1 }} className="admin-form-col">
             <div className="admin-form-wrapper">
-
               {/* Success Message */}
               {showSuccess && (
                 <div className="admin-success-popup">
-                  Product updated successfully! 
+                  Product updated successfully!
                 </div>
               )}
 
@@ -143,7 +164,7 @@ const AdminView = ({ id }) => {
                   <RatingDisplay
                     value={rating}
                     onChange={(e, newRating) => setRating(newRating)}
-                    readOnly={false}
+                    readOnly={true}
                   />
                 </Form.Group>
 
@@ -172,34 +193,25 @@ const AdminView = ({ id }) => {
                   <Button
                     variant={isFlagged ? "danger" : "outline-danger"}
                     className="admin-flag-button"
-                    onClick={handleDelete}
+                    onClick={flagProduct}
                   >
                     {isFlagged ? "Flagged" : "Flag Product"}
                   </Button>
+                  <Button
+                    variant="danger"
+                    className="admin-delete-button"
+                    onClick={handleDelete}
+                    style={{ marginTop:'5%', marginLeft: '5%' }}
+                  >
+                    Delete Product
+                  </Button>
                 </div>
 
-                 <Button
-    variant="danger"
-    className="admin-delete-button"
-    onClick={handleDelete}
-    style={{ marginLeft: "10px" }}
-  >
-    Delete Product
-  </Button>
-
-                <Form.Group controlId="formStock" className="admin-toggle-group">
-                  <Form.Label className="admin-label">Out of Stock</Form.Label>
-                  <label className="admin-toggle-switch">
-                    <input
-                      type="checkbox"
-                      checked={outOfStock}
-                      onChange={handleStockChange}
-                    />
-                    <span className="admin-slider" />
-                  </label>
-                </Form.Group>
-
-                <Button variant="outline-warning" className="admin-submit-button" type="submit">
+                <Button
+                  variant="outline-warning"
+                  className="admin-submit-button"
+                  type="submit"
+                >
                   Save Changes
                 </Button>
               </Form>

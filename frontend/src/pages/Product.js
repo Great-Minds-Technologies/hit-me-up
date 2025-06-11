@@ -33,11 +33,26 @@ function Admin() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
+  const [email, setEmail] = useState("");
   const [type, setType] = useState("");
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+  const [isFlagged, setIsFlagged] = useState(false);
   const { id } = useParams();
-
+  const flagProduct = async() => {
+    //run update
+    const status = 'flagged';
+    
+    try {
+      const res = await axios.put(`http://localhost:5000/api/products/updateStatus/${id}`, {
+        status
+      });
+      setIsFlagged(true);
+    } catch (error) {
+      console.log("Error updating status to flagged", error);
+      
+    }
+  }
   useEffect(() => {
     async function CheckCredentials() {
       try {
@@ -81,12 +96,18 @@ function Admin() {
       setPrice(res.data.price);
       setVendor(res.data.vendor);
       setType(res.data.type);
-
+      if (res.data.status == "flagged") {
+        setIsFlagged(true);
+        console.log("setisflaggedtotrue");
+        
+      }
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
   const addToWishlist = async () => {
+    console.log(email);
+
     try {
       const res = await axios.put(
         `http://localhost:5000/api/users/wishlist/${user.email}`,
@@ -154,6 +175,15 @@ function Admin() {
                 </Col>
               </Row>
               <Row style={{marginTop: '2vh'}}>
+                <div className="admin-button-group">
+                  <Button
+                    variant={isFlagged ? "danger" : "outline-danger"}
+                    className="admin-flag-button"
+                    onClick={flagProduct} 
+                  >
+                    {isFlagged ? "Flagged" : "Flag Product"}
+                  </Button>
+                </div>
               </Row>
             </div>
           </Col>
