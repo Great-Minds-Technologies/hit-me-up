@@ -169,7 +169,17 @@ router.put("/removeFromCart/:email", async (req, res) => {
     await user.save();
     res.status(200).json({message: "Removed field"});
   } catch (error) {
-    console.log("Error Adding to wishlist" + error);
+    console.log("Error removing item from cart" + error);
+  }
+});
+router.put("/clearCart/:email", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email });
+    user.cartIds = [];
+    await user.save();
+    res.status(200).json({message: "Cleared Cart"});
+  } catch (error) {
+    console.log("Error clearing cart" + error);
   }
 });
 

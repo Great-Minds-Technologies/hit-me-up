@@ -33,7 +33,7 @@ function Admin() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [type, setType] = useState("");
   const [role, setRole] = useState("");
   const { id } = useParams();
@@ -47,7 +47,6 @@ function Admin() {
   useEffect(() => {
     if (email) {
       fetchUserRole();
-      
     }
   }, [email]);
   const fetchUserRole = async () => {
@@ -73,7 +72,7 @@ function Admin() {
     } catch (error) {
       console.log("Error adding to cart" + error);
     }
-  }
+  };
   const fetchProducts = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
@@ -104,7 +103,6 @@ function Admin() {
       console.log("Error adding to wishlist" + error);
     }
   };
-  
 
   return (
     <div className="product-page-container">
@@ -131,7 +129,7 @@ function Admin() {
             <div className="product-info">
               <h1 className="product-title">{productName}</h1>
               <h4 className="product-vendor">{vendor}</h4>
-              <h4 className="product-type">{type}</h4> 
+              <h6 className="product-type">{type}</h6>
               <div className="product-rating">
                 <RatingDisplay value={rating} readOnly={true} />
               </div>
@@ -140,13 +138,23 @@ function Admin() {
                 <Col md={5} className="product-price-col">
                   <p className="product-price">{`R ` + price}</p>
                 </Col>
-                <Col md={{ span: 5, offset: 2 }} className="product-buy-col">
+                <Col md={{ span: 5, offset: 0 }} className="product-buy-col">
                   {/* <OutlineButton buttonLabel={"Buy Now"} onClick={addToCart} buttonLink={""}  /> */}
                   {/* The outline button is not letting me do an onclick. we need to add functionality for that*/}
-                   <button onClick={addToCart}>Buy Now</button>
+                  <OutlineButton
+                    buttonLabel={"Buy now"}
+                    buttonFunction={addToCart}
+                  />
                   {/* add to the cart */}
                 </Col>
-                <button onClick={addToWishlist}>Wishlist</button>
+                <Col md={{ span: 2, offset: 0 }} className="product-wishlist-col">
+                  <OutlineButton
+                    buttonLabel={"♡"}
+                    buttonFunction={addToWishlist}
+                  />
+                </Col>
+              </Row>
+              <Row style={{marginTop: '2vh'}}>
               </Row>
             </div>
           </Col>

@@ -6,11 +6,13 @@ import "./css/Cart.css";
 import DummyImg from "../assets/images/Asset_58x.png";
 import axios from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [coupon, setCoupon] = useState("");
   const [subtotal, setSubTotal] = useState(0);
+  const navigate = useNavigate();
 
   const handleRemove = async (id) => {
     try {
@@ -20,6 +22,7 @@ function Cart() {
       console.log("removedProduct");
       fetchProducts();
     } catch (error) {
+      console.log("Error removing item from cart", error);
       
     }
   };
@@ -128,6 +131,36 @@ const handleDecrease = async (productId) => {
     console.error("Error decreasing quantity:", error);
   }
 };
+const clearCart = async() => {
+  if (!email) {
+    console.warn("Email not set yet");
+    return;
+  }
+  try {
+    await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
+    fetchProducts();
+    console.log("Cleared Cart");
+  } catch (error) {
+    console.error("Error clearing cart", error);
+    
+  }
+}
+const clearCartAndBuy = async() => {
+  
+  if (!email) {
+    console.warn("Email not set yet");
+    return;
+  }
+  try {
+    await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
+    fetchProducts();
+    navigate('/purchase');
+    console.log("Cleared Cart");
+  } catch (error) {
+    console.error("Error clearing cart", error);
+    
+  }
+}
 
 
 
@@ -180,8 +213,7 @@ const handleDecrease = async (productId) => {
             <span>Grand Total:</span>
             <span>R{grandTotal.toFixed(2)}</span>
           </div>
-
-          <button>BUY</button>
+          {grandTotal>0 ? <OutlineButton buttonLabel={"BUY"} buttonFunction={clearCartAndBuy} buttonLink={'/purchase'}/> : <OutlineButton buttonLabel={"BUY"} buttonLink={'/purchase'} disabled={true}/>}
         </div>
       </div>
     </div>
