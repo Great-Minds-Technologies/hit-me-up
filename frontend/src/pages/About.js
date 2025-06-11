@@ -1,8 +1,9 @@
 import React from 'react';
 import '../pages/css/About.css';
 import Team1 from '../assets/images/kai.jpg';
-import Team2 from '../assets/images/gun.png';
+import Team2 from '../assets/images/onti.jpg';
 import Team3 from '../assets/images/danae.jpg';
+import img from '../assets/images/call-to-action.jpg';
 import { useNavigate } from 'react-router-dom';
 import HitmanDark from "../assets/images/HitmanDark.jpeg";
 
@@ -27,7 +28,7 @@ function About() {
             </button>
           </div>
           <div className="about-description">
-            <img src={Team2} alt="Intro Visual 2" className="about-img" />
+            <img src={img} alt="Intro Visual 2" className="about-img" />
             <p>
               On our platform, clients gain exclusive access to a curated selection of premium weapons, tactical gear, and professional services. Whether you're looking to make a statement or remove a problem discreetly, we've built the tools and the network to make it happen—fast, clean, and untraceable.
             </p>

@@ -1,11 +1,11 @@
 .weapon-choice-container {
   display: flex;
-  width: 100%;
+  width: 50vh;
   flex-direction: row;
   /* Allow wrapping if needed */
-  gap: 10px; /* optional spacing between items */
   justify-content: space-around; /* optional layout choice */
 }
+
 
 .weapon-img-stack {
   display: flex;
@@ -43,4 +43,14 @@
 
 .weapon-selected-text{
     color: #F3B86D;
+}
+
+@media screen and (max-width:768px){
+  .weapon-choice-container{
+    flex-direction: column;
+    width: 100%;
+  }
+  .weapon-img{
+    width: 5vh;
+  }
 }
