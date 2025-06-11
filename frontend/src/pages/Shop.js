@@ -114,7 +114,7 @@ function Shop() {
       </div>
 
       {/* Display filtered products */}
-      <Container id="shop-item-shop-container" style={{marginTop: '10vh'}}>
+      <Container id="shop-item-shop-container">
         <Row>
           {filteredProducts.slice(0, displayMaxCount).map((product) => (
             <Col xs={12} sm={6} md={4} lg={3}>
