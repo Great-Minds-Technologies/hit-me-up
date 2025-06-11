@@ -161,10 +161,10 @@ function Product() {
         </Row>
         <Row>
           <Col lg={6}>
-            <button onClick={approveProduct}>Approve</button>
+            <OutlineButton buttonLabel={"Approve"} buttonFunction={approveProduct}/>
           </Col>
           <Col lg={6}>
-            <button onClick={denyProduct}>Deny</button>
+            <OutlineButton buttonLabel={"Deny"} buttonFunction={denyProduct}/>
           </Col>
         </Row>
       </Container>
