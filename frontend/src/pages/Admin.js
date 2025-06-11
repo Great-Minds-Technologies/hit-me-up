@@ -72,7 +72,7 @@ function Product() {
       let pending = [];
       for (let index = 0; index < res.data.length; index++) {
         let temp = res.data[index];
-        if (temp.status === "pending") {
+        if (temp.status === "pending" || temp.status==="flagged") {
           pending.push(temp);
         }
       }
