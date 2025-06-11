@@ -28,9 +28,11 @@ function Landing(){
                  </div>
 
                    <div className='landingPair landing-2'>
+                   
                     <h1>No Witness.<br/>No Worries.</h1>
                     <p>We bring closure</p>
-                    <div landing-outlinebtn>
+                   
+                    <div className='landing-outlinebtn' >
                      <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
                   </div>
                  </div>
@@ -51,6 +53,9 @@ function Landing(){
             <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
               
                </div> */}
+               <div className='landing-btn-mobile'>
+               <OutlineButton buttonLabel="Meet the Man" buttonLink="/shop" />
+                </div>
              
         </section>
     );
