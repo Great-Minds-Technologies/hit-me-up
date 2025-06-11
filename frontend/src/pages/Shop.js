@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Pagination } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import OutlineButton from "../components/OutlineButton.js";
 import "./css/Shop.css";
@@ -11,32 +11,25 @@ function Shop() {
   const [displayMaxCount, setDisplayMaxCount] = useState(20);
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("all");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const fetchUserRole = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
-      console.log(email);
-      console.log(res);
-      console.log(res.data.role);
-      setRole(res.data.role);
-      console.log(role);
-    } catch (error) {
-      console.log("Error finding the user's role");
+  const [user, setUser] = useState("");
+
+  async function GetCurrentUser() {
+        try {
+            const _res = await axios.get("http://localhost:5000/api/users/logged", {
+                withCredentials: true, // Ensure cookies are sent with the request
+            });
+            if (_res.data){
+              setUser(_res.data.user);
+            } 
+            
+        } catch (error) {
+            console.log("Error checking credentials:", error);
+        }
     }
-  };
 
   useEffect(() => {
-    console.log(email);
-    if (email) {
-      fetchUserRole();
-    }
-  }, [email]);
-  useEffect(() => {
-    const emailTemp = JSON.parse(localStorage.getItem("email"));
-    if (emailTemp) {
-      setEmail(emailTemp);
-    }
+    GetCurrentUser();
+    
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/products");
@@ -48,8 +41,6 @@ function Shop() {
       }
     };
     fetchProducts();
-    console.log(JSON.parse(localStorage.getItem("email")));
-    // setEmail(JSON.parse(localStorage.getItem("email")));
   }, []);
 
   const filteredProducts = products.filter((item) => {
@@ -61,7 +52,7 @@ function Shop() {
     <div className="shop-container">
       <div className="shop-submenu">
         <h2 className="shop-title">ALL PRODUCTS</h2>
-        {role === "admin" || role === "vendor" ? (
+        {user.role === "admin" || user.role === "vendor" ? (
           <Link to="/addProduct" className="add-product-button">
             + Add Product
           </Link>
@@ -99,9 +90,9 @@ function Shop() {
 
       {/* Display filtered products */}
       <Container id="shop-item-shop-container" style={{marginTop: '10vh'}}>
-        <Row className="g-4 justify-content-center">
-          {filteredProducts.slice(0, displayMaxCount).map((product, index) => (
-            <Col key={index} xs={12} sm={6} md={4} lg={3}>
+        <Row>
+          {filteredProducts.slice(0, displayMaxCount).map((product) => (
+            <Col xs={12} sm={6} md={4} lg={3}>
               <Link to={`/product/${product._id}`}>
                 <ShopItemCard
                   productImage={product.image}
@@ -113,6 +104,9 @@ function Shop() {
             </Col>
           ))}
         </Row>
+        {/* <Pagination>
+
+        </Pagination> */}
       </Container>
     </div>
   );

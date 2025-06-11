@@ -87,22 +87,29 @@ hr {
 .featured-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
-#featured-hitmen-title,
+#featured-hitmen-title {
+  color: #f58f4f;
+  text-align: left;
+}
+
 #featured-products-title {
-  color: #EE5D02;
-  margin: 2vh 0;
-  text-align: center;
+  color: #f58f4f;
+  text-align: right;
 }
 
-.hitmen-divider,
+.hitmen-divider {
+  width: 40%;
+  margin-top: 1rem;
+}
+
 .products-divider {
   width: 40%;
-  margin: 4vh auto;
+  justify-self: right;
+  margin-top: 5rem;
 }
 
 /* Responsive tweaks */

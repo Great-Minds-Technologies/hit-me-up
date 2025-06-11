@@ -33,37 +33,33 @@ function Admin() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [vendor, setVendor] = useState("");
-  const [email, setEmail] = useState("");
   const [type, setType] = useState("");
-  const [role, setRole] = useState("");
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetchProducts();
-    setEmail(JSON.parse(localStorage.getItem("email")));
+    async function CheckCredentials() {
+      try {
+        const _user = await axios.get("http://localhost:5000/api/users/logged", {
+            withCredentials: true, // Ensure cookies are sent with the request
+        });
+        if (_user) {
+          setUser(_user.data.user);
+          setRole(_user.data.user.role);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-    console.log("Fetched all");
+    fetchProducts();
+    CheckCredentials();
   }, [id]);
-  useEffect(() => {
-    if (email) {
-      fetchUserRole();
-    }
-  }, [email]);
-  const fetchUserRole = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
-      console.log(res);
-      console.log(res.data.role);
-      setRole(res.data.role);
-    } catch (error) {
-      console.log("Error finding the user's role");
-    }
-  };
   const addToCart = async () => {
-    console.log(email);
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/cart/${email}`,
+        `http://localhost:5000/api/users/cart/${user.email}`,
         {
           productID: id,
         }
@@ -75,25 +71,25 @@ function Admin() {
   };
   const fetchProducts = async () => {
     try {
+      const _rating = await axios.put(`http://localhost:5000/api/products/${id}/rating`);
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
       console.log("data fetched!" + res.data);
       setImage(res.data.image);
       setProductName(res.data.productName);
-      setRating(res.data.rating);
+      setRating(_rating.data);
       setDescription(res.data.description);
       setPrice(res.data.price);
       setVendor(res.data.vendor);
       setType(res.data.type);
+
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
   const addToWishlist = async () => {
-    console.log(email);
-
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/wishlist/${email}`,
+        `http://localhost:5000/api/users/wishlist/${user.email}`,
         {
           productID: id,
         }
@@ -106,11 +102,14 @@ function Admin() {
 
   return (
     <div className="product-page-container">
-      {(role === "admin" || role === "vendor") && (
+      
+      {(role === "admin" || role === "vendor") ? 
         <Link to={`/adminEdit/${id}`}>
           <button className="edit-button">Edit</button>
         </Link>
-      )}
+        :
+        null
+      }
 
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row

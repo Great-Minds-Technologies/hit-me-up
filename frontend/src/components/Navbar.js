@@ -14,9 +14,8 @@ import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
-  const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState("");
   const [cart, setCart] = useState(null);
 
   const navHeading = [
@@ -37,43 +36,22 @@ function Navbar() {
     //   label: "Admin",
     // },
   ];
-  const fetchUserRole = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
-      console.log(email);
-      console.log(res);
-      console.log(res.data.role);
-      setUser(res.data);
-      setRole(res.data.role);
-      console.log(role);
-    } catch (error) {
-      console.log("Error finding the user's role");
-    }
-  };
-  useEffect(() => {
-    console.log(email);
-    if (email) {
-      fetchUserRole();
-    }
-  }, [email]);
 
   useEffect(() => {
-    const _userEmail = JSON.parse(localStorage.getItem("email"));
-    const _cart = JSON.parse(localStorage.getItem("userCart"));
-
-    if (_userEmail) setEmail(_userEmail);
-    if (_cart) setCart(_cart);
+    CheckCredentials()
   }, []);
 
-  //   async function CheckCredentials() {
-  //     try {
-  //       const _user = await axios.get("http://localhost:5000/api/users/logged");
-  //       console.log(_user);
-  //       if (_user) setUser(_user);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+    async function CheckCredentials() {
+      try {
+        const _user = await axios.get("http://localhost:5000/api/users/logged", {
+            withCredentials: true, // Ensure cookies are sent with the request
+        });
+        console.log(_user);
+        if (_user) setUser(_user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
   ///logout function
   async function LogOut() {

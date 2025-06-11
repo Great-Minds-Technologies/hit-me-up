@@ -10,11 +10,11 @@ const router = express.Router();
 // Session middleware configuration
 app.use(
   session({
-    secret: "your-secret-key", // Replace with a strong secret key
+    secret: process.env.SESSION_SECRET, // Replace with a strong secret key
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: "mongodb://localhost:27017/yourDatabaseName", // Replace with your MongoDB connection string
+      mongoUrl: process.env.MONGODB_URI, // Replace with your MongoDB connection string
       collectionName: "sessions",
     }),
     cookie: {

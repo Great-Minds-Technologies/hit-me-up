@@ -137,15 +137,14 @@ router.delete ('/delete/:id', async (req, res) => {
 
   router.get ("/:id/reviews", async (req, res) => {
     try {
-      const _product = await Product.findById(req.params.id);
+      const _id = req.params.id;
+      const _product = await Product.findById(_id);
       
       if (!_product) {
-      return res.status(404).json({ message: "Product not found" });
+        return res.status(404).json({ message: "Product not found" });
       }
-       const _productName = _product.productName;
-      const _review = await Review.find({product: {_productName}});
-      console.log("Reviews: " +_review);
-      // if (_review) res.status(200).json(_review);   //commented out incase of hangs
+      const _review = await Review.find().all("productId", _id);
+      
       res.status(200).json(_review);
     } catch (error) {
       res.status(500).json({ error: "Server error" });
@@ -154,21 +153,37 @@ router.delete ('/delete/:id', async (req, res) => {
   
   router.post ("/:id/review/post", async (req, res) => {
     try {
-      const _user = req.session.user;
-      const { _rating, _productReview } = req.body;
-      const _product = await Product.findById(req.params.id);
+      const { _rating, _productReview, _user } = req.body;
+      console.log("Rating: "+_rating);
+      const _productId = req.params.id;
       const _review = new Review({
-        _rating,
-        _productReview,
-        _user,
-        _product
+        rating: parseFloat(_rating),
+        review: _productReview,
+        userEmail: _user,
+        productId: _productId
       });
-      console.log(_review);
+      _review.save();
+  
       res.status(201).json(_review);
     } catch (error) {
       res.status(500).json({ error: error.message || "Server error" });
     }
   })
 
+  router.put ("/:id/rating", async (req, res) => {
+    try {
+      const _id = req.params.id;
+      const _product = await Product.findById(_id);
+      const _review = await Review.find().all("productId", _id);
+      const _ratings = _review.map((i) => i.rating);
+      const _avg = _ratings.reduce((sum, i) => sum + i)/_review.length;
+  
+      _product.rating =_avg;
+      await _product.save();
+      res.status(201).json(_avg);
+    } catch (error) {
+      res.status(500).json({ error: error.message || "Server error" });
+    }
+  })
 
 module.exports = router;

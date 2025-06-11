@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Landing from '../components/Landing';
 import ShopItemCard from '../components/ShopItemCard';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [hitmen, setHitmen] = useState([]);
@@ -18,8 +19,8 @@ function Home() {
         try {
             const _items = await axios.get("http://localhost:5000/api/products");
             console.log("Got Products");
-            const _products = _items.data.filter((index) => index.type === "Product");
-            const _services = _items.data.filter((index) => index.type === "Service");
+            const _products = _items.data.filter((index) => index.type === "product");
+            const _services = _items.data.filter((index) => index.type === "service");
             _products.sort((a, b) => b.rating - a.rating );
             _services.sort((a, b) => b.rating - a.rating);
             setProducts(_products.slice(0,4));
@@ -78,12 +79,14 @@ function Home() {
                         <h3 id='featured-hitmen-title'>Featured Hitmen</h3>
                         {hitmen.map((index) =>
                            <Col sm='6' md='3'>
-                               <FeaturedCard
-                                   description={index.description}
-                                   image={index.image}
-                                   name={index.name}
-                                   price={index.price}
-                               />
+                                <Link to={`/product/${index._id}`}>
+                                    <ShopItemCard
+                                        productImage={index.image}
+                                        productName={index.productName}
+                                        productPrice={index.price}
+                                        productRating={index.rating}
+                                    />
+                                </Link>
                            </Col>
                         )}
                     </Row> 
@@ -99,12 +102,14 @@ function Home() {
 
                                 {/* this shop item is not working yet */}
 
-                                <ShopItemCard
-                                    productImage={index.image}
-                                    productName={index.productName}
-                                    productPrice={index.price}
-                                    productRating={index.rating}
-                                />
+                                <Link to={`/product/${index._id}`}>
+                                    <ShopItemCard
+                                        productImage={index.image}
+                                        productName={index.productName}
+                                        productPrice={index.price}
+                                        productRating={index.rating}
+                                    />
+                                </Link>
                             </Col>
                         )}
                     </Row>
