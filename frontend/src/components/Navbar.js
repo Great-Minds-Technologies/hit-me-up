@@ -58,16 +58,9 @@ function Navbar() {
   ///logout function
   async function LogOut() {
     try {
-      await axios.get("http://localhost:5000/api/users/logout");
-
-      localStorage.removeItem("email");
-      localStorage.removeItem("userCart");
-
-      setUser(null);
-      setCart(null);
-
-      // ✅ Go to home page
+      const res = await axios.get("http://localhost:5000/api/users/logout");
       navigate("/");
+      console.log(res);
     } catch (error) {
       console.error("Logout failed", error);
     }
