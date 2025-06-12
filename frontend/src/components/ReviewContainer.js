@@ -53,7 +53,6 @@ const ReviewContainer = ({productId}) => {
 
     async function CaptureReviewInformation () {
         try {
-            console.log(itemRating);
             const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
                 _rating: parseFloat(itemRating),
                 _productReview: reviewText,
@@ -68,7 +67,6 @@ const ReviewContainer = ({productId}) => {
     async function GrabReviews() {
         try {
             const _reviews = await axios.get(`http://localhost:5000/api/products/${productId}/reviews`);
-            console.log(_reviews);
             setReviews(_reviews.data);
         } catch (error) {
             console.log(error);

@@ -18,7 +18,6 @@ function Home() {
     async function GetProductsServices() {
         try {
             const _items = await axios.get("http://localhost:5000/api/products");
-            console.log("Got Products");
             const _products = _items.data.filter((index) => index.type === "product");
             const _services = _items.data.filter((index) => index.type === "service");
             _products.sort((a, b) => b.rating - a.rating );
@@ -35,7 +34,6 @@ function Home() {
             const _res = await axios.get("http://localhost:5000/api/users/logged", {
                 withCredentials: true, // Ensure cookies are sent with the request
             });
-            console.log(_res);
             if (_res.data) setUser(_res.data.user);
         } catch (error) {
             console.log("Error checking credentials:", error);

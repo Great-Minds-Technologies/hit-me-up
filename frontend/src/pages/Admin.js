@@ -44,7 +44,6 @@ function Product() {
     fetchProducts();
     setEmail(JSON.parse(localStorage.getItem("email")));
 
-    console.log("Fetched all");
   }, [id]);
   useEffect(() => {
     displayIndividualProducts();
@@ -56,8 +55,6 @@ function Product() {
   const fetchUserRole = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/users/${email}`);
-      console.log(res);
-      console.log(res.data.role);
       setRole(res.data.role);
     } catch (error) {
       console.log("Error finding the user's role");
@@ -68,7 +65,6 @@ function Product() {
     try {
       setIsLoaded(false);
       const res = await axios.get(`http://localhost:5000/api/products/`);
-      console.log(res.data);
       let pending = [];
       for (let index = 0; index < res.data.length; index++) {
         let temp = res.data[index];
@@ -98,8 +94,6 @@ function Product() {
   const approveProduct = async() => {
     //run update
     const status = 'approved';
-
-    console.log(pendingProducts[0]._id);
     
     try {
       const res = await axios.put(`http://localhost:5000/api/products/updateStatus/${pendingProducts[0]._id}`, {
@@ -114,7 +108,6 @@ function Product() {
   const denyProduct = async() => {
     try {
       const res = await axios.delete(`http://localhost:5000/api/products/delete/${pendingProducts[0]._id}`);
-      console.log("Product deleted" + res.data);
       fetchProducts();
     } catch (error) {
       console.log("Error updating status to approved", error);
@@ -128,7 +121,6 @@ function Product() {
       </div>
     )
   }
-  console.log(pendingProducts.length);
   
   return (
     <div className="product-page-container">

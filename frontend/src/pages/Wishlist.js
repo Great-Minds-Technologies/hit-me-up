@@ -23,8 +23,6 @@ function Wishlist() {
 useEffect(() => {
   if (!email) return;
 
-  console.log("Email found:", email);
-
   const fetchProducts = async () => {
     try {
       const userRes = await axios.get(`http://localhost:5000/api/users/${email}`);
@@ -41,7 +39,6 @@ useEffect(() => {
       });
       let productResponses = await Promise.all(productPromises);
       productResponses = productResponses.filter(data => data != null);
-      console.log(productResponses);
       
       setProducts(productResponses.map(res => res));
     } catch (error) {

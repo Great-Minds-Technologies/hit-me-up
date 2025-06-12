@@ -19,7 +19,6 @@ function Cart() {
       await axios.put(`http://localhost:5000/api/users/removeFromCart/${email}`,{
         productID: id
       });
-      console.log("removedProduct");
       fetchProducts();
     } catch (error) {
       console.log("Error removing item from cart", error);
@@ -37,7 +36,6 @@ function Cart() {
         const userRes = await axios.get(
           `http://localhost:5000/api/users/${email}`
         );
-        console.log("Found user" + userRes);
 
         const productIDs = userRes.data.cartIds;
         const productPromises = productIDs.map(async (id) => {
@@ -54,7 +52,6 @@ function Cart() {
         });
         let productResponses = await Promise.all(productPromises);
         productResponses = productResponses.filter((data) => data != null);
-        console.log(productResponses);
         let mergedResponses = [];
 
         productResponses.forEach((product) => {
@@ -68,7 +65,6 @@ function Cart() {
             mergedResponses.push({ product, quantity: 1 });
           }
         });
-        console.log(mergedResponses);
 
         setCartItems(mergedResponses.map((res) => res));
       } catch (error) {
@@ -84,8 +80,6 @@ function Cart() {
 
   useEffect(() => {
     if (!email) return;
-
-    console.log("Email found:", email);
     
     fetchProducts();
     
@@ -139,7 +133,6 @@ const clearCart = async() => {
   try {
     await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
     fetchProducts();
-    console.log("Cleared Cart");
   } catch (error) {
     console.error("Error clearing cart", error);
     
@@ -155,7 +148,6 @@ const clearCartAndBuy = async() => {
     await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
     fetchProducts();
     navigate('/purchase');
-    console.log("Cleared Cart");
   } catch (error) {
     console.error("Error clearing cart", error);
     

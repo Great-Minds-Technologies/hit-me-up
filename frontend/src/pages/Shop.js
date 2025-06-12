@@ -35,7 +35,6 @@ function Shop() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/products");
-        console.log("Fetched products:", response.data);
         const approvedProducts = response.data.filter( (product) => product.status =="approved" || product.status == "flagged");
         setProducts(approvedProducts);
       } catch (error) {

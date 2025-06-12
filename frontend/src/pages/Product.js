@@ -79,7 +79,6 @@ function Admin() {
           productID: id,
         }
       );
-      console.log("Product Added To Cart");
     } catch (error) {
       console.log("Error adding to cart" + error);
     }
@@ -88,7 +87,6 @@ function Admin() {
     try {
       const _rating = await axios.put(`http://localhost:5000/api/products/${id}/rating`);
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-      console.log("data fetched!" + res.data);
       setImage(res.data.image);
       setProductName(res.data.productName);
       setRating(_rating.data);
@@ -98,16 +96,12 @@ function Admin() {
       setType(res.data.type);
       if (res.data.status == "flagged") {
         setIsFlagged(true);
-        console.log("setisflaggedtotrue");
-        
       }
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
   const addToWishlist = async () => {
-    console.log(email);
-
     try {
       const res = await axios.put(
         `http://localhost:5000/api/users/wishlist/${user.email}`,
@@ -115,7 +109,6 @@ function Admin() {
           productID: id,
         }
       );
-      console.log("Product Added To Wishlist");
     } catch (error) {
       console.log("Error adding to wishlist" + error);
     }

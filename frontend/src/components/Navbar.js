@@ -46,7 +46,6 @@ function Navbar() {
         const _user = await axios.get("http://localhost:5000/api/users/logged", {
             withCredentials: true, // Ensure cookies are sent with the request
         });
-        console.log(_user);
         if (_user) {
           setUser(_user);
           setRole(_user.data.user.role);

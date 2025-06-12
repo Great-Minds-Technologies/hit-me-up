@@ -55,7 +55,6 @@ function LoginRegisterForm({ isLogin = true }) {
         if (res.status === 200) {
           // Store user details in localStorage or state
           localStorage.setItem("user", JSON.stringify(res.data.user));
-          console.log("Login successful:", res.data.user);
 
           // Navigate to the home page or dashboard
           navigate("/");
@@ -100,7 +99,6 @@ function LoginRegisterForm({ isLogin = true }) {
         );
 
         if (res.status === 201) {
-          console.log("Registration successful:", res.data);
           setError("Registration successful! Please log in.");
           setRenderError(true);
           setIsError(false);
