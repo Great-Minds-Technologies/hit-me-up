@@ -15,9 +15,9 @@ const ReviewSection = ({ratingValue, reviewText, reviewer}) => {
                     value={ratingValue}
                     />
                     <br/>
-                    <Link>
-                        {"User"}
-                    </Link>
+                    <p>
+                        {reviewer}
+                    </p>
                 </div>
                 
                 <p>{reviewText}</p>

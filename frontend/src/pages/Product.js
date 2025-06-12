@@ -85,11 +85,11 @@ function Admin() {
   };
   const fetchProducts = async () => {
     try {
-      const _rating = await axios.put(`http://localhost:5000/api/products/${id}/rating`);
+      
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
       setImage(res.data.image);
       setProductName(res.data.productName);
-      setRating(_rating.data);
+      setRating(res.data.rating);
       setDescription(res.data.description);
       setPrice(res.data.price);
       setVendor(res.data.vendor);
