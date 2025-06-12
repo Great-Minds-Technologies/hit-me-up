@@ -154,7 +154,7 @@ router.delete ('/delete/:id', async (req, res) => {
   router.post ("/:id/review/post", async (req, res) => {
     try {
       const { _rating, _productReview, _user } = req.body;
-      console.log("Rating: "+_rating);
+      console.log("name: "+ _user);
       const _productId = req.params.id;
       const _review = new Review({
         rating: parseFloat(_rating),
@@ -162,6 +162,8 @@ router.delete ('/delete/:id', async (req, res) => {
         userEmail: _user,
         productId: _productId
       });
+      console.log("saving review");
+      
       _review.save();
   
       res.status(201).json(_review);

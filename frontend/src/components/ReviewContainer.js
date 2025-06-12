@@ -7,6 +7,7 @@ import axios from "axios";
 
 const ReviewContainer = ({productId}) => {
     const [user, setUser] = useState(null);
+    const [loadedUser, setIsLoadedUser] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [reviewText, setReviewText] = useState([]);
     const [itemRating, setItemRating] = useState(null);
@@ -18,7 +19,10 @@ const ReviewContainer = ({productId}) => {
         const _user = await axios.get("http://localhost:5000/api/users/logged", {
             withCredentials: true, // Ensure cookies are sent with the request
         });
-        if (_user) setUser(_user.data.user);
+        console.log(_user.data.user);
+        setUser(_user.data?.user);
+        console.log("User Loaded", user);
+        
       } catch (error) {
         console.log(error);
       }
@@ -29,8 +33,8 @@ const ReviewContainer = ({productId}) => {
         let _reviewRows = [];
         let _tempRow = [];
         
-        for (let _i = 0; _i < reviews.length; _i++) {
-            _tempRow.push(<ReviewSection reviewer={reviews[_i].userEmail} ratingValue={reviews[_i].rating} reviewText={reviews[_i].review}/>);
+        for (let _i = 1; _i <= reviews.length; _i++) {
+            _tempRow.push(<ReviewSection reviewer={reviews[_i-1].userEmail} ratingValue={reviews[_i-1].rating} reviewText={reviews[_i-1].review}/>);
 
             if (_i % 3 === 0) {
                 _reviewRows.push(
@@ -52,16 +56,19 @@ const ReviewContainer = ({productId}) => {
     }
 
     async function CaptureReviewInformation () {
-        try {
-            console.log(itemRating);
-            const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
-                _rating: parseFloat(itemRating),
-                _productReview: reviewText,
-                _user: user.email
-            });
+        if (itemRating) {
+            try {
+                
+                const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
+                    _rating: parseFloat(itemRating),
+                    _productReview: reviewText,
+                    _user: user.email
+                });
+                const _rating = await axios.put(`http://localhost:5000/api/products/${productId}/rating`);
+            } catch (error) {
+                console.log(error);
+            }
             
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -77,6 +84,7 @@ const ReviewContainer = ({productId}) => {
 
     useEffect(() => {
         GenerateReviewRows();
+        console.log(user);
     },[reviews]);
 
     useEffect (() => {
