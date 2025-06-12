@@ -12,11 +12,12 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [coupon, setCoupon] = useState("");
   const [subtotal, setSubTotal] = useState(0);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const handleRemove = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/users/removeFromCart/${email}`,{
+      await axios.put(`http://localhost:5000/api/users/removeFromCart/${user.email}`,{
         productID: id
       });
       fetchProducts();
@@ -30,11 +31,10 @@ function Cart() {
   const discount = coupon === "DISCOUNT10" ? 0.1 * subtotal : 0;
   const grandTotal = subtotal - discount;
   const [displayMaxCount, setDisplayMaxCount] = useState(20);
-  const [email, setEmail] = useState("");
    const fetchProducts = async () => {
       try {
         const userRes = await axios.get(
-          `http://localhost:5000/api/users/${email}`
+          `http://localhost:5000/api/users/${user.email}`
         );
 
         const productIDs = userRes.data.cartIds;
@@ -72,18 +72,26 @@ function Cart() {
       }
     };
   useEffect(() => {
-    const storedEmail = JSON.parse(localStorage.getItem("email"));
-    if (storedEmail) {
-      setEmail(storedEmail);
+    async function GetCurrentUser() {
+        try {
+            const _res = await axios.get("http://localhost:5000/api/users/logged", {
+                withCredentials: true, // Ensure cookies are sent with the request
+            });
+            if (_res.data) setUser(_res.data.user);
+        } catch (error) {
+            console.log("Error checking credentials:", error);
+        }
     }
+
+    GetCurrentUser();
   }, []);
 
   useEffect(() => {
-    if (!email) return;
+    if (!user) return;
     
     fetchProducts();
     
-  }, [email]);
+  }, [user]);
   useEffect(() =>{
     const tempSubTotal = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -95,13 +103,13 @@ function Cart() {
   // Function to handle increase and decrease of quantity
 
  const handleIncrease = async (productId) => {
-  if (!email) {
-    console.warn("Email not set yet");
+  if (!user) {
+    console.warn("User not set yet");
     return;
   }
 
   try {
-   await axios.put(`http://localhost:5000/api/users/increaseFromCart/${email}`, {
+   await axios.put(`http://localhost:5000/api/users/increaseFromCart/${user.email}`, {
       productID: productId
     });
     fetchProducts(); 
@@ -111,13 +119,13 @@ function Cart() {
 };
 
 const handleDecrease = async (productId) => {
-  if (!email) {
-    console.warn("Email not set yet");
+  if (!user) {
+    console.warn("User not set yet");
     return;
   }
 
   try {
-    await axios.put(`http://localhost:5000/api/users/decreaseFromCart/${email}`, {
+    await axios.put(`http://localhost:5000/api/users/decreaseFromCart/${user.email}`, {
       productID: productId
     });
     fetchProducts();
@@ -126,12 +134,12 @@ const handleDecrease = async (productId) => {
   }
 };
 const clearCart = async() => {
-  if (!email) {
-    console.warn("Email not set yet");
+  if (!user) {
+    console.warn("User not set yet");
     return;
   }
   try {
-    await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
+    await axios.put(`http://localhost:5000/api/users/clearCart/${user.email}`)
     fetchProducts();
   } catch (error) {
     console.error("Error clearing cart", error);
@@ -140,12 +148,12 @@ const clearCart = async() => {
 }
 const clearCartAndBuy = async() => {
   
-  if (!email) {
-    console.warn("Email not set yet");
+  if (!user) {
+    console.warn("User not set yet");
     return;
   }
   try {
-    await axios.put(`http://localhost:5000/api/users/clearCart/${email}`)
+    await axios.put(`http://localhost:5000/api/users/clearCart/${user.email}`)
     fetchProducts();
     navigate('/purchase');
   } catch (error) {
