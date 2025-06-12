@@ -12,12 +12,24 @@ function Wishlist() {
   const [displayMaxCount, setDisplayMaxCount] = useState(20);
   const [products, setProducts] = useState([]);
   const [email,setEmail] = useState("");
+  const [user, setUser] = useState(null);
 
- useEffect(() => {
-  const storedEmail = JSON.parse(localStorage.getItem("email"));
-  if (storedEmail) {
-    setEmail(storedEmail);
+useEffect(() => {
+  async function GetCurrentUser() {
+      try {
+          const _res = await axios.get("http://localhost:5000/api/users/logged", {
+              withCredentials: true, // Ensure cookies are sent with the request
+          });
+          if (_res.data) {
+            setUser(_res.data.user);
+            setEmail(_res.data.user.email);
+          }
+      } catch (error) {
+          console.log("Error checking credentials:", error);
+      }
   }
+  
+  GetCurrentUser();
 }, []);
 
 useEffect(() => {

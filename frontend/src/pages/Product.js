@@ -9,6 +9,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
 import ReviewContainer from "../components/ReviewContainer";
+import heartIcon from '../assets/images/HeartIcon.png';
 // import { set } from "mongoose";
 
 const mockProduct = {
@@ -162,7 +163,7 @@ function Admin() {
                 </Col>
                 <Col md={{ span: 2, offset: 0 }} className="product-wishlist-col">
                   <OutlineButton
-                    buttonLabel={"♡"}
+                    buttonLabel={<img src={heartIcon} style={{width:'100%'}}/>}
                     buttonFunction={addToWishlist}
                   />
                 </Col>
