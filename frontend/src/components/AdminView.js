@@ -24,12 +24,10 @@ const AdminView = ({ id }) => {
   const [showSuccess, setShowSuccess] = useState(false); // New: success message state
 
   const handleDelete = async (e) => {
-    console.log("deleting product...");
     try {
       const res = await axios.delete(
         `http://localhost:5000/api/products/delete/${id}`
       );
-      console.log("Product deleted" + res.data);
       navigate("/shop");
     } catch (error) {
       console.log("Error deleting product");
@@ -47,7 +45,6 @@ const AdminView = ({ id }) => {
         }
       );
       setIsFlagged(true);
-      console.log("Flagged Product Successfully");
     } catch (error) {
       console.log("Error updating status to flagged", error);
     }
@@ -82,9 +79,6 @@ const AdminView = ({ id }) => {
           vendor,
         }
       );
-
-      console.log(res);
-      console.log("Successfully updated product");
 
       setShowSuccess(true); // Show success message
 

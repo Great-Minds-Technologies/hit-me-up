@@ -9,6 +9,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom"; //lets us read the id
 import { useNavigate } from "react-router-dom";
 import ReviewContainer from "../components/ReviewContainer";
+import heartIcon from '../assets/images/HeartIcon.png';
 // import { set } from "mongoose";
 
 const mockProduct = {
@@ -35,7 +36,8 @@ function Admin() {
   const [vendor, setVendor] = useState("");
   const [email, setEmail] = useState("");
   const [type, setType] = useState("");
-  const [role, setRole] = useState("");
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [isFlagged, setIsFlagged] = useState(false);
   const { id } = useParams();
   const flagProduct = async() => {
@@ -53,44 +55,39 @@ function Admin() {
     }
   }
   useEffect(() => {
-    fetchProducts();
-    setEmail(JSON.parse(localStorage.getItem("email")));
+    async function CheckCredentials() {
+      try {
+        const _user = await axios.get("http://localhost:5000/api/users/logged", {
+            withCredentials: true, // Ensure cookies are sent with the request
+        });
+        if (_user) {
+          setUser(_user.data.user);
+          setRole(_user.data.user.role);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-    console.log("Fetched all");
+    fetchProducts();
+    CheckCredentials();
   }, [id]);
-  useEffect(() => {
-    if (email) {
-      fetchUserRole();
-    }
-  }, [email]);
-  const fetchUserRole = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/users/${email}`);
-      console.log(res);
-      console.log(res.data.role);
-      setRole(res.data.role);
-    } catch (error) {
-      console.log("Error finding the user's role");
-    }
-  };
   const addToCart = async () => {
-    console.log(email);
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/cart/${email}`,
+        `http://localhost:5000/api/users/cart/${user.email}`,
         {
           productID: id,
         }
       );
-      console.log("Product Added To Cart");
     } catch (error) {
       console.log("Error adding to cart" + error);
     }
   };
   const fetchProducts = async () => {
     try {
+      
       const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-      console.log("data fetched!" , res.data);
       setImage(res.data.image);
       setProductName(res.data.productName);
       setRating(res.data.rating);
@@ -100,24 +97,19 @@ function Admin() {
       setType(res.data.type);
       if (res.data.status == "flagged") {
         setIsFlagged(true);
-        console.log("setisflaggedtotrue");
-        
       }
     } catch (error) {
       console.log("Error fetching product data:", error);
     }
   };
   const addToWishlist = async () => {
-    console.log(email);
-
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/users/wishlist/${email}`,
+        `http://localhost:5000/api/users/wishlist/${user.email}`,
         {
           productID: id,
         }
       );
-      console.log("Product Added To Wishlist");
     } catch (error) {
       console.log("Error adding to wishlist" + error);
     }
@@ -125,11 +117,14 @@ function Admin() {
 
   return (
     <div className="product-page-container">
-      {(role === "admin" || role === "vendor") && (
+      
+      {(role === "admin" || role === "vendor") ? 
         <Link to={`/adminEdit/${id}`}>
           <button className="edit-button">Edit</button>
         </Link>
-      )}
+        :
+        null
+      }
 
       <Container style={{ marginTop: "40px", marginBottom: "40px" }}>
         <Row
@@ -168,7 +163,7 @@ function Admin() {
                 </Col>
                 <Col md={{ span: 2, offset: 0 }} className="product-wishlist-col">
                   <OutlineButton
-                    buttonLabel={"♡"}
+                    buttonLabel={<img src={heartIcon} style={{width:'100%'}}/>}
                     buttonFunction={addToWishlist}
                   />
                 </Col>

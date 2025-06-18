@@ -34,90 +34,87 @@ function LoginRegisterForm({ isLogin = true }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (isLogin) {
-      //Login
+      // Login
       try {
-        const res = await axios.post("http://localhost:5000/api/users/login", {
-          email,
-          password,
-          weapon: selectedWeapon,
-          victim: selectedTarget,
-          murderLocation: selectedRoom
-        }, {
-              withCredentials:true
-            });
-        setError(res.data.message);
-        setRenderError(true);
-        setIsError(false);
-        localStorage.setItem("email", JSON.stringify(email));
-        console.log(localStorage.getItem("email"));
-        
-        navigate("/");
-        window.location.reload();
+        const res = await axios.post(
+          "http://localhost:5000/api/users/login",
+          {
+            email,
+            password,
+            weapon: selectedWeapon,
+            victim: selectedTarget,
+            murderLocation: selectedRoom,
+          },
+          {
+            withCredentials: true, // Ensure cookies are sent with the request
+          }
+        );
+
+        if (res.status === 200) {
+          // Store user details in localStorage or state
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+
+          // Navigate to the home page or dashboard
+          navigate("/");
+          window.location.reload();
+        } else {
+          setError(res.data.error || "Login failed");
+          setRenderError(true);
+          setIsError(true);
+        }
       } catch (error) {
+        console.error("Error logging in:", error);
         setError("Error logging in");
         setRenderError(true);
         setIsError(true);
       }
     } else {
-      //Register
+      // Register
       if (password !== confirmPassword) {
         setError("Passwords do not match");
         setRenderError(true);
         setIsError(true);
         return;
-      } else if (!selectedWeapon) {
-        setError("Please select a weapon");
-        setRenderError(true);
-        setIsError(true);
-        return;
-      } 
-      else if (!selectedTarget) {
-        setError("Please select a target");
+      }
+
+      if (!selectedWeapon || !selectedTarget || !selectedRoom) {
+        setError("Please complete all fields");
         setRenderError(true);
         setIsError(true);
         return;
       }
-      else if (!selectedRoom) {
-        setError("Please select a room");
+
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/users/register",
+          {
+            email,
+            password,
+            weapon: selectedWeapon,
+            victim: selectedTarget,
+            murderLocation: selectedRoom,
+          }
+        );
+
+        if (res.status === 201) {
+          setError("Registration successful! Please log in.");
+          setRenderError(true);
+          setIsError(false);
+
+          // Optionally, redirect to the login page
+          navigate("/login");
+        } else {
+          setError(res.data.error || "Registration failed");
+          setRenderError(true);
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error("Error registering:", error);
+        setError("Error registering");
         setRenderError(true);
         setIsError(true);
-        return;
-      }else {
-        //Success
-        console.log("Selected Weapon:", selectedWeapon);
-
-        console.log("Sending registration data:", {
-          email,
-          password,
-          weapon: selectedWeapon,
-          victim: selectedTarget,
-          murderLocation: selectedRoom
-        });
-
-        try {
-          const response = await axios.post(
-            "http://localhost:5000/api/users/register",
-            {
-              email,
-              password,
-              weapon: selectedWeapon,
-              victim: selectedTarget,
-              murderLocation: selectedRoom
-            }
-          );
-          console.log("User registered!" + response.data);
-          setError("Success!");
-          setRenderError(true);
-          setIsError(false);
-        } catch (error) {
-          setError("Error Creating User");
-          setRenderError(true);
-          setIsError(false);
-          console.error("Error registering user:", error);
-        }
-        //Do logic to store user
-        console.log({ email, password });
       }
     }
   };

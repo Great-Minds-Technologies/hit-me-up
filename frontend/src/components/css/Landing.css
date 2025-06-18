@@ -95,7 +95,36 @@
   pointer-events: auto;
   
 }
+
+.landingPair {
+  position: absolute;
+  text-align: left;
+  margin-top: 5%;
+  color: white;
+  max-width: 200px;
+  pointer-events: auto;
+}
+
+
+.landing-welcome {
+  position: absolute;
+  text-align: center;
+  color: white;
+  pointer-events: auto;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+
 @media screen and (max-width: 768px) {
+  .circle-overlay-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+  }
+
   .landing-welcome h1 {
     font-size: clamp(1rem, 4vw, 2rem);
   }
@@ -121,8 +150,13 @@
   .landingPair {
     max-width: 140px;
     font-size: 5px;
+    text-align: center;
   }
 
+  .landingPair p {
+  width: 50%;
+  font-size: clamp(0.5rem, 0.5vw, 1rem);
+}
 }
 
 @media screen and (max-width: 480px) {
@@ -196,16 +230,6 @@
 
 
 
-.landing-welcome {
-  position: absolute;
-  text-align: center;
-  color: white;
-  pointer-events: auto;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
-}
 
 .landing-welcome h1 {
   color: #DDAC7D;
@@ -221,17 +245,10 @@
 .landingPair h1 {
   white-space: nowrap;
   word-break: keep-all;
-  font-size: clamp(0.5rem, 2.5vw, 2.5rem); /* ✅ Responsive */
+  font-size: clamp(0.75rem, 2.5vw, 2.5rem); /* ✅ Responsive */
 }
 
-.landingPair {
-  position: absolute;
-  text-align: left;
-  margin-top: 5%;
-  color: white;
-  max-width: 200px;
-  pointer-events: auto;
-}
+
 
 .landing-1 {
   position: absolute;

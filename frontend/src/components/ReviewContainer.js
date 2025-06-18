@@ -6,80 +6,114 @@ import "./css/ReviewContainer.css";
 import axios from "axios";
 
 const ReviewContainer = ({productId}) => {
+    const [user, setUser] = useState(null);
+    const [loadedUser, setIsLoadedUser] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [reviewText, setReviewText] = useState([]);
-    const [itemRating, setItemRating] = useState([]);
+    const [itemRating, setItemRating] = useState(null);
+    const [reviewRows, setReviewRows] = useState(null);
+    
 
-    let _reviewRows = [];
+    async function CheckCredentials() {
+      try {
+        const _user = await axios.get("http://localhost:5000/api/users/logged", {
+            withCredentials: true, // Ensure cookies are sent with the request
+        });
+        console.log(_user.data.user);
+        setUser(_user.data?.user);
+        console.log("User Loaded", user);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-    const ReviewRows = () => {
+    const GenerateReviewRows = () => {
+        if (reviews.length <= 0) return;
+        let _reviewRows = [];
         let _tempRow = [];
         
-        for (let _i = 0; _i < reviews.length; _i++) {
-            _tempRow.push(<ReviewSection/>);
+        for (let _i = 1; _i <= reviews.length; _i++) {
+            _tempRow.push(<ReviewSection reviewer={reviews[_i-1].userEmail} ratingValue={reviews[_i-1].rating} reviewText={reviews[_i-1].review}/>);
 
             if (_i % 3 === 0) {
                 _reviewRows.push(
                     <Row>
-                        <_tempRow/>
+                        {_tempRow}
                     </Row>
                 )
+
+                _tempRow = [];
             }
-            
         }
         _reviewRows.push(
             <Row>
-                <_tempRow/>
+                {_tempRow}
             </Row>
         )
+
+        setReviewRows(_reviewRows);
     }
 
     async function CaptureReviewInformation () {
-        try {
-            const _tempProduct = await axios.get(`http://localhost:5000/api/products/${productId}`);
-            const _currentUser = await axios.get(`http://localhost:5000/api/user/logged`);
-            const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
-                _rating: itemRating,
-                _productReview: reviewText,
-                _user: _currentUser,
-                _product: _tempProduct
-            })
-        } catch (error) {
-            console.log(error);
+        if (itemRating) {
+            try {
+                
+                const _tempResult = await axios.post(`http://localhost:5000/api/products/${productId}/review/post`, {
+                    _rating: parseFloat(itemRating),
+                    _productReview: reviewText,
+                    _user: user.email
+                });
+                const _rating = await axios.put(`http://localhost:5000/api/products/${productId}/rating`);
+            } catch (error) {
+                console.log(error);
+            }
+            
         }
     }
 
     async function GrabReviews() {
         try {
             const _reviews = await axios.get(`http://localhost:5000/api/products/${productId}/reviews`);
-            // const _reviews = await axios.get(`http://localhost:5000/api/reviews/`);
-            console.log(_reviews.data);
+            console.log(_reviews);
             setReviews(_reviews.data);
         } catch (error) {
             console.log(error);
         }
     }
 
+    useEffect(() => {
+        GenerateReviewRows();
+        console.log(user);
+    },[reviews]);
+
     useEffect (() => {
+        CheckCredentials();
         GrabReviews();
     },[]); 
 
     return (
         <div>
-            <Form className="review-form" onSubmit={CaptureReviewInformation}>
-                <div className="review-rating-display">
-                    <RatingDisplay  onChange={setItemRating}/>
-                </div>
-                <textarea
-                    className="review-text-input"
-                    placeholder="Review (Optional)"
-                    onChange={setReviewText}
-                />
-                <Button className="review-submit-button" type="submit">Post Review</Button>
-            </Form>
+            {user ?
+                <Form className="review-form" onSubmit={CaptureReviewInformation}>
+                {/* // <Form className="review-form"> */}
+                    <div className="review-rating-display">
+                        <RatingDisplay  onChange={(i) => setItemRating(i.target.value)}/>
+                    </div>
+                    <textarea
+                        className="review-text-input"
+                        placeholder="Review (Optional)"
+                        onChange={(i) => setReviewText(i.target.value)}
+                    />
+                    <Button className="review-submit-button" type="submit">Post Review</Button>
+                </Form>
+                :
+                null
+            }
+            
             <Container>
                 <hr/>
-                <ReviewRows/>
+                {reviewRows}
             </Container>
             
         </div>

@@ -8,16 +8,14 @@ const reviewSchema = new mongoose.Schema({
     review: {
         type: String,
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Hitman_User",
-        unique: true,
+    userEmail: {
+        type: String,
         required: true,
     },
-    product: {
+    productId: {
         type: String,
         required: true,
     }
 });
 
-module.exports = mongoose.model("Review", reviewSchema);
+module.exports = mongoose.model("reviews", reviewSchema);
